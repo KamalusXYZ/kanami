@@ -1,0 +1,26 @@
+
+
+install symfony 
+
+
+1 composer create-project symfony/skeleton nom_de_dossier
+
+
+2 cd nom_de_dossier
+
+3 composer require webapp
+
+4 ajouter symfony.exe dans nom_de_dossier
+
+5 ./symfony server:start ou symfony server:start  (terminal a laisser ouvert)
+
+6 npm install
+
+7 yarn install
+
+8 yarn watch (terminal a laisser ouvert)
+
+9 OPTION ajouter à templates/base.html le link boostrap  CSS ET JAVASCRIPT
+
+
+
