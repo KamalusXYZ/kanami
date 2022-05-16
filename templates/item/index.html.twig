@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Item index{% endblock %}
+
+{% block body %}
+    <h1>Item index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Ref</th>
+                <th>Lang</th>
+                <th>PublisherGameDuration</th>
+                <th>OurGameDuration</th>
+                <th>PlayerNbMin</th>
+                <th>PlayerNbMax</th>
+                <th>AgeMin</th>
+                <th>Author</th>
+                <th>Illustrator</th>
+                <th>Publisher</th>
+                <th>ItemCondition</th>
+                <th>Completeness</th>
+                <th>Available</th>
+                <th>Archive</th>
+                <th>UpdatePseudoUser</th>
+                <th>UpdateDateTime</th>
+                <th>ArchivePseudoUser</th>
+                <th>ArchiveDateTime</th>
+                <th>ArchiveCause</th>
+                <th>ArchiveGameBecome</th>
+                <th>MemberItemRatingTotal</th>
+                <th>MemberItemRatingNb</th>
+                <th>GamePrice</th>
+                <th>GameOrigin</th>
+                <th>UserMadeEntry</th>
+                <th>CopyNumber</th>
+                <th>RegisterDateTime</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.ref }}</td>
+                <td>{{ item.lang }}</td>
+                <td>{{ item.publisherGameDuration }}</td>
+                <td>{{ item.ourGameDuration }}</td>
+                <td>{{ item.playerNbMin }}</td>
+                <td>{{ item.playerNbMax }}</td>
+                <td>{{ item.ageMin }}</td>
+                <td>{{ item.author }}</td>
+                <td>{{ item.illustrator }}</td>
+                <td>{{ item.publisher }}</td>
+                <td>{{ item.itemCondition }}</td>
+                <td>{{ item.completeness ? 'Yes' : 'No' }}</td>
+                <td>{{ item.available ? 'Yes' : 'No' }}</td>
+                <td>{{ item.archive ? 'Yes' : 'No' }}</td>
+                <td>{{ item.updatePseudoUser }}</td>
+                <td>{{ item.UpdateDateTime ? item.UpdateDateTime|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ item.archivePseudoUser }}</td>
+                <td>{{ item.archiveDateTime ? item.archiveDateTime|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ item.archiveCause }}</td>
+                <td>{{ item.archiveGameBecome }}</td>
+                <td>{{ item.memberItemRatingTotal }}</td>
+                <td>{{ item.memberItemRatingNb }}</td>
+                <td>{{ item.gamePrice }}</td>
+                <td>{{ item.gameOrigin }}</td>
+                <td>{{ item.userMadeEntry }}</td>
+                <td>{{ item.copyNumber }}</td>
+                <td>{{ item.registerDateTime ? item.registerDateTime|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_item_show', {'id': item.id}) }}">show</a>
+                    <a href="{{ path('app_item_edit', {'id': item.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="30">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_item_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CategoryDependance index{% endblock %}
+
+{% block body %}
+    <h1>CategoryDependance index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for category_dependance in category_dependances %}
+            <tr>
+                <td>{{ category_dependance.id }}</td>
+                <td>
+                    <a href="{{ path('app_category_dependance_show', {'id': category_dependance.id}) }}">show</a>
+                    <a href="{{ path('app_category_dependance_edit', {'id': category_dependance.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_category_dependance_new') }}">Create new</a>
+{% endblock %}

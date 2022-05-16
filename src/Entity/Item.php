@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ItemRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
@@ -96,6 +98,14 @@ class Item
 
     #[ORM\Column(type: 'datetime')]
     private $registerDateTime;
+
+    #[ORM\OneToMany(mappedBy: 'item', targetEntity: CategoryDependance::class)]
+    private $categories;
+
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -434,6 +444,36 @@ class Item
     public function setRegisterDateTime(\DateTimeInterface $registerDateTime): self
     {
         $this->registerDateTime = $registerDateTime;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CategoryDependance>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(CategoryDependance $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->setItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(CategoryDependance $category): self
+    {
+        if ($this->categories->removeElement($category)) {
+            // set the owning side to null (unless already changed)
+            if ($category->getItem() === $this) {
+                $category->setItem(null);
+            }
+        }
 
         return $this;
     }

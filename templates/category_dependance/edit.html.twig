@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit CategoryDependance{% endblock %}
+
+{% block body %}
+    <h1>Edit CategoryDependance</h1>
+
+    {{ include('category_dependance/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_category_dependance_index') }}">back to list</a>
+
+    {{ include('category_dependance/_delete_form.html.twig') }}
+{% endblock %}

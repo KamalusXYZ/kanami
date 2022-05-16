@@ -13,8 +13,43 @@ class CategoryDependance
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    #[ORM\ManyToOne(targetEntity: Item::class, inversedBy: 'categories')]
+    private $item;
+
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'items')]
+    private $category;
+
+    public function __toString()
+    {
+        return $this->category;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getItem(): ?Item
+    {
+        return $this->item;
+    }
+
+    public function setItem(?Item $item): self
+    {
+        $this->item = $item;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
     }
 }
