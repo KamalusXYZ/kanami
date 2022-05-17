@@ -26,13 +26,11 @@ class CategoryDependanceController extends AbstractController
     }
 
     #[Route('/new', name: 'app_category_dependance_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CategoryDependanceRepository $categoryDependanceRepository, ItemRepository $itemRepository, CategoryRepository $categoryRepository): Response
+    public function new(Request $request, CategoryDependanceRepository $categoryDependanceRepository): Response
     {
         $categoryDependance = new CategoryDependance();
         $form = $this->createForm(CategoryDependanceType::class, $categoryDependance);
         $form->handleRequest($request);
-        $itemRepository = new Item();
-        $categoryRepository = new Category();
 
 
         if ($form->isSubmitted() && $form->isValid()) {
