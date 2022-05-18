@@ -2,8 +2,12 @@
 
 namespace App\Form;
 
+use App\Entity\CategoryDependance;
 use App\Entity\Item;
+use Doctrine\DBAL\Types\SimpleArrayType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,7 +16,7 @@ class ItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
+            ->add('name', TextType::class, ["label"=>"Nom"])
             ->add('ref')
             ->add('lang')
             ->add('publisherGameDuration')
@@ -40,6 +44,7 @@ class ItemType extends AbstractType
             ->add('userMadeEntry')
             ->add('copyNumber')
             ->add('registerDateTime')
+
         ;
     }
 
@@ -47,6 +52,7 @@ class ItemType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Item::class,
+
         ]);
     }
 }

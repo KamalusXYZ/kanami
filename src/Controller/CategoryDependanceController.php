@@ -25,16 +25,22 @@ class CategoryDependanceController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_category_dependance_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CategoryDependanceRepository $categoryDependanceRepository): Response
+    #[Route('/new/{idItem}', name: 'app_category_dependance_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, CategoryDependanceRepository $categoryDependanceRepository, ItemRepository $itemRepository): Response
     {
+
         $categoryDependance = new CategoryDependance();
+
         $form = $this->createForm(CategoryDependanceType::class, $categoryDependance);
         $form->handleRequest($request);
 
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $item = $itemRepository->find($request->get("idItem"));
+            $categoryDependance->setItem($item);
             $categoryDependanceRepository->add($categoryDependance, true);
+
 
             return $this->redirectToRoute('app_category_dependance_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -42,6 +48,7 @@ class CategoryDependanceController extends AbstractController
         return $this->renderForm('category_dependance/new.html.twig', [
             'category_dependance' => $categoryDependance,
             'form' => $form,
+
         ]);
     }
 

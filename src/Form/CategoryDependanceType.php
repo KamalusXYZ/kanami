@@ -12,7 +12,7 @@ class CategoryDependanceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('item')
+
             ->add('category')
         ;
     }
