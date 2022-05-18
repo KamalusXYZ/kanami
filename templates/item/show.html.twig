@@ -9,122 +9,132 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ item.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ item.name }}</td>
-            </tr>
-            <tr>
-                <th>Ref</th>
-                <td>{{ item.ref }}</td>
-            </tr>
-            <tr>
-                <th>Lang</th>
-                <td>{{ item.lang }}</td>
-            </tr>
-            <tr>
-                <th>PublisherGameDuration</th>
-                <td>{{ item.publisherGameDuration }}</td>
-            </tr>
-            <tr>
-                <th>OurGameDuration</th>
-                <td>{{ item.ourGameDuration }}</td>
-            </tr>
-            <tr>
-                <th>PlayerNbMin</th>
-                <td>{{ item.playerNbMin }}</td>
-            </tr>
-            <tr>
-                <th>PlayerNbMax</th>
-                <td>{{ item.playerNbMax }}</td>
-            </tr>
-            <tr>
-                <th>AgeMin</th>
-                <td>{{ item.ageMin }}</td>
-            </tr>
-            <tr>
-                <th>Author</th>
-                <td>{{ item.author }}</td>
-            </tr>
-            <tr>
-                <th>Illustrator</th>
-                <td>{{ item.illustrator }}</td>
-            </tr>
-            <tr>
-                <th>Publisher</th>
-                <td>{{ item.publisher }}</td>
-            </tr>
-            <tr>
-                <th>ItemCondition</th>
-                <td>{{ item.itemCondition }}</td>
-            </tr>
-            <tr>
-                <th>Completeness</th>
-                <td>{{ item.completeness ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Available</th>
-                <td>{{ item.available ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Archive</th>
-                <td>{{ item.archive ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatePseudoUser</th>
-                <td>{{ item.updatePseudoUser }}</td>
-            </tr>
-            <tr>
-                <th>UpdateDateTime</th>
-                <td>{{ item.UpdateDateTime ? item.UpdateDateTime|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>ArchivePseudoUser</th>
-                <td>{{ item.archivePseudoUser }}</td>
-            </tr>
-            <tr>
-                <th>ArchiveDateTime</th>
-                <td>{{ item.archiveDateTime ? item.archiveDateTime|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>ArchiveCause</th>
-                <td>{{ item.archiveCause }}</td>
-            </tr>
-            <tr>
-                <th>ArchiveGameBecome</th>
-                <td>{{ item.archiveGameBecome }}</td>
-            </tr>
-            <tr>
-                <th>MemberItemRatingTotal</th>
-                <td>{{ item.memberItemRatingTotal }}</td>
-            </tr>
-            <tr>
-                <th>MemberItemRatingNb</th>
-                <td>{{ item.memberItemRatingNb }}</td>
-            </tr>
-            <tr>
-                <th>GamePrice</th>
-                <td>{{ item.gamePrice }}</td>
-            </tr>
-            <tr>
-                <th>GameOrigin</th>
-                <td>{{ item.gameOrigin }}</td>
-            </tr>
-            <tr>
-                <th>UserMadeEntry</th>
-                <td>{{ item.userMadeEntry }}</td>
-            </tr>
-            <tr>
-                <th>CopyNumber</th>
-                <td>{{ item.copyNumber }}</td>
-            </tr>
-            <tr>
-                <th>RegisterDateTime</th>
-                <td>{{ item.registerDateTime ? item.registerDateTime|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <td>{{ item.id }}</td>
+        </tr>
+
+
+        <tr>
+            <th>Categorie</th>
+            {% for category in item.categories %}
+                <td>{{ category }}</td>
+            {% else %}
+                <td>sans categorie</td>
+            {% endfor %}
+
+        <tr>
+            <th>Name</th>
+            <td>{{ item.name }}</td>
+        </tr>
+        <tr>
+            <th>Ref</th>
+            <td>{{ item.ref }}</td>
+        </tr>
+        <tr>
+            <th>Lang</th>
+            <td>{{ item.lang }}</td>
+        </tr>
+        <tr>
+            <th>PublisherGameDuration</th>
+            <td>{{ item.publisherGameDuration }}</td>
+        </tr>
+        <tr>
+            <th>OurGameDuration</th>
+            <td>{{ item.ourGameDuration }}</td>
+        </tr>
+        <tr>
+            <th>PlayerNbMin</th>
+            <td>{{ item.playerNbMin }}</td>
+        </tr>
+        <tr>
+            <th>PlayerNbMax</th>
+            <td>{{ item.playerNbMax }}</td>
+        </tr>
+        <tr>
+            <th>AgeMin</th>
+            <td>{{ item.ageMin }}</td>
+        </tr>
+        <tr>
+            <th>Author</th>
+            <td>{{ item.author }}</td>
+        </tr>
+        <tr>
+            <th>Illustrator</th>
+            <td>{{ item.illustrator }}</td>
+        </tr>
+        <tr>
+            <th>Publisher</th>
+            <td>{{ item.publisher }}</td>
+        </tr>
+        <tr>
+            <th>ItemCondition</th>
+            <td>{{ item.itemCondition }}</td>
+        </tr>
+        <tr>
+            <th>Completeness</th>
+            <td>{{ item.completeness ? 'Yes' : 'No' }}</td>
+        </tr>
+        <tr>
+            <th>Available</th>
+            <td>{{ item.available ? 'Yes' : 'No' }}</td>
+        </tr>
+        <tr>
+            <th>Archive</th>
+            <td>{{ item.archive ? 'Yes' : 'No' }}</td>
+        </tr>
+        <tr>
+            <th>UpdatePseudoUser</th>
+            <td>{{ item.updatePseudoUser }}</td>
+        </tr>
+        <tr>
+            <th>UpdateDateTime</th>
+            <td>{{ item.UpdateDateTime ? item.UpdateDateTime|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>ArchivePseudoUser</th>
+            <td>{{ item.archivePseudoUser }}</td>
+        </tr>
+        <tr>
+            <th>ArchiveDateTime</th>
+            <td>{{ item.archiveDateTime ? item.archiveDateTime|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>ArchiveCause</th>
+            <td>{{ item.archiveCause }}</td>
+        </tr>
+        <tr>
+            <th>ArchiveGameBecome</th>
+            <td>{{ item.archiveGameBecome }}</td>
+        </tr>
+        <tr>
+            <th>MemberItemRatingTotal</th>
+            <td>{{ item.memberItemRatingTotal }}</td>
+        </tr>
+        <tr>
+            <th>MemberItemRatingNb</th>
+            <td>{{ item.memberItemRatingNb }}</td>
+        </tr>
+        <tr>
+            <th>GamePrice</th>
+            <td>{{ item.gamePrice }}</td>
+        </tr>
+        <tr>
+            <th>GameOrigin</th>
+            <td>{{ item.gameOrigin }}</td>
+        </tr>
+        <tr>
+            <th>UserMadeEntry</th>
+            <td>{{ item.userMadeEntry }}</td>
+        </tr>
+        <tr>
+            <th>CopyNumber</th>
+            <td>{{ item.copyNumber }}</td>
+        </tr>
+        <tr>
+            <th>RegisterDateTime</th>
+            <td>{{ item.registerDateTime ? item.registerDateTime|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
         </tbody>
     </table>
 
