@@ -1,7 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MainController!{% endblock %}
+{% block title %}KaNaMi{% endblock %}
 
 {% block body %}
-    <h1>hello</h1>
+    <h1 class="logotitre text-center">KaNaMi</h1>
+    <div class="box">
+
+        <button class=""><a class="text-white text-decoration-none" href="{{ path('app_item_new') }}">Ajouter un article</a></button>
+    </div>
+    <div class="box"><button class=""><a class="" href="{{ path('app_category_new') }}">Ajouter une catégorie</a></button></div>
+    
 {% endblock %}
