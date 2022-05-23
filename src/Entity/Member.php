@@ -43,6 +43,15 @@ class Member
     #[ORM\Column(type: 'string', length: 45, nullable: true)]
     private $otherAddressDetail;
 
+    #[ORM\ManyToOne(targetEntity: Relationship::class, inversedBy: 'members')]
+    private $relationShip;
+
+    #[ORM\ManyToOne(targetEntity: MemberEvent::class, inversedBy: 'members')]
+    private $memberEvent;
+
+    #[ORM\ManyToOne(targetEntity: MemberDailySession::class, inversedBy: 'members')]
+    private $MemberDailySession;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -164,6 +173,42 @@ class Member
     public function setOtherAddressDetail(?string $otherAddressDetail): self
     {
         $this->otherAddressDetail = $otherAddressDetail;
+
+        return $this;
+    }
+
+    public function getRelationShip(): ?Relationship
+    {
+        return $this->relationShip;
+    }
+
+    public function setRelationShip(?Relationship $relationShip): self
+    {
+        $this->relationShip = $relationShip;
+
+        return $this;
+    }
+
+    public function getMemberEvent(): ?MemberEvent
+    {
+        return $this->memberEvent;
+    }
+
+    public function setMemberEvent(?MemberEvent $memberEvent): self
+    {
+        $this->memberEvent = $memberEvent;
+
+        return $this;
+    }
+
+    public function getMemberDailySession(): ?MemberDailySession
+    {
+        return $this->MemberDailySession;
+    }
+
+    public function setMemberDailySession(?MemberDailySession $MemberDailySession): self
+    {
+        $this->MemberDailySession = $MemberDailySession;
 
         return $this;
     }

@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 #[Route('/item')]
 class ItemController extends AbstractController
@@ -27,8 +28,12 @@ class ItemController extends AbstractController
         $item = new Item();
         $form = $this->createForm(ItemType::class, $item);
         $form->handleRequest($request);
+        $dateTime = date_create("now");
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $item->setArchive(0);
+            $item->setRegisterDateTime($dateTime);
             $itemRepository->add($item, true);
 
             return $this->redirectToRoute('app_category_dependance_new', ['idItem' => $item->getId() ], Response::HTTP_SEE_OTHER);

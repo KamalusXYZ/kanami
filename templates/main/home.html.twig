@@ -6,8 +6,26 @@
     <h1 class="logotitre text-center">KaNaMi</h1>
     <div class="box">
 
-        <button class=""><a class="text-white text-decoration-none" href="{{ path('app_item_new') }}">Ajouter un article</a></button>
+        <button class=""><a class="text-white text-decoration-none" href="{{ path('app_item_new') }}">Ajouter un
+                jeu</a></button>
+        <button class=""><a class="text-white text-decoration-none" href="{{ path('app_item_index') }}">Voir les
+                jeux</a></button>
     </div>
-    <div class="box"><button class=""><a class="" href="{{ path('app_category_new') }}">Ajouter une catégorie</a></button></div>
-    
+
+    <div class="box">
+        <button class=""><a class="" href="{{ path('app_category_new') }}">Ajouter une catégorie</a></button>
+    </div>
+    <div class="box">
+        <button class=""><a class="" href="{{ path('app_category_index') }}">Voir les catégories</a></button>
+    </div>
+
+    <div class="box">
+        <button class=""><a class="" href="{{ path('app_member_new') }}">Ajouter un adhérant</a></button>
+    </div>
+
+
+
+    </div>
+
+
 {% endblock %}
