@@ -28,6 +28,9 @@ class Loan
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $returnComment;
 
+    #[ORM\ManyToOne(targetEntity: Family::class, inversedBy: 'loan')]
+    private $family;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +92,18 @@ class Loan
     public function setReturnComment(?string $returnComment): self
     {
         $this->returnComment = $returnComment;
+
+        return $this;
+    }
+
+    public function getFamily(): ?Family
+    {
+        return $this->family;
+    }
+
+    public function setFamily(?Family $family): self
+    {
+        $this->family = $family;
 
         return $this;
     }

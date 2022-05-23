@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FamilyRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FamilyRepository::class)]
@@ -45,6 +47,22 @@ class Family
 
     #[ORM\Column(type: 'string', length: 45, nullable: true)]
     private $depositInformation;
+
+    #[ORM\OneToMany(mappedBy: 'family', targetEntity: Relationship::class)]
+    private $relationships;
+
+    #[ORM\OneToMany(mappedBy: 'family', targetEntity: Loan::class)]
+    private $loan;
+
+    #[ORM\OneToMany(mappedBy: 'family', targetEntity: Payment::class)]
+    private $payment;
+
+    public function __construct()
+    {
+        $this->relationships = new ArrayCollection();
+        $this->loan = new ArrayCollection();
+        $this->payment = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -179,6 +197,96 @@ class Family
     public function setDepositInformation(string $depositInformation): self
     {
         $this->depositInformation = $depositInformation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Relationship>
+     */
+    public function getRelationships(): Collection
+    {
+        return $this->relationships;
+    }
+
+    public function addRelationship(Relationship $relationship): self
+    {
+        if (!$this->relationships->contains($relationship)) {
+            $this->relationships[] = $relationship;
+            $relationship->setFamily($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRelationship(Relationship $relationship): self
+    {
+        if ($this->relationships->removeElement($relationship)) {
+            // set the owning side to null (unless already changed)
+            if ($relationship->getFamily() === $this) {
+                $relationship->setFamily(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Loan>
+     */
+    public function getLoan(): Collection
+    {
+        return $this->loan;
+    }
+
+    public function addLoan(Loan $loan): self
+    {
+        if (!$this->loan->contains($loan)) {
+            $this->loan[] = $loan;
+            $loan->setFamily($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLoan(Loan $loan): self
+    {
+        if ($this->loan->removeElement($loan)) {
+            // set the owning side to null (unless already changed)
+            if ($loan->getFamily() === $this) {
+                $loan->setFamily(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Payment>
+     */
+    public function getPayment(): Collection
+    {
+        return $this->payment;
+    }
+
+    public function addPayment(Payment $payment): self
+    {
+        if (!$this->payment->contains($payment)) {
+            $this->payment[] = $payment;
+            $payment->setFamily($this);
+        }
+
+        return $this;
+    }
+
+    public function removePayment(Payment $payment): self
+    {
+        if ($this->payment->removeElement($payment)) {
+            // set the owning side to null (unless already changed)
+            if ($payment->getFamily() === $this) {
+                $payment->setFamily(null);
+            }
+        }
 
         return $this;
     }

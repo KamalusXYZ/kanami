@@ -25,6 +25,9 @@ class Payment
     #[ORM\Column(type: 'string', length: 45, nullable: true)]
     private $paymentComment;
 
+    #[ORM\ManyToOne(targetEntity: Family::class, inversedBy: 'payment')]
+    private $family;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +77,18 @@ class Payment
     public function setPaymentComment(?string $paymentComment): self
     {
         $this->paymentComment = $paymentComment;
+
+        return $this;
+    }
+
+    public function getFamily(): ?Family
+    {
+        return $this->family;
+    }
+
+    public function setFamily(?Family $family): self
+    {
+        $this->family = $family;
 
         return $this;
     }

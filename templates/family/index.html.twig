@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Family index{% endblock %}
+
+{% block body %}
+    <h1>Family index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>RegisterDate</th>
+                <th>MaxLoanSimultaneous</th>
+                <th>DelayWarning</th>
+                <th>DelayWarningNb</th>
+                <th>IncompleteReturn</th>
+                <th>IncompleteReturnNb</th>
+                <th>Blocked</th>
+                <th>PaymentOk</th>
+                <th>TokenAvailable</th>
+                <th>Deposit</th>
+                <th>DepositInformation</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for family in families %}
+            <tr>
+                <td>{{ family.id }}</td>
+                <td>{{ family.registerDate ? family.registerDate|date('Y-m-d') : '' }}</td>
+                <td>{{ family.maxLoanSimultaneous }}</td>
+                <td>{{ family.delayWarning ? 'Yes' : 'No' }}</td>
+                <td>{{ family.delayWarningNb }}</td>
+                <td>{{ family.incompleteReturn ? 'Yes' : 'No' }}</td>
+                <td>{{ family.incompleteReturnNb }}</td>
+                <td>{{ family.blocked ? 'Yes' : 'No' }}</td>
+                <td>{{ family.paymentOk ? 'Yes' : 'No' }}</td>
+                <td>{{ family.tokenAvailable }}</td>
+                <td>{{ family.deposit ? 'Yes' : 'No' }}</td>
+                <td>{{ family.depositInformation }}</td>
+                <td>
+                    <a href="{{ path('app_family_show', {'id': family.id}) }}">show</a>
+                    <a href="{{ path('app_family_edit', {'id': family.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="13">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_family_new') }}">Create new</a>
+{% endblock %}

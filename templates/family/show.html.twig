@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Family{% endblock %}
+
+{% block body %}
+    <h1>Family</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ family.id }}</td>
+            </tr>
+            <tr>
+                <th>RegisterDate</th>
+                <td>{{ family.registerDate ? family.registerDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>MaxLoanSimultaneous</th>
+                <td>{{ family.maxLoanSimultaneous }}</td>
+            </tr>
+            <tr>
+                <th>DelayWarning</th>
+                <td>{{ family.delayWarning ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>DelayWarningNb</th>
+                <td>{{ family.delayWarningNb }}</td>
+            </tr>
+            <tr>
+                <th>IncompleteReturn</th>
+                <td>{{ family.incompleteReturn ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IncompleteReturnNb</th>
+                <td>{{ family.incompleteReturnNb }}</td>
+            </tr>
+            <tr>
+                <th>Blocked</th>
+                <td>{{ family.blocked ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>PaymentOk</th>
+                <td>{{ family.paymentOk ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>TokenAvailable</th>
+                <td>{{ family.tokenAvailable }}</td>
+            </tr>
+            <tr>
+                <th>Deposit</th>
+                <td>{{ family.deposit ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>DepositInformation</th>
+                <td>{{ family.depositInformation }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_family_index') }}">back to list</a>
+
+    <a href="{{ path('app_family_edit', {'id': family.id}) }}">edit</a>
+
+    {{ include('family/_delete_form.html.twig') }}
+{% endblock %}

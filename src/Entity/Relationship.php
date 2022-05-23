@@ -21,6 +21,9 @@ class Relationship
     #[ORM\OneToMany(mappedBy: 'relationShip', targetEntity: Member::class)]
     private $members;
 
+    #[ORM\ManyToOne(targetEntity: Family::class, inversedBy: 'relationships')]
+    private $family;
+
     public function __construct()
     {
         $this->members = new ArrayCollection();
@@ -69,6 +72,18 @@ class Relationship
                 $member->setRelationShip(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFamily(): ?Family
+    {
+        return $this->family;
+    }
+
+    public function setFamily(?Family $family): self
+    {
+        $this->family = $family;
 
         return $this;
     }
