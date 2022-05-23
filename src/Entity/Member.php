@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MemberRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MemberRepository::class)]
@@ -51,6 +53,19 @@ class Member
 
     #[ORM\ManyToOne(targetEntity: MemberDailySession::class, inversedBy: 'members')]
     private $MemberDailySession;
+
+    #[ORM\OneToMany(mappedBy: 'member', targetEntity: Relationship::class)]
+    private $relationships;
+
+    public function __construct()
+    {
+        $this->relationships = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->id;
+    }
 
     public function getId(): ?int
     {
@@ -209,6 +224,36 @@ class Member
     public function setMemberDailySession(?MemberDailySession $MemberDailySession): self
     {
         $this->MemberDailySession = $MemberDailySession;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Relationship>
+     */
+    public function getRelationships(): Collection
+    {
+        return $this->relationships;
+    }
+
+    public function addRelationship(Relationship $relationship): self
+    {
+        if (!$this->relationships->contains($relationship)) {
+            $this->relationships[] = $relationship;
+            $relationship->setMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRelationship(Relationship $relationship): self
+    {
+        if ($this->relationships->removeElement($relationship)) {
+            // set the owning side to null (unless already changed)
+            if ($relationship->getMember() === $this) {
+                $relationship->setMember(null);
+            }
+        }
 
         return $this;
     }

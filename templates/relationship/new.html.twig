@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Relationship{% endblock %}
+{% block title %}Ajout d'une famille{% endblock %}
 
 {% block body %}
-    <h1>Create new Relationship</h1>
+    <h1>Ajout d'une famille</h1>
 
+    <p>    {{ relationship.id }}
+    </p>
     {{ include('relationship/_form.html.twig') }}
 
-    <a href="{{ path('app_relationship_index') }}">back to list</a>
+    <a href="{{ path('app_main') }}">retour en arrière</a>
 {% endblock %}

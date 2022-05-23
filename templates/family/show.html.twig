@@ -12,6 +12,16 @@
                 <td>{{ family.id }}</td>
             </tr>
             <tr>
+                <th>nom de famille</th>
+                {% for relationship in family.relationships %}
+
+                <td>{{ relationship.member.lastName }}</td>
+
+                {% endfor %}
+
+
+            </tr>
+            <tr>
                 <th>RegisterDate</th>
                 <td>{{ family.registerDate ? family.registerDate|date('Y-m-d') : '' }}</td>
             </tr>

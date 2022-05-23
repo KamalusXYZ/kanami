@@ -12,17 +12,9 @@ class FamilyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('registerDate')
-            ->add('maxLoanSimultaneous')
-            ->add('delayWarning')
-            ->add('delayWarningNb')
-            ->add('incompleteReturn')
-            ->add('incompleteReturnNb')
-            ->add('blocked')
-            ->add('paymentOk')
-            ->add('tokenAvailable')
-            ->add('deposit')
-            ->add('depositInformation')
+
+
+
         ;
     }
 

@@ -24,9 +24,17 @@ class Relationship
     #[ORM\ManyToOne(targetEntity: Family::class, inversedBy: 'relationships')]
     private $family;
 
+    #[ORM\ManyToOne(targetEntity: Member::class, inversedBy: 'relationships')]
+    private $member;
+
     public function __construct()
     {
         $this->members = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->id;
     }
 
     public function getId(): ?int
@@ -84,6 +92,18 @@ class Relationship
     public function setFamily(?Family $family): self
     {
         $this->family = $family;
+
+        return $this;
+    }
+
+    public function getMember(): ?Member
+    {
+        return $this->member;
+    }
+
+    public function setMember(?Member $member): self
+    {
+        $this->member = $member;
 
         return $this;
     }

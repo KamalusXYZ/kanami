@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Member;
 use App\Entity\Relationship;
 use App\Form\RelationshipType;
+use App\Repository\FamilyRepository;
+use App\Repository\MemberRepository;
 use App\Repository\RelationshipRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,17 +24,30 @@ class RelationshipController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_relationship_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, RelationshipRepository $relationshipRepository): Response
+    #[Route('/family{idFamily}/member{idMember}/new_owner', name: 'app_relationship_new_owner', methods: ['GET', 'POST'])]
+    public function new(Request $request, RelationshipRepository $relationshipRepository, FamilyRepository $familyRepository, MemberRepository $memberRepository): Response
     {
+        $idFamily = $request->get('idFamily');
+        $Family = $familyRepository->find(id: $idFamily);
+        $idMember = $request->get('idMember');
+        $member = $memberRepository->find(id: $idMember);
+
+
+
+
         $relationship = new Relationship();
         $form = $this->createForm(RelationshipType::class, $relationship);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $relationship->setIsOwner(1);
+            $relationship->setFamily($Family);
+            $relationship->setMember($member);
+
+
             $relationshipRepository->add($relationship, true);
 
-            return $this->redirectToRoute('app_relationship_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_main', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('relationship/new.html.twig', [

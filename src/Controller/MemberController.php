@@ -40,6 +40,39 @@ class MemberController extends AbstractController
         ]);
     }
 
+    #[Route('/newOwner/{idFamily}', name: 'app_member_new_owner', methods: ['GET', 'POST'])]
+    public function newOwner(Request $request, MemberRepository $memberRepository, $idFamily): Response
+    {
+
+        ;
+
+
+        $member = new Member();
+        $firstNameMember = $member->getFirstName();
+
+
+        $form = $this->createForm(MemberType::class, $member);
+        $form->handleRequest($request);
+
+
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $memberRepository->add($member, true);
+
+            return $this->redirectToRoute('app_relationship_new_owner', ['idMember'=> $member->getId(), 'idFamily'=> $idFamily, 'member'=>$member], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('member/new.html.twig', [
+            'member' => $member,
+            'form' => $form,
+        ]);
+    }
+
+
+
+
+
     #[Route('/{id}', name: 'app_member_show', methods: ['GET'])]
     public function show(Member $member): Response
     {

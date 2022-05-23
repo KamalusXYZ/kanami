@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Family;
 use App\Form\FamilyType;
 use App\Repository\FamilyRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,10 +29,23 @@ class FamilyController extends AbstractController
         $form = $this->createForm(FamilyType::class, $family);
         $form->handleRequest($request);
 
+        $dateTime = date_create("now");
+
+
         if ($form->isSubmitted() && $form->isValid()) {
+            $family->setMaxLoanSimultaneous(0);
+            $family->setDelayWarning(0);
+            $family->setIncompleteReturn(0);
+            $family->setBlocked(0);
+            $family->setPaymentOk(1);
+            $family->setDeposit(0);
+
+
+            $family->setRegisterDate($dateTime);
             $familyRepository->add($family, true);
 
-            return $this->redirectToRoute('app_family_index', [], Response::HTTP_SEE_OTHER);
+
+            return $this->redirectToRoute('app_member_new_owner', ['idFamily'=> $family->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('family/new.html.twig', [
@@ -43,6 +57,7 @@ class FamilyController extends AbstractController
     #[Route('/{id}', name: 'app_family_show', methods: ['GET'])]
     public function show(Family $family): Response
     {
+//        dd($family);
         return $this->render('family/show.html.twig', [
             'family' => $family,
         ]);
