@@ -27,8 +27,11 @@ class FamilyController extends AbstractController
     #[Route('/new', name: 'app_family_new', methods: ['GET', 'POST'])]
     public function new(Request $request, FamilyRepository $familyRepository): Response
     {
+
         $family = new Family();
+
         $form = $this->createForm(FamilyType::class, $family);
+
         $form->handleRequest($request);
 
         $dateTime = date_create("now");
@@ -39,13 +42,11 @@ class FamilyController extends AbstractController
             $family->setDelayWarning(0);
             $family->setIncompleteReturn(0);
             $family->setBlocked(0);
-            $family->setPaymentOk(1);
+            $family->setPaymentOk(0);
             $family->setDeposit(0);
-
 
             $family->setRegisterDate($dateTime);
             $familyRepository->add($family, true);
-
 
             return $this->redirectToRoute('app_member_new_owner', ['idFamily'=> $family->getId()], Response::HTTP_SEE_OTHER);
         }
@@ -66,7 +67,7 @@ class FamilyController extends AbstractController
     }
 
     #[Route('/{id}/subscription', name: 'app_family_subscription', methods: ['GET'])]
-    public function subscription(Family $family, PaymentRepository $paymentRepository, $id): Response
+    public function subscription(Family $family, $id): Response
     {
 
 
@@ -77,8 +78,9 @@ class FamilyController extends AbstractController
 
 
 
-        return $this->render('family/subscription.html.twig', [
+        return $this->render('payment/new.html.twig', [
             'family' => $family,
+            'idFamily' => $id
 
         ]);
     }

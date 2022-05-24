@@ -8,7 +8,7 @@
 
     {{ include('member/_form.html.twig') }}
 
-<button><a href="{{ path('app_family_subscription', {'id': family.id}) }}">Valider les membres de la famille, et passer à la phase de paiement</a></button>
+<button><a href="{{ path('app_payment_new', {'idFamily': family.id}) }}">Valider les membres de la famille, et passer à la phase de paiement</a></button>
 
 
 {% endblock %}

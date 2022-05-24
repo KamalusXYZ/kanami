@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Payment{% endblock %}
+{% block title %}Nouveau paiement de cotisation{% endblock %}
 
 {% block body %}
-    <h1>Create new Payment</h1>
+    <h1>Paiement de la cotisation</h1>
 
     {{ include('payment/_form.html.twig') }}
 
+{#    <button><a href="{{ path('app_payment_new') }}">Payez plus tard</a></button>#}
+
+{#, {'idFamily': idFamily}, {'idMember': idMember})#}
+    
     <a href="{{ path('app_payment_index') }}">back to list</a>
 {% endblock %}

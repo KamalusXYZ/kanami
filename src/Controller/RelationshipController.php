@@ -41,10 +41,10 @@ class RelationshipController extends AbstractController
             $relationship->setFamily($Family);
             $relationship->setMember($member);
             $relationshipRepository->add($relationship, true);
-            return $this->redirectToRoute($is_owner == 0 ? 'app_member_new_owner' : 'app_member_new', ['idFamily'=> $idFamily], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute($is_owner == 0 ? 'app_member_new' : 'app_member_new', ['idFamily'=> $idFamily], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm($is_owner == 0 ? 'relationship/new_owner.html.twig' : 'relationship/new.html.twig' , [
+        return $this->renderForm($is_owner == 0 ? 'relationship/new.html.twig' : 'relationship/new_owner.html.twig' , [
             'relationship' => $relationship,
             'form' => $form,
             'member' => $member

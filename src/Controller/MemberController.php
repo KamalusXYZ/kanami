@@ -26,6 +26,7 @@ class MemberController extends AbstractController
     public function new(Request $request, MemberRepository $memberRepository, FamilyRepository $familyRepository): Response
     {
         $member = new Member();
+        $idMember = $member->getId();
         $form = $this->createForm(MemberType::class, $member);
         $form->handleRequest($request);
         $idFamily = $request->get('idFamily');
@@ -34,13 +35,15 @@ class MemberController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $memberRepository->add($member, true);
 
-            return $this->redirectToRoute('app_relationship_new', ['idMember'=> $member->getId(), 'idFamily'=> $idFamily, 'member'=>$member], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_relationship_new', ['idMember'=> $member->getId(), 'idFamily'=> $idFamily, 'member'=>$member, 'family'=>$family], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('member/new.html.twig', [
             'member' => $member,
             'form' => $form,
-            'family'=> $family
+            'family'=> $family,
+            'idFamily'=>$idFamily,
+            'idMember'=>$idMember
         ]);
     }
 
@@ -54,6 +57,7 @@ class MemberController extends AbstractController
 
         $form = $this->createForm(MemberType::class, $member);
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $memberRepository->add($member, true);
