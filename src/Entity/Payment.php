@@ -28,6 +28,9 @@ class Payment
     #[ORM\ManyToOne(targetEntity: Family::class, inversedBy: 'payment')]
     private $family;
 
+    #[ORM\ManyToOne(targetEntity: ToyLibrary::class, inversedBy: 'payments')]
+    private $toylibrary;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +92,18 @@ class Payment
     public function setFamily(?Family $family): self
     {
         $this->family = $family;
+
+        return $this;
+    }
+
+    public function getToylibrary(): ?ToyLibrary
+    {
+        return $this->toylibrary;
+    }
+
+    public function setToylibrary(?ToyLibrary $toylibrary): self
+    {
+        $this->toylibrary = $toylibrary;
 
         return $this;
     }

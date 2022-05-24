@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ToyLibraryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ToyLibraryRepository::class)]
@@ -63,6 +65,14 @@ class ToyLibrary
 
     #[ORM\Column(type: 'integer')]
     private $maxLoanSimultFamily;
+
+    #[ORM\OneToMany(mappedBy: 'toylibrary', targetEntity: Payment::class)]
+    private $payments;
+
+    public function __construct()
+    {
+        $this->payments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -269,6 +279,36 @@ class ToyLibrary
     public function setMaxLoanSimultFamily(int $maxLoanSimultFamily): self
     {
         $this->maxLoanSimultFamily = $maxLoanSimultFamily;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Payment>
+     */
+    public function getPayments(): Collection
+    {
+        return $this->payments;
+    }
+
+    public function addPayment(Payment $payment): self
+    {
+        if (!$this->payments->contains($payment)) {
+            $this->payments[] = $payment;
+            $payment->setToylibrary($this);
+        }
+
+        return $this;
+    }
+
+    public function removePayment(Payment $payment): self
+    {
+        if ($this->payments->removeElement($payment)) {
+            // set the owning side to null (unless already changed)
+            if ($payment->getToylibrary() === $this) {
+                $payment->setToylibrary(null);
+            }
+        }
 
         return $this;
     }

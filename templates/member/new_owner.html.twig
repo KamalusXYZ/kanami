@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau membre pour la famille la nouvelle famille {% endblock %}
+
+{% block body %}
+    <h1>Ajouter un titulaire à la famille</h1>
+    <p>Avant de valider les détails de la famille, vous devez choisir le titulaire du compte: </p>
+
+    {{ include('member/_form.html.twig') }}
+
+    <a href="{{ path('app_member_index') }}">back to list</a>
+{% endblock %}

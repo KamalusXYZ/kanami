@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Member;
 use App\Form\MemberType;
+use App\Repository\FamilyRepository;
 use App\Repository\MemberRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,41 +22,38 @@ class MemberController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_member_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, MemberRepository $memberRepository): Response
+    #[Route('/new/{idFamily}', name: 'app_member_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, MemberRepository $memberRepository, FamilyRepository $familyRepository): Response
     {
         $member = new Member();
         $form = $this->createForm(MemberType::class, $member);
         $form->handleRequest($request);
+        $idFamily = $request->get('idFamily');
+        $family = $familyRepository->find($idFamily);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $memberRepository->add($member, true);
 
-            return $this->redirectToRoute('app_member_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_relationship_new', ['idMember'=> $member->getId(), 'idFamily'=> $idFamily, 'member'=>$member], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('member/new.html.twig', [
             'member' => $member,
             'form' => $form,
+            'family'=> $family
         ]);
     }
 
     #[Route('/newOwner/{idFamily}', name: 'app_member_new_owner', methods: ['GET', 'POST'])]
-    public function newOwner(Request $request, MemberRepository $memberRepository, $idFamily): Response
+    public function newOwner(Request $request, MemberRepository $memberRepository, $idFamily, FamilyRepository $familyRepository): Response
     {
-
-        ;
-
 
         $member = new Member();
         $firstNameMember = $member->getFirstName();
-
+        $family = $familyRepository->find($idFamily);
 
         $form = $this->createForm(MemberType::class, $member);
         $form->handleRequest($request);
-
-
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $memberRepository->add($member, true);
@@ -63,9 +61,10 @@ class MemberController extends AbstractController
             return $this->redirectToRoute('app_relationship_new_owner', ['idMember'=> $member->getId(), 'idFamily'=> $idFamily, 'member'=>$member], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('member/new.html.twig', [
+        return $this->renderForm('member/new_owner.html.twig', [
             'member' => $member,
             'form' => $form,
+            'family'=> $family
         ]);
     }
 

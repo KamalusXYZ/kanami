@@ -57,11 +57,22 @@ class FamilyController extends AbstractController
     #[Route('/{id}', name: 'app_family_show', methods: ['GET'])]
     public function show(Family $family): Response
     {
-//        dd($family);
+
         return $this->render('family/show.html.twig', [
             'family' => $family,
         ]);
     }
+
+    #[Route('/{id}/subscription', name: 'app_family_subscription', methods: ['GET'])]
+    public function subscription(Family $family): Response
+    {
+
+        return $this->render('family/subscription.html.twig', [
+            'family' => $family,
+        ]);
+    }
+
+
 
     #[Route('/{id}/edit', name: 'app_family_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Family $family, FamilyRepository $familyRepository): Response
