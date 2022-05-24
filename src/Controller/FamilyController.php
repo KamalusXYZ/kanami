@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Family;
+use App\Entity\Payment;
 use App\Form\FamilyType;
 use App\Repository\FamilyRepository;
+use App\Repository\PaymentRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -64,11 +66,20 @@ class FamilyController extends AbstractController
     }
 
     #[Route('/{id}/subscription', name: 'app_family_subscription', methods: ['GET'])]
-    public function subscription(Family $family): Response
+    public function subscription(Family $family, PaymentRepository $paymentRepository, $id): Response
     {
+
+
+        $payment = new Payment();
+        $payment->setFamily($family);
+
+
+
+
 
         return $this->render('family/subscription.html.twig', [
             'family' => $family,
+
         ]);
     }
 
