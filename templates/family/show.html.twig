@@ -24,6 +24,9 @@
             <br>
         </p>
     {% endfor %}
+    <div class="box">
+        <button class=""><a class="" href="{{ path('app_member_new_in_existing', {'idFamily': family.id}) }}">Ajouter un adhérant</a></button>
+    </div>
 
 
 
@@ -96,5 +99,7 @@
 
     <a href="{{ path('app_family_edit', {'id': family.id}) }}">edit</a>
 
-    {{ include('family/_delete_form.html.twig') }}
+
+
+
 {% endblock %}

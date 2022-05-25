@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout nouveau membre pour la famille {% endblock %}
+
+{% block body %}
+    <h1>Ajouter un membre supplémentaire ou validez la famille en l'état</h1>
+
+
+    {{ include('member/_form.html.twig') }}
+
+<button><a href="{{ path('app_main')}}">Retourner à l'acceuil</a></button>
+
+
+{% endblock %}

@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Member;
 use App\Entity\Relationship;
 use App\Form\RelationshipType;
 use App\Repository\FamilyRepository;
@@ -24,7 +23,7 @@ class RelationshipController extends AbstractController
         ]);
     }
 
-    private function manageNew(Request $request,RelationshipRepository $relationshipRepository, FamilyRepository $familyRepository, MemberRepository $memberRepository, $is_owner = 0): Response
+    private function manageNew(Request $request, RelationshipRepository $relationshipRepository, FamilyRepository $familyRepository, MemberRepository $memberRepository, $is_owner = 0): Response
     {
         $idFamily = $request->get('idFamily');
         $Family = $familyRepository->find(id: $idFamily);
@@ -41,10 +40,10 @@ class RelationshipController extends AbstractController
             $relationship->setFamily($Family);
             $relationship->setMember($member);
             $relationshipRepository->add($relationship, true);
-            return $this->redirectToRoute($is_owner == 0 ? 'app_member_new' : 'app_member_new', ['idFamily'=> $idFamily], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute($is_owner == 0 ? 'app_member_new' : 'app_member_new', ['idFamily' => $idFamily], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm($is_owner == 0 ? 'relationship/new.html.twig' : 'relationship/new_owner.html.twig' , [
+        return $this->renderForm($is_owner == 0 ? 'relationship/new.html.twig' : 'relationship/new_owner.html.twig', [
             'relationship' => $relationship,
             'form' => $form,
             'member' => $member
@@ -54,14 +53,42 @@ class RelationshipController extends AbstractController
     #[Route('/family/{idFamily}/member/{idMember}/new_owner', name: 'app_relationship_new_owner', methods: ['GET', 'POST'])]
     public function newOwner(Request $request, RelationshipRepository $relationshipRepository, FamilyRepository $familyRepository, MemberRepository $memberRepository): Response
     {
-        return $this->manageNew( $request,  $relationshipRepository, $familyRepository, $memberRepository, 1);
+        return $this->manageNew($request, $relationshipRepository, $familyRepository, $memberRepository, 1);
     }
 
     #[Route('/family/{idFamily}/member/{idMember}/new', name: 'app_relationship_new', methods: ['GET', 'POST'])]
     public function new(Request $request, RelationshipRepository $relationshipRepository, FamilyRepository $familyRepository, MemberRepository $memberRepository): Response
     {
 
-        return $this->manageNew( $request,  $relationshipRepository, $familyRepository, $memberRepository, 0);
+        return $this->manageNew($request, $relationshipRepository, $familyRepository, $memberRepository, 0);
+    }
+
+    #[Route('/family/{idFamily}/member/{idMember}/new', name: 'app_relationship_new', methods: ['GET', 'POST'])]
+    public function newInExisting(Request $request, RelationshipRepository $relationshipRepository, FamilyRepository $familyRepository, MemberRepository $memberRepository, $is_owner = 0): Response
+    {
+        $idFamily = $request->get('idFamily');
+        $Family = $familyRepository->find(id: $idFamily);
+        $idMember = $request->get('idMember');
+        $member = $memberRepository->find(id: $idMember);
+
+        $relationship = new Relationship();
+        $form = $this->createForm(RelationshipType::class, $relationship);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $relationship->setIsOwner($is_owner);
+            $relationship->setFamily($Family);
+            $relationship->setMember($member);
+            $relationshipRepository->add($relationship, true);
+            return $this->redirectToRoute('app_family_show' , ['idFamily' => $idFamily], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm($is_owner == 0 ? 'relationship/new.html.twig' : 'relationship/new_owner.html.twig', [
+            'relationship' => $relationship,
+            'form' => $form,
+            'member' => $member
+        ]);
     }
 
     #[Route('/{id}', name: 'app_relationship_show', methods: ['GET'])]
@@ -93,7 +120,7 @@ class RelationshipController extends AbstractController
     #[Route('/{id}', name: 'app_relationship_delete', methods: ['POST'])]
     public function delete(Request $request, Relationship $relationship, RelationshipRepository $relationshipRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$relationship->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $relationship->getId(), $request->request->get('_token'))) {
             $relationshipRepository->remove($relationship, true);
         }
 

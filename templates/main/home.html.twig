@@ -5,6 +5,8 @@
 {% block body %}
     <h1 class="logotitre text-center">KaNaMi</h1>
     <div class="box">
+        <div><input id="search-item" type="search"/></div>
+        <div></div>
 
         <button class=""><a class="text-white text-decoration-none" href="{{ path('app_item_new') }}">Ajouter un
                 jeu</a></button>
@@ -19,18 +21,19 @@
         <button class=""><a class="" href="{{ path('app_category_index') }}">Voir les catégories</a></button>
     </div>
 
-    <div class="box">
-        <button class=""><a class="" href="">Ajouter un adhérant (non fonctionnel, doit avoir une famille en params)</a></button>
-    </div>
-    <div class="box">
-        <button class=""><a class="" href="{{ path('app_member_index') }}">Voir tous les adhérants</a></button>
-    </div>
+
     <div class="box">
         <button class=""><a class="" href="{{ path('app_family_new') }}">Ajouter une famille</a></button>
     </div>
     <div class="box">
         <button class=""><a class="" href="{{ path('app_family_index') }}">voir les familles</a></button>
     </div>
+
+
+    
+
+
+
 
 
 

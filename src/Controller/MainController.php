@@ -16,6 +16,16 @@ class MainController extends AbstractController
         ]);
     }
 
+    #[Route('/', name: 'app_main')]
+    public function searchItem(): Response
+    {
+
+
+        return $this->render('main/home.html.twig', [
+            'controller_name' => 'MainController',
+        ]);
+    }
+
 
 
 }
