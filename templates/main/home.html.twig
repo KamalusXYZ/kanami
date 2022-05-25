@@ -5,7 +5,12 @@
 {% block body %}
     <h1 class="logotitre text-center">KaNaMi</h1>
     <div class="box">
-        <div><input id="search-item" type="search"/></div>
+
+        <div>
+            <form style="width: 300px" action="{{ path('app_search_item') }}" method="post"><input name="word"  id="search-item" type="search"/><button style="width: 100px  ; font-size: 12px">Rechercher</button></form>
+        </div>
+        <br>
+        <br>
         <div></div>
 
         <button class=""><a class="text-white text-decoration-none" href="{{ path('app_item_new') }}">Ajouter un
@@ -30,7 +35,7 @@
     </div>
 
 
-    
+
 
 
 
