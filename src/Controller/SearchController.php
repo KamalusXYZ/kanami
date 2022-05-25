@@ -12,7 +12,7 @@ class SearchController extends AbstractController
     #[Route('/item/', name: 'app_search_item', methods: ['POST'])]
     public function itemSearch(Request $request): Response
     {
-        dd($request->get("word"));
+//        dd($request->get("word"));
         return $this->render('search/index.html.twig', [
             'controller_name' => 'SearchController',
         ]);
