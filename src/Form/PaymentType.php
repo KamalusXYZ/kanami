@@ -8,7 +8,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,19 +18,22 @@ class PaymentType extends AbstractType
         $builder
             ->add('paymentDate', HiddenType::class)
             ->add('paymentKind', ChoiceType::class, [
-                'choices'  => [
-                    'Selectionnez un mode de paiement' => null ,
+                'choices' => [
+
                     'Carte bancaire' => "cb",
                     'Chèque' => "cheque",
                     'Espèce' => "espece",
                     'Autre' => "autre",
-                ],
+                    'Payez plus tard' => "aucun paiement",
+
+                ],"label" => "Choisissez le mode de paiement: ", 'required' => true
             ])
-            ->add('paymentAmount', MoneyType::class, ["label" => "Montant: "])
-        ->add('paymentComment', TextareaType::class, ["label" => "Commentaire: ",'required'   => false,
-            'empty_data' => 'Aucun commentaire'])
-        ->add('family', HiddenType::class)
-        ->add('toylibrary', HiddenType::class);
+            ->add('paymentAmount', MoneyType::class, ["label" => "Montant: ", 'required' => false,
+                'empty_data' => 0])
+            ->add('paymentComment', TextareaType::class, ["label" => "Commentaire: ", 'required' => false,
+                'empty_data' => 'Aucun commentaire'])
+            ->add('family', HiddenType::class)
+            ->add('toylibrary', HiddenType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -53,8 +53,7 @@
             <td>{{ family.deposit ? 'Yes' : 'No' }}</td>
             <td>{{ family.depositInformation }}</td>
             <td>
-                <a href="{{ path('app_family_show', {'id': family.id}) }}">show</a>
-                <a href="{{ path('app_family_edit', {'id': family.id}) }}">edit</a>
+
             </td>
             </tr>
         {% else %}
@@ -65,5 +64,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_family_new') }}">Create new</a>
 {% endblock %}

@@ -7,6 +7,7 @@ use App\Form\PaymentType;
 use App\Repository\FamilyRepository;
 use App\Repository\MemberRepository;
 use App\Repository\PaymentRepository;
+use App\Repository\RelationshipRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,11 +25,16 @@ class PaymentController extends AbstractController
     }
 
     #[Route('/new/{idFamily}/', name: 'app_payment_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, PaymentRepository $paymentRepository, FamilyRepository $familyRepository, $idFamily ): Response
+    public function new(Request $request, RelationshipRepository $relationshipRepository, PaymentRepository $paymentRepository, FamilyRepository $familyRepository, $idFamily): Response
     {
 
         $idFamily = $request->get('idFamily');
         $idMember = $request->get('idMember');
+        $family = $familyRepository->find($idFamily);
+
+
+        $nbMember = $family->getRelationships()->count();
+
 
         $payment = new Payment();
 
@@ -36,31 +42,34 @@ class PaymentController extends AbstractController
         $form->handleRequest($request);
         $dateTime = date_create("now");
 
-        $family = $familyRepository->find($idFamily);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $payment->setPaymentDate($dateTime);
             $payment->setFamily($family);
-            $paymentOK = $payment->getId();
-            if($paymentOK) $family->setPaymentOk(1);
 
+
+            $paymentKind = $payment->getPaymentKind();
+            $paymentAmount = $payment->getPaymentAmount();
+
+            if ($paymentKind != 'aucun paiement' && $paymentAmount > 20) $family->setPaymentOk(1); // 20 est le prix choisit en attendant , celui ci sera fixé dynamiquement quand la ludotheque sera créée, et que le champs subscription_price_month (x12) sera renseigné.
+            $family->setMaxLoanSimultaneous($nbMember * 2); // 2 est le nombre choisit de pret par membre, en attendant que celui ci soit determiné dynamiquement dans la ludotheque dans le champs max_loan_simult_user + attention a verifier si celui ci ne depasse pas le champs max_loan_simult_family
 
             $paymentRepository->add($payment, true);
 
-            return $this->redirectToRoute('app_payment_new_deposit', ['idMember'=> $idMember, 'idFamily'=> $idFamily], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_payment_new_deposit', ['idMember' => $idMember, 'idFamily' => $idFamily], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('payment/new.html.twig', [
             'payment' => $payment,
             'form' => $form,
-            'idFamily'=>$idFamily,
-            'idMember'=>$idMember
+            'idFamily' => $idFamily,
+            'idMember' => $idMember
         ]);
     }
 
     #[Route('/new_deposit/{idFamily}/', name: 'app_payment_new_deposit', methods: ['GET', 'POST'])]
-    public function newDeposit(Request $request, PaymentRepository $paymentRepository, FamilyRepository $familyRepository, $idFamily, MemberRepository $memberRepository ): Response
+    public function newDeposit(Request $request, PaymentRepository $paymentRepository, FamilyRepository $familyRepository, $idFamily, MemberRepository $memberRepository): Response
     {
 
         $idFamily = $request->get('idFamily');
@@ -80,22 +89,29 @@ class PaymentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            if($payment->getPaymentAmount() > 50) $family->setDeposit(1) ; // 50  est determiné en attendant qu'il soit dynamiquement crée dans ludotheque avec la propriete deposit_amount
+            if($payment->getPaymentComment() ) $family->setDepositInformation($payment->getPaymentComment());
+
             $payment->setPaymentDate($dateTime);
             $payment->setFamily($family);
             $paymentOK = $payment->getId();
-            if($paymentOK) $family->setPaymentOk(1);
+
+
+
+
+            if ($paymentOK) $family->setPaymentOk(1);
 
 
             $paymentRepository->add($payment, true);
 
-            return $this->redirectToRoute('app_main', ['idFamily'=> $idFamily], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_family_show', ['idFamily' => $idFamily], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('payment/new.html.twig', [
+        return $this->renderForm('payment/new_deposit.html.twig', [
             'payment' => $payment,
             'form' => $form,
-            'idFamily'=>$idFamily,
-            'family'=>$family
+            'idFamily' => $idFamily,
+            'family' => $family
 
         ]);
     }
@@ -130,7 +146,7 @@ class PaymentController extends AbstractController
     #[Route('/{id}', name: 'app_payment_delete', methods: ['POST'])]
     public function delete(Request $request, Payment $payment, PaymentRepository $paymentRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$payment->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $payment->getId(), $request->request->get('_token'))) {
             $paymentRepository->remove($payment, true);
         }
 

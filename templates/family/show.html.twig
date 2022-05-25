@@ -16,13 +16,22 @@
 
 
     </h1>
+    <p>Tout les membres de la famille:</p>
+    {% for relationship in family.relationships %}
+        <p>
+            Prénom: {{ relationship.member.firstName }} Nom: {{ relationship.member.lastName }} Date de naissance
+            : {{ relationship.member.birthday.format('d-m-Y') }}
+            <br>
+        </p>
+    {% endfor %}
+
+
+
 
     <table class="table">
         <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ family.id }}</td>
-        </tr>
+
+
         <tr>
             <th>nom de famille</th>
             {% for relationship in family.relationships %}
@@ -30,10 +39,12 @@
                     <td>{{ relationship.member.lastName }}</td>
                 {% endif %}
 
+
             {% endfor %}
 
 
         </tr>
+
         <tr>
             <th>RegisterDate</th>
             <td>{{ family.registerDate ? family.registerDate|date('Y-m-d') : '' }}</td>
@@ -81,7 +92,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_family_index') }}">back to list</a>
+
 
     <a href="{{ path('app_family_edit', {'id': family.id}) }}">edit</a>
 

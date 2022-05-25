@@ -57,9 +57,14 @@ class FamilyController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_family_show', methods: ['GET'])]
-    public function show(Family $family): Response
+    #[Route('/{idFamily}', name: 'app_family_show', methods: ['GET'])]
+    public function show(Request $request,FamilyRepository $familyRepository): Response
     {
+        $idFamily = $request->get('idFamily');
+        $family = $familyRepository->find($idFamily);
+
+
+
 
         return $this->render('family/show.html.twig', [
             'family' => $family,
