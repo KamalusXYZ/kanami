@@ -7,11 +7,69 @@
     <div class="box">
 
         <div>
-            <form style="width: 300px" action="{{ path('app_search_item') }}" method="post"><input name="word"  id="search-item" type="search"/><button style="width: 100px  ; font-size: 12px">Rechercher</button></form>
+            <form style="width: 300px" action="{{ path('app_search_item') }}" method="post"><input name="word"
+                                                                                                   id="search-item"
+                                                                                                   type="search"/>
+                <button style="width: 100px  ; font-size: 12px">Rechercher un jeu <span
+                            class="material-symbols-outlined">
+casino
+</span></button>
+            </form>
+
+
         </div>
-        <br>
-        <br>
-        <div></div>
+
+        <div>
+            <form style="width: 300px" action="{{ path('app_search_family') }}" method="post"><input name="word"
+                                                                                                     id="familySearch"
+                                                                                                     type="search"/>
+                <button style="width: 100px  ; font-size: 12px">Rechercher une famille <span
+                            class="material-symbols-outlined">
+family_restroom
+</span>
+                </button>
+            </form>
+        </div>
+
+        <div>
+            {% if searchWord %}
+                Voici les résultats de la recherche pour : <strong>{{ searchWord }}</strong>
+            {% endif %}
+            <br>
+            <ul>
+                {% if resultsItem %}
+                    {% for result in resultsItem %}
+                        <li>
+                            {{ result.name }}
+                            {% if result.available == 1 %}
+                                <strong>Disponible</strong>
+                            {% elseif result.available ==0 %} <strong>Indisponible</strong>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+
+                {% endif %}
+            </ul>
+
+        </div>
+        <div>
+            {% if searchWord %}
+                Voici les résultats de la recherche pour : <strong>{{ searchWord }}</strong>
+            {% endif %}
+            <br>
+            <ul>
+                {% if resultsFamily %}
+                    {% for result in resultsFamily %}
+                        <li>
+                            {{ result.firstName }} {{ result.lastName }}
+
+                        </li>
+                    {% endfor %}
+
+                {% endif %}
+            </ul>
+
+        </div>
 
         <button class=""><a class="text-white text-decoration-none" href="{{ path('app_item_new') }}">Ajouter un
                 jeu</a></button>
