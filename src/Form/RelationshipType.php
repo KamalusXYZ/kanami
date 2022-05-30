@@ -13,11 +13,7 @@ class RelationshipType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('id', HiddenType::class)
-            ->add('isOwner', HiddenType::class)
-            ->add('members', HiddenType::class)
-            ->add('family', HiddenType::class)
-            ->add('family', HiddenType::class)
+
 
 
 

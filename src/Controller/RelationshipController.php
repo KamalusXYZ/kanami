@@ -63,7 +63,7 @@ class RelationshipController extends AbstractController
         return $this->manageNew($request, $relationshipRepository, $familyRepository, $memberRepository, 0);
     }
 
-    #[Route('/family/{idFamily}/member/{idMember}/new', name: 'app_relationship_new', methods: ['GET', 'POST'])]
+    #[Route('/family/{idFamily}/member/{idMember}/new_in_existing', name: 'app_relationship_new_in_existing', methods: ['GET', 'POST'])]
     public function newInExisting(Request $request, RelationshipRepository $relationshipRepository, FamilyRepository $familyRepository, MemberRepository $memberRepository, $is_owner = 0): Response
     {
         $idFamily = $request->get('idFamily');

@@ -60,7 +60,7 @@ class MemberController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $memberRepository->add($member, true);
 
-            return $this->redirectToRoute('app_relationship_new', ['idMember'=> $member->getId(), 'idFamily'=> $idFamily, 'member'=>$member, 'family'=>$family], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_relationship_new_in_existing', ['idMember'=> $member->getId(), 'idFamily'=> $idFamily, 'member'=>$member, 'family'=>$family], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('relationship/new.html.twig', [

@@ -33,7 +33,7 @@ class FamilyController extends AbstractController
         $form = $this->createForm(FamilyType::class, $family);
 
         $form->handleRequest($request);
-        $idFamily = $family->getId();
+
 
         $dateTime = date_create("now");
 
@@ -48,6 +48,8 @@ class FamilyController extends AbstractController
 
             $family->setRegisterDate($dateTime);
             $familyRepository->add($family, true);
+            $idFamily = $family->getId();
+
 
             return $this->redirectToRoute('app_member_new_owner', ['idFamily'=> $idFamily ], Response::HTTP_SEE_OTHER);
         }
