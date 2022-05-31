@@ -33,6 +33,8 @@ class MemberController extends AbstractController
         $family = $familyRepository->find($idFamily);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $nbMember = $family->getRelationships()->count();
+            $family->setMaxLoanSimultaneous($nbMember * 2);
             $memberRepository->add($member, true);
 
             return $this->redirectToRoute('app_relationship_new', ['idMember'=> $member->getId(), 'idFamily'=> $idFamily, 'member'=>$member, 'family'=>$family], Response::HTTP_SEE_OTHER);
@@ -58,7 +60,10 @@ class MemberController extends AbstractController
         $family = $familyRepository->find($idFamily);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $nbMember = $family->getRelationships()->count();
+            $family->setMaxLoanSimultaneous($nbMember * 2);
             $memberRepository->add($member, true);
+
 
             return $this->redirectToRoute('app_relationship_new_in_existing', ['idMember'=> $member->getId(), 'idFamily'=> $idFamily, 'member'=>$member, 'family'=>$family], Response::HTTP_SEE_OTHER);
         }

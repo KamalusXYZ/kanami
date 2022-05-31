@@ -32,9 +32,7 @@ family_restroom
         </div>
 
         <div>
-            {% if searchWord %}
-                Voici les résultats de la recherche pour : <strong>{{ searchWord }}</strong>
-            {% endif %}
+
             <br>
             <ul>
                 {% if resultsItem %}
@@ -45,6 +43,8 @@ family_restroom
                                 <strong>Disponible</strong>
                             {% elseif result.available ==0 %} <strong>Indisponible</strong>
                             {% endif %}
+                            <a style="color: #25963F" href="{{ path('app_item_show', { 'id': result.id }) }}">Voir la fiche du jeu</a>
+
                         </li>
                     {% endfor %}
 
@@ -53,7 +53,7 @@ family_restroom
 
         </div>
         <div>
-            {% if searchWord %}
+            {% if searchWord != '' %}
                 Voici les résultats de la recherche pour : <strong>{{ searchWord }}</strong>
             {% endif %}
             <br>
@@ -62,6 +62,9 @@ family_restroom
                     {% for result in resultsFamily %}
                         <li>
                             {{ result.firstName }} {{ result.lastName }}
+                            {% for relation in result.relationships %}
+                                <a style="color: #25963F" href="{{ path('app_family_show', {'idFamily': relation.family.id}) }}">Voir la fiche famille</a>
+                            {% endfor %}
 
                         </li>
                     {% endfor %}

@@ -83,9 +83,6 @@ class FamilyController extends AbstractController
         $payment->setFamily($family);
 
 
-
-
-
         return $this->render('payment/new.html.twig', [
             'family' => $family,
             'idFamily' => $id
