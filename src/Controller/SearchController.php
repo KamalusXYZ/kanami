@@ -54,13 +54,12 @@ class SearchController extends AbstractController
 
         $resultsFamily = $query->execute();
 
-
-
         return $this->render('main/home.html.twig', [
             'controller_name' => 'SearchController',
             'searchWord' => $searchWord,
             'resultsFamily'=> $resultsFamily,
             'resultsItem'=> $resultsItem,
+
         ]);
     }
 }

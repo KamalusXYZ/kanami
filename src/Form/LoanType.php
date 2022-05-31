@@ -12,13 +12,13 @@ class LoanType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('startDateTime')
-            ->add('datePreviewBack')
-            ->add('effectReturnDateTime')
-            ->add('completenessReturn')
-            ->add('returnComment')
-            ->add('family')
-            ->add('item')
+//            ->add('startDateTime')
+//            ->add('datePreviewBack')
+//            ->add('effectReturnDateTime')
+//            ->add('completenessReturn')
+//            ->add('returnComment')
+//            ->add('family')
+//            ->add('item')
         ;
     }
 

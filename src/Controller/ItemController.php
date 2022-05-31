@@ -26,6 +26,7 @@ class ItemController extends AbstractController
     public function new(Request $request, ItemRepository $itemRepository): Response
     {
         $item = new Item();
+
         $form = $this->createForm(ItemType::class, $item);
         $form->handleRequest($request);
         $dateTime = date_create("now");

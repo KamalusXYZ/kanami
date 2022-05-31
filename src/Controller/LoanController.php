@@ -4,7 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Loan;
 use App\Form\LoanType;
+use App\Repository\FamilyRepository;
+use App\Repository\ItemRepository;
 use App\Repository\LoanRepository;
+use App\Repository\MemberRepository;
+use App\Repository\RelationshipRepository;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,32 +27,91 @@ class LoanController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_loan_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, LoanRepository $loanRepository): Response
+    #[Route('searchfamily/{idItem}', name: 'app_loan_show', methods: ['GET', 'POST'])]
+    public function show(EntityManagerInterface $em, Request $request, ItemRepository $itemRepository, $idItem): Response
     {
+
+        $resultsItem = '';
+        $searchWord = $request->get("word");
+        $item = $itemRepository->find($idItem);
+
+
+        $qb = $em->createQueryBuilder()
+            ->select('m')
+            ->from('App:Member', 'm')
+            ->where('m.lastName LIKE :key')
+            ->setParameter('key', '%' . $searchWord . '%');
+
+        $query = $qb->getQuery();
+
+        $resultsFamily = $query->execute();
+
+        return $this->render('loan/show.html.twig', [
+
+            'controller_name' => 'LoanController',
+            'searchWord' => $searchWord,
+            'resultsFamily' => $resultsFamily,
+            'item' => $item,
+
+
+        ]);
+    }
+
+    #[Route('/new/item/{idItem}/family/{idMember}', name: 'app_loan_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, FamilyRepository $familyRepository, RelationshipRepository $relationshipRepository, ItemRepository $itemRepository, MemberRepository $memberRepository, LoanRepository $loanRepository, $idItem, $idMember): Response
+    {
+        $item = $itemRepository->find($idItem);
+        $member = $memberRepository->find($idMember);
+
+        $relation = $relationshipRepository->find($idMember);
+
+        if ($relation->isIsOwner() == 1) {
+            $owner = $member;
+
+
+        } else {
+            $owner = $relation->getMember()->getRelationShip()->isIsOwner(1);
+
+        }
+
+
+        $family = $relation->getFamily();
+
+        $dateTime = date_create("now");
+        $backDateTime = new DateTime();
+        $backDateTime->add(new \DateInterval('P15D')); // La date de 15 jour de la date interval a été inscrite en dur, une fois le programme avancé elle sera recupéré dynamiquement dans la propriété max_duration_loan_day de la class ToyLibrary.
+
+
         $loan = new Loan();
         $form = $this->createForm(LoanType::class, $loan);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $loan->setStartDateTime($dateTime);
+            $loan->setDatePreviewBack($backDateTime);
+            $loan->setItem($item);
+            $loan->setFamily($family);
+
+
             $loanRepository->add($loan, true);
 
-            return $this->redirectToRoute('app_loan_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_main', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('loan/new.html.twig', [
             'loan' => $loan,
             'form' => $form,
+            'idItem' => $idItem,
+            'item' => $item,
+            'member' => $member,
+            'family' => $family,
+            'owner' => $owner
+
+
         ]);
     }
 
-    #[Route('/{id}', name: 'app_loan_show', methods: ['GET'])]
-    public function show(Loan $loan): Response
-    {
-        return $this->render('loan/show.html.twig', [
-            'loan' => $loan,
-        ]);
-    }
 
     #[Route('/{id}/edit', name: 'app_loan_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Loan $loan, LoanRepository $loanRepository): Response
@@ -69,7 +134,7 @@ class LoanController extends AbstractController
     #[Route('/{id}', name: 'app_loan_delete', methods: ['POST'])]
     public function delete(Request $request, Loan $loan, LoanRepository $loanRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$loan->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $loan->getId(), $request->request->get('_token'))) {
             $loanRepository->remove($loan, true);
         }
 

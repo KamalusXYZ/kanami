@@ -38,9 +38,14 @@ h1 {
     padding: 25px;
 }
 
-.box {
+.box2 {
     padding: 5px;
-    width: 200px;
+    width: 400px;
+    border: 3px solid #739AD6;
+    border-radius: 12px;
+    margin: 5px;
+    text-align: center;
+    background-color: #dfdfdf;
 }
 
 .text-center {

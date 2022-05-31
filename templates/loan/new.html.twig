@@ -3,7 +3,7 @@
 {% block title %}New Loan{% endblock %}
 
 {% block body %}
-    <h1>Create new Loan</h1>
+    <h1>Prêter le jeu <span style="color: #B0413E">  {{ item.name }} </span> à la famille <span style="color: #B0413E"> {{ member.lastName }}</span> ?</h1>
 
     {{ include('loan/_form.html.twig') }}
 

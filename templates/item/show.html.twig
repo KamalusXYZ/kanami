@@ -1,11 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Item{% endblock %}
+{% block title %}Jeu{% endblock %}
 
 {% block body %}
-    <h1>Item</h1>
+    <h1>{{ item.name }}</h1>
 
-
+    <div class="box2">
+        <h2>Prêter le jeu à une famille?</h2>
+        <form style="width: 300px" action="{{ path('app_loan_show', {'idItem': item.id }) }}" method="post"><input name="word"
+                                                                                                 id="loansearchfamily"
+                                                                                                 type="search"/>
+            <button style="width: 100px  ; font-size: 12px">Rechercher une famille <span
+                        class="material-symbols-outlined">
+family_restroom
+</span>
+            </button>
+        </form>
+    </div>
 
     <table class="table">
         <tbody>

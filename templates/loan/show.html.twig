@@ -3,40 +3,22 @@
 {% block title %}Loan{% endblock %}
 
 {% block body %}
-    <h1>Loan</h1>
+    <h1>Qui va louer le jeu {{ item.name }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ loan.id }}</td>
-            </tr>
-            <tr>
-                <th>StartDateTime</th>
-                <td>{{ loan.startDateTime ? loan.startDateTime|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>DatePreviewBack</th>
-                <td>{{ loan.datePreviewBack ? loan.datePreviewBack|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>EffectReturnDateTime</th>
-                <td>{{ loan.effectReturnDateTime ? loan.effectReturnDateTime|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>CompletenessReturn</th>
-                <td>{{ loan.completenessReturn ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>ReturnComment</th>
-                <td>{{ loan.returnComment }}</td>
-            </tr>
-        </tbody>
-    </table>
+    {% for result in resultsFamily %}
+    <ul>
+        <li>{{ result.lastname }} {{ result.firstname }}
+            <a href="{{  path('app_loan_new', {'idItem': item.id, 'idMember': result.id}) }}">Choisir ce membre</a>
+        </li>
 
-    <a href="{{ path('app_loan_index') }}">back to list</a>
 
-    <a href="{{ path('app_loan_edit', {'id': loan.id}) }}">edit</a>
+        
+        
+    </ul>
+    {% endfor %}
 
-    {{ include('loan/_delete_form.html.twig') }}
+
+
+    <a href="{{ path('app_item_show',{'id': item.id}) }}">Retour</a>
+
 {% endblock %}
