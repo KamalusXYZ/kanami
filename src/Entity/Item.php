@@ -105,10 +105,14 @@ class Item
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'items')]
     private $tags;
 
+    #[ORM\OneToMany(mappedBy: 'item', targetEntity: Loan::class)]
+    private $loans;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->tags = new ArrayCollection();
+        $this->loans = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -507,6 +511,36 @@ class Item
     public function removeTag(Tag $tag): self
     {
         $this->tags->removeElement($tag);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Loan>
+     */
+    public function getLoans(): Collection
+    {
+        return $this->loans;
+    }
+
+    public function addLoan(Loan $loan): self
+    {
+        if (!$this->loans->contains($loan)) {
+            $this->loans[] = $loan;
+            $loan->setItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLoan(Loan $loan): self
+    {
+        if ($this->loans->removeElement($loan)) {
+            // set the owning side to null (unless already changed)
+            if ($loan->getItem() === $this) {
+                $loan->setItem(null);
+            }
+        }
 
         return $this;
     }

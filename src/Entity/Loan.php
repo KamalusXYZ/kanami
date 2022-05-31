@@ -31,6 +31,9 @@ class Loan
     #[ORM\ManyToOne(targetEntity: Family::class, inversedBy: 'loan')]
     private $family;
 
+    #[ORM\ManyToOne(targetEntity: Item::class, inversedBy: 'loans')]
+    private $item;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +107,18 @@ class Loan
     public function setFamily(?Family $family): self
     {
         $this->family = $family;
+
+        return $this;
+    }
+
+    public function getItem(): ?Item
+    {
+        return $this->item;
+    }
+
+    public function setItem(?Item $item): self
+    {
+        $this->item = $item;
 
         return $this;
     }
