@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Loan{% endblock %}
+
+{% block body %}
+
+    <h1>Retour d'article</h1>
+
+
+    {{ include('loan/_form.html.twig') }}
+
+
+
+
+
+    <a href="{{ path('app_item_show',{'id': item.id}) }}">Retour</a>
+
+{% endblock %}

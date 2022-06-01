@@ -4,19 +4,36 @@
 
 {% block body %}
     <h1>{{ item.name }}</h1>
-
-    <div class="box2">
-        <h2>Prêter le jeu à une famille?</h2>
-        <form style="width: 300px" action="{{ path('app_loan_show', {'idItem': item.id }) }}" method="post"><input name="word"
-                                                                                                 id="loansearchfamily"
-                                                                                                 type="search"/>
-            <button style="width: 100px  ; font-size: 12px">Rechercher une famille <span
-                        class="material-symbols-outlined">
+    {% if item.available == 1 %}
+        <div class="box2">
+            <h2>Prêter le jeu à une famille?</h2>
+            <form style="width: 300px" action="{{ path('app_loan_show', {'idItem': item.id }) }}" method="post"><input
+                        name="word"
+                        id="loansearchfamily"
+                        type="search"/>
+                <button style="width: 100px  ; font-size: 12px">Rechercher une famille <span
+                            class="material-symbols-outlined">
 family_restroom
 </span>
-            </button>
-        </form>
-    </div>
+                </button>
+            </form>
+        </div>
+    {% endif %}
+    {% if item.available == 0 and item.completeness == 1 %}
+        <div class="box2">
+            <h2>Le jeu a été prété, effectuer un retour?</h2>
+            <form style="width: 300px" action="{{ path('app_loan_return', {'idItem': item.id }) }}" method="post">
+                <button
+                        style="width: 100px  ; font-size: 12px">Effectuer le retour de l'article
+                </button>
+            </form>
+        </div>
+    {% endif %}
+    {% if item.completeness == 0 %}
+        <div class="box2">
+            <h2>Le jeu n'est pas disponible pour le moment</h2>
+        </div>
+    {% endif %}
 
     <table class="table">
         <tbody>

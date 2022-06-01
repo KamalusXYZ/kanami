@@ -15,6 +15,7 @@ class SearchController extends AbstractController
     public function itemSearch(Request $request, EntityManagerInterface $em): Response
     {
         $resultsFamily = '';
+        $resultsItem = '';
         $searchWord = $request->get("word");
 
         $qb = $em->createQueryBuilder()
@@ -24,7 +25,7 @@ class SearchController extends AbstractController
             ->setParameter('key', '%'.$searchWord.'%');
 
         $query = $qb->getQuery();
-
+        if($searchWord != '')
         $resultsItem = $query->execute();
 
 
@@ -40,19 +41,19 @@ class SearchController extends AbstractController
     public function familySearch(Request $request, EntityManagerInterface $em): Response
     {
         $resultsItem = '';
+        $resultsFamily = '';
         $searchWord = $request->get("word");
 
         $qb = $em->createQueryBuilder()
             ->select('m')
             ->from('App:Member','m')
-//            ->innerJoin()
-//                ->innerJoin()
             ->where('m.lastName LIKE :key')
             ->setParameter('key', '%'.$searchWord.'%');
 
         $query = $qb->getQuery();
-
+        if($searchWord != '')
         $resultsFamily = $query->execute();
+
 
         return $this->render('main/home.html.twig', [
             'controller_name' => 'SearchController',
