@@ -49,7 +49,7 @@ class MemberController extends AbstractController
         ]);
     }
 
-    #[Route('/new_in_existing/{idFamily}', name: 'app_member_new_in_existing', methods: ['GET', 'POST'])]
+    #[Route('/new-in-existing/{idFamily}', name: 'app_member_new_in_existing', methods: ['GET', 'POST'])]
     public function newInExisting(Request $request, MemberRepository $memberRepository, FamilyRepository $familyRepository): Response
     {
         $member = new Member();
@@ -78,7 +78,7 @@ class MemberController extends AbstractController
     }
 
 
-    #[Route('/newOwner/{idFamily}', name: 'app_member_new_owner', methods: ['GET', 'POST'])]
+    #[Route('/new-owner/{idFamily}', name: 'app_member_new_owner', methods: ['GET', 'POST'])]
     public function newOwner(Request $request, MemberRepository $memberRepository, $idFamily, FamilyRepository $familyRepository): Response
     {
 

@@ -14,8 +14,10 @@ class SearchController extends AbstractController
     #[Route('/item/', name: 'app_search_item', methods: ['POST'])]
     public function itemSearch(Request $request, EntityManagerInterface $em): Response
     {
+
         $resultsFamily = '';
         $resultsItem = '';
+
         $searchWord = $request->get("word");
 
         $qb = $em->createQueryBuilder()
@@ -27,6 +29,7 @@ class SearchController extends AbstractController
         $query = $qb->getQuery();
         if($searchWord != '')
         $resultsItem = $query->execute();
+
 
 
         return $this->render('main/home.html.twig', [

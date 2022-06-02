@@ -3,113 +3,106 @@
 {% block title %}KaNaMi{% endblock %}
 
 {% block body %}
-    <h1 class="logotitre text-center">KaNaMi</h1>
-    <div class="box">
 
+    <div class="cont-small radius-bottom-left">
         <div>
-            <form style="width: 300px" action="{{ path('app_search_item') }}" method="post"><input name="word"
-                                                                                                   id="search-item"
-                                                                                                   type="search"/>
-                <button style="width: 100px  ; font-size: 12px">Rechercher un jeu <span
-                            class="material-symbols-outlined">
-casino
-</span></button>
-            </form>
+            <div class="">
+                <form action="{{ path('app_search_item') }}" method="post">
+                    <input placeholder="Rechercher un jeu" name="word" id="search-item" type="search"/>
+                    <button><span class="material-symbols-outlined">
+casino</span></button>
+                </form>
+            </div>
 
-
-        </div>
-
-        <div>
-            <form style="width: 300px" action="{{ path('app_search_family') }}" method="post"><input name="word"
-                                                                                                     id="familySearch"
-                                                                                                     type="search"/>
-                <button style="width: 100px  ; font-size: 12px">Rechercher une famille <span
-                            class="material-symbols-outlined">
+            <div>
+                <form action="{{ path('app_search_family') }}" method="post"><input
+                            placeholder="Rechercher une famille" name="word"
+                            id="familySearch"
+                            type="search"/>
+                    <button><span
+                                class="material-symbols-outlined">
 family_restroom
 </span>
-                </button>
-            </form>
-        </div>
+                    </button>
+                </form>
+            </div>
 
-        <div>
 
-            <br>
-            <ul>
-
-                {% if resultsItem %}
-                    {% for result in resultsItem %}
-                        <li>
-                            {{ result.name }}
-                            {% if result.available == 1 %}
-                                <strong>Disponible</strong>
-                            {% elseif result.available ==0 %} <strong>Indisponible</strong>
-                            {% endif %}
-                            <a style="color: #25963F" href="{{ path('app_item_show', { 'id': result.id }) }}">Voir la
-                                fiche du jeu</a>
-
-                        </li>
-                    {% endfor %}
-
-                {% endif %}
-            </ul>
+            <button class=""><a class="text-white text-decoration-none" href="{{ path('app_item_new') }}">Ajouter un
+                    jeu</a></button>
 
         </div>
+
+        <div class="box">
+            <button class=""><a class="" href="{{ path('app_category_new') }}">Ajouter une catégorie</a></button>
+        </div>
+        <div class="box">
+            <button class=""><a class="" href="{{ path('app_category_index') }}">Voir les catégories</a></button>
+        </div>
+
+
+        <div class="box">
+            <button class=""><a class="" href="{{ path('app_family_new') }}">Ajouter une famille</a></button>
+        </div>
+        <div class="box">
+            <button class=""><a class="" href="{{ path('app_family_index') }}">voir les familles</a></button>
+        </div>
+
+
+    </div>
+    <div class="cont-big radius-bottom-right">
         <div>
             {% if searchWord != '' %}
-                Voici les résultats de la recherche pour : <strong>{{ searchWord }}</strong>
+                <p>Il y a {{ resultsItem|length }} résultat(s). <br>
+                    Voici les résultats de la recherche pour : <strong>{{ searchWord }}</strong></p>
 
             {% endif %}
-            <br>
-            <ul>
-                {% if resultsFamily %}
-                    {% for result in resultsFamily %}
-                        <li>
-                            {{ result.firstName }} {{ result.lastName }}
-                            {% for relation in result.relationships %}
-                                <a style="color: #25963F"
-                                   href="{{ path('app_family_show', {'idFamily': relation.family.id}) }}">Voir la fiche
-                                    famille</a>
-                            {% endfor %}
 
-                        </li>
-                    {% endfor %}
 
-                {% endif %}
-            </ul>
+            {% if resultsItem %}
+                {% for result in resultsItem %}
+                    <div class="cont-result flex-align-center">
+
+                        {% if result.available == 1 %}
+                            <div><img src="/img/available.svg" alt="disponible"></div>
+                        {% elseif result.available ==0 %}
+                            <div><img src="/img/unavailable.svg" alt="indisponible"></div>
+                        {% endif %}
+                        <div style="font-weight: bold ; font-size: 20px; text-align: left">{{ result.name }}</div>
+                        <div><a style="color: #25963F" href="{{ path('app_item_show', { 'id': result.id }) }}">Voir
+                                la
+                                fiche du jeu</a></div>
+
+                    </div>
+                {% endfor %}
+
+            {% endif %}
+
 
         </div>
+        <div>
 
-        <button class=""><a class="text-white text-decoration-none" href="{{ path('app_item_new') }}">Ajouter un
-                jeu</a></button>
-        <button class=""><a class="text-white text-decoration-none" href="{{ path('app_item_index') }}">Voir les
-                jeux</a></button>
+            <br>
+
+            {% if resultsFamily %}
+                {% for result in resultsFamily %}
+                    <div class="cont-result flex-align-center">
+                        <div>{{ result.firstName }} {{ result.lastName }}</div>
+                        {% for relation in result.relationships %}
+                            <div><a style="color: #25963F"
+                                    href="{{ path('app_family_show', {'idFamily': relation.family.id}) }}">Voir la
+                                    fiche
+                                    famille</a></div>
+                        {% endfor %}
+
+                    </div>
+                {% endfor %}
+
+            {% endif %}
+            
+
+        </div>
     </div>
 
-    <div class="box">
-        <button class=""><a class="" href="{{ path('app_category_new') }}">Ajouter une catégorie</a></button>
     </div>
-    <div class="box">
-        <button class=""><a class="" href="{{ path('app_category_index') }}">Voir les catégories</a></button>
-    </div>
-
-
-    <div class="box">
-        <button class=""><a class="" href="{{ path('app_family_new') }}">Ajouter une famille</a></button>
-    </div>
-    <div class="box">
-        <button class=""><a class="" href="{{ path('app_family_index') }}">voir les familles</a></button>
-    </div>
-
-
-
-
-
-
-
-
-
-
-    </div>
-
-
 {% endblock %}
