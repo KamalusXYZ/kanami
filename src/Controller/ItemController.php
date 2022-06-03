@@ -4,12 +4,15 @@ namespace App\Controller;
 
 use App\Entity\Item;
 use App\Form\ItemType;
+use App\Repository\FamilyRepository;
 use App\Repository\ItemRepository;
+use App\Repository\LoanRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 #[Route('/item')]
 class ItemController extends AbstractController
@@ -37,7 +40,7 @@ class ItemController extends AbstractController
             $item->setRegisterDateTime($dateTime);
             $itemRepository->add($item, true);
 
-            return $this->redirectToRoute('app_category_dependance_new', ['idItem' => $item->getId() ], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_category_dependance_new', ['idItem' => $item->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('item/new.html.twig', [
@@ -51,6 +54,64 @@ class ItemController extends AbstractController
     {
         return $this->render('item/show.html.twig', [
             'item' => $item,
+        ]);
+    }
+
+    #[Route('/resolving/item{idItem}/family{idFamily}', name: 'app_resolve_confirmation', methods: ['GET', 'POST'])]
+    public function resolveConfirmation(Request $request, LoanRepository $loanRepository, ItemRepository $itemRepository, FamilyRepository $familyRepository, $idItem, $idFamily): Response
+    {
+        $loan = 0;
+        $item = $itemRepository->find($idItem);
+        $family = $familyRepository->find($idFamily);
+        $loans = $loanRepository->findBy(array('item' => $idItem));
+        foreach ($loans as $loan)
+            $loan = $loan;
+
+
+        $loanStayIncomplete = count($loanRepository->findBy(array('family' => $idFamily, 'completenessReturn' => 0)));
+//        if($loanStayIncomplete == 1)
+        $family->setBlocked(0);
+        $family->setIncompleteReturn(0);
+
+
+
+
+        $form = $this->createFormBuilder($loan)
+            ->add('completenessReturn', CheckboxType::class, ['label' => 'Le jeu a été complété?', 'required' => true])
+            ->add('returnComment', ChoiceType::class, [
+                'choices' => [
+                    'Pièce retrouvée' => 'Pièce retrouvée',
+                    'Pièce rachetée' => 'Pièce rachetée',
+                    'Autre ' => 'Pièce ni racheté ni retrouvée: autre',
+                ]
+            ])
+            ->getForm();
+
+
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+
+            $item->setAvailable(1);
+            $item->setCompleteness(1);
+
+
+
+
+
+
+
+            $itemRepository->add($item, true);
+            return $this->redirectToRoute('app_family_show', ['idFamily' => $idFamily], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('item/resolve.html.twig', [
+            'item' => $item,
+            'form' => $form,
+            'family' => $family
         ]);
     }
 

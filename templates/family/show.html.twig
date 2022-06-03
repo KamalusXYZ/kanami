@@ -28,6 +28,12 @@
         <button class=""><a class="" href="{{ path('app_member_new_in_existing', {'idFamily': family.id}) }}">Ajouter un adhérant</a></button>
     </div>
 
+    {% if family.incompleteReturn != 0 %}
+    <div class="box">
+        <button class=""><a class="" href="{{ path('app_family_resolve', {'idFamily': family.id}) }}">Régler un jeu incomplet</a></button>
+    </div>
+    {% endif %}
+
 
 
 

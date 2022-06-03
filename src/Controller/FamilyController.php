@@ -6,6 +6,8 @@ use App\Entity\Family;
 use App\Entity\Payment;
 use App\Form\FamilyType;
 use App\Repository\FamilyRepository;
+use App\Repository\ItemRepository;
+use App\Repository\LoanRepository;
 use App\Repository\PaymentRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -74,18 +76,23 @@ class FamilyController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/subscription', name: 'app_family_subscription', methods: ['GET'])]
-    public function subscription(Family $family, $id): Response
+    #[Route('/{idFamily}/resolve', name: 'app_family_resolve', methods: ['GET', 'POST'])]
+    public function resolve(Request $request, LoanRepository $loanRepository, ItemRepository $itemRepository,FamilyRepository $familyRepository, $idFamily): Response
     {
+        $loan = 0;
+        // recherche de la famille ayant un pret retourné incomplet
+        $family = $familyRepository->find($idFamily);
+        // recherche du pret litigieux, recuperation sous forme de tableau.
+        $loansToResolve = $loanRepository->findBy(array('completenessReturn'=>0, 'family'=> $idFamily));
 
 
-        $payment = new Payment();
-        $payment->setFamily($family);
 
 
-        return $this->render('payment/new.html.twig', [
+        return $this->render('family/resolve.html.twig', [
             'family' => $family,
-            'idFamily' => $id
+            'idFamily' => $idFamily,
+            'loanToResolve'=> $loansToResolve,
+
 
         ]);
     }

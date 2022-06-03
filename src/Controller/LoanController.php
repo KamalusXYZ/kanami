@@ -68,17 +68,6 @@ class LoanController extends AbstractController
 
         $relation = $relationshipRepository->find($idMember);
 
-        // le script if servira a vérifier le nom de famille et afficher un message précisant le nom de famille du titulaire emprunte l'article x, et non celui du membre en cas de difference entre les deux.
-//        if ($relation->isIsOwner() == 1) {
-//            $owner = $member;
-//
-//
-//        } else {
-//            $owner = $relation->getMember()->getRelationShip()->isIsOwner(1);
-//
-//        }
-
-
         $family = $relation->getFamily();
 
         $dateTime = date_create("now");
@@ -102,6 +91,7 @@ class LoanController extends AbstractController
 
 
                 $loanRepository->add($loan, true);
+
             } else {
 
                 print 'Le jeu est indisponible';
@@ -153,12 +143,12 @@ class LoanController extends AbstractController
 
 //        $form = $this->createForm();
         $form = $this->createFormBuilder($loan)
-            ->add('completenessReturn', CheckboxType::class, ['label' => 'Le jeu est rendu complet?','required' => false])
-            ->add('returnComment', TextareaType::class, ['label' => 'Commentaire (optionnel)','required' => false])
+            ->add('completenessReturn', CheckboxType::class, ['label' => 'Le jeu est rendu complet?', 'required' => false])
+            ->add('returnComment', TextareaType::class, ['label' => 'Commentaire (optionnel)', 'required' => false])
             ->getForm();
 
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid() ) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
             if ($item->isAvailable() == 0) {
 
@@ -166,14 +156,13 @@ class LoanController extends AbstractController
                 $family->setMaxLoanSimultaneous($family->getMaxLoanSimultaneous() + 1);
                 $item->setAvailable(1);
 
-                if($loan->isCompletenessReturn() == 0)
-                {
+                if ($loan->isCompletenessReturn() == 0) {
                     $item->setCompleteness(0);
                     $item->setAvailable(0);
-                    $family->setIncompleteReturnNb($family->getIncompleteReturnNb()+1);
+                    $family->setIncompleteReturnNb($family->getIncompleteReturnNb() + 1);
                     $family->setIncompleteReturn(1);
-//                    $family->setBlocked(1);
-//                    dé-commenter lorsque la fonctionnalité sera mise en place de payer un jeu après incomplétude, et/ou de débloquer une famille.
+                    $family->setBlocked(1);
+
 
                 }
 
