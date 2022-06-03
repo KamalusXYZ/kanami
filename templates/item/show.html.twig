@@ -19,7 +19,7 @@ family_restroom
             </form>
         </div>
     {% endif %}
-    {% if item.available == 0 and item.completeness == 1 %}
+    {% if item.available == 0 %}
         <div class="box2">
             <h2>Le jeu a été prété, effectuer un retour?</h2>
             <form style="width: 300px" action="{{ path('app_loan_return', {'idItem': item.id }) }}" method="post">
@@ -31,7 +31,7 @@ family_restroom
     {% endif %}
     {% if item.completeness == 0 %}
         <div class="box2">
-            <h2>Le jeu n'est pas disponible pour le moment</h2>
+            <h2>Le jeu est incomplet</h2>
         </div>
     {% endif %}
 

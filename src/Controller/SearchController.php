@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Relationship;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,21 +23,20 @@ class SearchController extends AbstractController
 
         $qb = $em->createQueryBuilder()
             ->select('i')
-            ->from('App:Item','i')
+            ->from('App:Item', 'i')
             ->where('i.name LIKE :key')
-            ->setParameter('key', '%'.$searchWord.'%');
+            ->setParameter('key', '%' . $searchWord . '%');
 
         $query = $qb->getQuery();
-        if($searchWord != '')
-        $resultsItem = $query->execute();
-
+        if ($searchWord != '')
+            $resultsItem = $query->execute();
 
 
         return $this->render('main/home.html.twig', [
             'controller_name' => 'SearchController',
             'searchWord' => $searchWord,
-            'resultsItem'=> $resultsItem,
-            'resultsFamily'=> $resultsFamily
+            'resultsItem' => $resultsItem,
+            'resultsFamily' => $resultsFamily
         ]);
     }
 
@@ -47,22 +47,25 @@ class SearchController extends AbstractController
         $resultsFamily = '';
         $searchWord = $request->get("word");
 
+// requete faite avec un innejoin en dql pour vérifier que le resultat de la recherche correspond  un titulaire càd que son id match avec celui de la table relationship, et que la propriété isowner soit sur '1'
         $qb = $em->createQueryBuilder()
             ->select('m')
-            ->from('App:Member','m')
+            ->from('App:Member', 'm')
             ->where('m.lastName LIKE :key')
-            ->setParameter('key', '%'.$searchWord.'%');
+            ->innerJoin(Relationship::class, 'r', 'WITH', 'r.member = m.id and r.isOwner = 1')
+            ->setParameter('key', '%' . $searchWord . '%');
+
 
         $query = $qb->getQuery();
-        if($searchWord != '')
-        $resultsFamily = $query->execute();
+        if ($searchWord != '')
+            $resultsFamily = $query->execute();
 
 
         return $this->render('main/home.html.twig', [
             'controller_name' => 'SearchController',
             'searchWord' => $searchWord,
-            'resultsFamily'=> $resultsFamily,
-            'resultsItem'=> $resultsItem,
+            'resultsFamily' => $resultsFamily,
+            'resultsItem' => $resultsItem,
 
         ]);
     }
