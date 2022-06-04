@@ -157,6 +157,7 @@ class LoanController extends AbstractController
                 $item->setAvailable(1);
 
                 if ($loan->isCompletenessReturn() == 0) {
+
                     $item->setCompleteness(0);
                     $item->setAvailable(0);
                     $family->setIncompleteReturnNb($family->getIncompleteReturnNb() + 1);

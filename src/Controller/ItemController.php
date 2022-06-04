@@ -60,6 +60,8 @@ class ItemController extends AbstractController
     #[Route('/resolving/item{idItem}/family{idFamily}', name: 'app_resolve_confirmation', methods: ['GET', 'POST'])]
     public function resolveConfirmation(Request $request, LoanRepository $loanRepository, ItemRepository $itemRepository, FamilyRepository $familyRepository, $idItem, $idFamily): Response
     {
+
+
         $loan = 0;
         $item = $itemRepository->find($idItem);
         $family = $familyRepository->find($idFamily);
@@ -67,13 +69,8 @@ class ItemController extends AbstractController
         foreach ($loans as $loan)
             $loan = $loan;
 
-
         $loanStayIncomplete = count($loanRepository->findBy(array('family' => $idFamily, 'completenessReturn' => 0)));
 //        if($loanStayIncomplete == 1)
-        $family->setBlocked(0);
-        $family->setIncompleteReturn(0);
-
-
 
 
         $form = $this->createFormBuilder($loan)
@@ -93,25 +90,35 @@ class ItemController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-
-
             $item->setAvailable(1);
             $item->setCompleteness(1);
-
-
-
-
-
-
-
             $itemRepository->add($item, true);
-            return $this->redirectToRoute('app_family_show', ['idFamily' => $idFamily], Response::HTTP_SEE_OTHER);
+
+
+            return $this->redirectToRoute('app_family_check', ['idFamily' => $idFamily], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('item/resolve.html.twig', [
             'item' => $item,
             'form' => $form,
             'family' => $family
+        ]);
+    }
+
+    #[Route('/check/family{idFamily}', name: 'app_family_check', methods: ['GET', 'POST'])]
+    public function checkFamily(Request $request, FamilyRepository $familyRepository, LoanRepository $loanRepository, $idFamily): Response
+    {
+
+        $family = $familyRepository->find($idFamily);
+        if (count($loanRepository->findBy(array('family' => $idFamily, 'completenessReturn' => 0))) == 0) {
+            $family->setBlocked(0);
+            $family->setIncompleteReturn(0);
+
+        }
+
+        return $this->renderForm('family/show.html.twig', [
+            'idFamily' => $idFamily,
+
         ]);
     }
 
