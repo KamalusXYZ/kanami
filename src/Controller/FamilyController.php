@@ -85,14 +85,10 @@ class FamilyController extends AbstractController
         // recherche du pret litigieux, recuperation sous forme de tableau.
         $loansToResolve = $loanRepository->findBy(array('completenessReturn'=>0, 'family'=> $idFamily));
 
-
-
-
         return $this->render('family/resolve.html.twig', [
             'family' => $family,
             'idFamily' => $idFamily,
             'loanToResolve'=> $loansToResolve,
-
 
         ]);
     }

@@ -110,14 +110,20 @@ class ItemController extends AbstractController
     {
 
         $family = $familyRepository->find($idFamily);
+
         if (count($loanRepository->findBy(array('family' => $idFamily, 'completenessReturn' => 0))) == 0) {
             $family->setBlocked(0);
             $family->setIncompleteReturn(0);
 
+            $familyRepository->add($family, true);
+
+
+            return $this->redirectToRoute('app_family_show', ['idFamily' => $idFamily], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('family/show.html.twig', [
             'idFamily' => $idFamily,
+            'family' => $family
 
         ]);
     }

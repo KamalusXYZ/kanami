@@ -6,105 +6,52 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Famille {% for relationship in family.relationships %}
 
-            {% if relationship.isOwner == 1 %}
-                {{ relationship.member.lastName }}
-            {% endif %}
+    <div class="cont-title"><h1>Famille {% for relationship in family.relationships %}
 
-        {% endfor %}
-
-
-    </h1>
-    <p>Tout les membres de la famille:</p>
-    {% for relationship in family.relationships %}
-        <p>
-            Prénom: {{ relationship.member.firstName }} Nom: {{ relationship.member.lastName }} Date de naissance
-            : {{ relationship.member.birthday.format('d-m-Y') }}
-            <br>
-        </p>
-    {% endfor %}
-    <div class="box">
-        <button class=""><a class="" href="{{ path('app_member_new_in_existing', {'idFamily': family.id}) }}">Ajouter un adhérant</a></button>
-    </div>
-
-    {% if family.incompleteReturn != 0 %}
-    <div class="box">
-        <button class=""><a class="" href="{{ path('app_family_resolve', {'idFamily': family.id}) }}">Régler un jeu incomplet</a></button>
-    </div>
-    {% endif %}
-
-
-
-
-    <table class="table">
-        <tbody>
-
-
-        <tr>
-            <th>nom de famille</th>
-            {% for relationship in family.relationships %}
                 {% if relationship.isOwner == 1 %}
-                    <td>{{ relationship.member.lastName }}</td>
+                    <span style="color: #25963F">{{ relationship.member.lastName|upper }}</span>
                 {% endif %}
-
 
             {% endfor %}
 
 
-        </tr>
-
-        <tr>
-            <th>RegisterDate</th>
-            <td>{{ family.registerDate ? family.registerDate|date('Y-m-d') : '' }}</td>
-        </tr>
-        <tr>
-            <th>MaxLoanSimultaneous</th>
-            <td>{{ family.maxLoanSimultaneous }}</td>
-        </tr>
-        <tr>
-            <th>DelayWarning</th>
-            <td>{{ family.delayWarning ? 'Yes' : 'No' }}</td>
-        </tr>
-        <tr>
-            <th>DelayWarningNb</th>
-            <td>{{ family.delayWarningNb }}</td>
-        </tr>
-        <tr>
-            <th>IncompleteReturn</th>
-            <td>{{ family.incompleteReturn ? 'Yes' : 'No' }}</td>
-        </tr>
-        <tr>
-            <th>IncompleteReturnNb</th>
-            <td>{{ family.incompleteReturnNb }}</td>
-        </tr>
-        <tr>
-            <th>Blocked</th>
-            <td>{{ family.blocked ? 'Yes' : 'No' }}</td>
-        </tr>
-        <tr>
-            <th>PaymentOk</th>
-            <td>{{ family.paymentOk ? 'Yes' : 'No' }}</td>
-        </tr>
-        <tr>
-            <th>TokenAvailable</th>
-            <td>{{ family.tokenAvailable }}</td>
-        </tr>
-        <tr>
-            <th>Deposit</th>
-            <td>{{ family.deposit ? 'Yes' : 'No' }}</td>
-        </tr>
-        <tr>
-            <th>DepositInformation</th>
-            <td>{{ family.depositInformation }}</td>
-        </tr>
-        </tbody>
-    </table>
+        </h1>
+        {% if family.incompleteReturn != 0 %}
+            <div class="box">
+                <button class=""><a class="" href="{{ path('app_family_resolve', {'idFamily': family.id}) }}">Régler un
+                        jeu incomplet</a></button>
+            </div>
+        {% endif %}
+    </div>
+    <div class="cont radius-bottom flex">
 
 
+        <div class="cont-medium-hidden"><h2>Coordonnées</h2>
+        </div>
+        <div class="cont-medium-hidden"><h2>Informations</h2>
+        </div>
 
-    <a href="{{ path('app_family_edit', {'id': family.id}) }}">edit</a>
+        <div class="cont-medium-hidden"><h2>Historique des prêts</h2>
+        </div>
 
+        <div class="cont-medium-hidden"><h2>Liste des membres</h2>
+            <div class="box">
+                <button class=""><a class="" href="{{ path('app_member_new_in_existing', {'idFamily': family.id}) }}">Ajouter
+                        un adhérant</a></button>
+            </div>
+            {% for relationship in family.relationships %}
+                <div class="cont-result">
+                    {{ relationship.member.firstName }}  {{ relationship.member.lastName }} <br>
+                    {{ relationship.member.birthday.format('d-m-Y') }}
+                </div>
+
+
+            {% endfor %}
+        </div>
+
+
+    </div>
 
 
 
