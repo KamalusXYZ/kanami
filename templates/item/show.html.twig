@@ -3,171 +3,209 @@
 {% block title %}Jeu{% endblock %}
 
 {% block body %}
-    <h1>{{ item.name }}</h1>
-    {% if item.available == 1 %}
-        <div class="box2">
-            <h2>Prêter le jeu à une famille?</h2>
-            <form style="width: 300px" action="{{ path('app_loan_show', {'idItem': item.id }) }}" method="post"><input
-                        name="word"
-                        id="loansearchfamily"
-                        type="search"/>
-                <button style="width: 100px  ; font-size: 12px">Rechercher une famille <span
-                            class="material-symbols-outlined">
-family_restroom
-</span>
-                </button>
-            </form>
+    <div class="cont-hidden flex-wrap">
+        <div class="cont-title"><h1>{{ item.name }}
+            </h1>
         </div>
-    {% endif %}
-    {% if item.available == 0 and item.completeness == 1 %}
-        <div class="box2">
-            <h2>Le jeu a été prété, effectuer un retour?</h2>
-            <form style="width: 300px" action="{{ path('app_loan_return', {'idItem': item.id }) }}" method="post">
-                <button
-                        style="width: 100px  ; font-size: 12px">Effectuer le retour de l'article
-                </button>
-            </form>
+        <div class="cont radius-bottom flex-wrap">
+
+
+
+            <div style="text-align: start" class="cont-medium radius"><h2 style="text-align: center">Informations
+                    interne</h2>
+
+            </div>
+            <div class="cont-medium radius"><h2>Informations générales</h2>
+
+            </div>
+
+            <div class="cont-medium radius"><h2>Historique des prêts</h2>
+
+
+            </div>
+
+            <div class="cont-medium radius"><h2>Jeux similaires</h2>
+
+            </div>
         </div>
-    {% endif %}
-    {% if item.completeness == 0 %}
-        <div class="box2">
-            <h2>Le jeu est incomplet</h2>
-        </div>
-    {% endif %}
 
-    <table class="table">
-        <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ item.id }}</td>
-        </tr>
+    </div>
 
-        <tr>
-            <th>Categorie</th>
-            {% for category in item.categories %}
-                <td>{{ category }}</td>
-            {% else %}
-                <td>sans categorie</td>
-            {% endfor %}
 
-        <tr>
-            <th>Name</th>
-            <td>{{ item.name }}</td>
-        </tr>
-        <tr>
-            <th>Ref</th>
-            <td>{{ item.ref }}</td>
-        </tr>
-        <tr>
-            <th>Lang</th>
-            <td>{{ item.lang }}</td>
-        </tr>
-        <tr>
-            <th>PublisherGameDuration</th>
-            <td>{{ item.publisherGameDuration }}</td>
-        </tr>
-        <tr>
-            <th>OurGameDuration</th>
-            <td>{{ item.ourGameDuration }}</td>
-        </tr>
-        <tr>
-            <th>PlayerNbMin</th>
-            <td>{{ item.playerNbMin }}</td>
-        </tr>
-        <tr>
-            <th>PlayerNbMax</th>
-            <td>{{ item.playerNbMax }}</td>
-        </tr>
-        <tr>
-            <th>AgeMin</th>
-            <td>{{ item.ageMin }}</td>
-        </tr>
-        <tr>
-            <th>Author</th>
-            <td>{{ item.author }}</td>
-        </tr>
-        <tr>
-            <th>Illustrator</th>
-            <td>{{ item.illustrator }}</td>
-        </tr>
-        <tr>
-            <th>Publisher</th>
-            <td>{{ item.publisher }}</td>
-        </tr>
-        <tr>
-            <th>ItemCondition</th>
-            <td>{{ item.itemCondition }}</td>
-        </tr>
-        <tr>
-            <th>Completeness</th>
-            <td>{{ item.completeness ? 'Yes' : 'No' }}</td>
-        </tr>
-        <tr>
-            <th>Available</th>
-            <td>{{ item.available ? 'Yes' : 'No' }}</td>
-        </tr>
-        <tr>
-            <th>Archive</th>
-            <td>{{ item.archive ? 'Yes' : 'No' }}</td>
-        </tr>
-        <tr>
-            <th>UpdatePseudoUser</th>
-            <td>{{ item.updatePseudoUser }}</td>
-        </tr>
-        <tr>
-            <th>UpdateDateTime</th>
-            <td>{{ item.UpdateDateTime ? item.UpdateDateTime|date('Y-m-d H:i:s') : '' }}</td>
-        </tr>
-        <tr>
-            <th>ArchivePseudoUser</th>
-            <td>{{ item.archivePseudoUser }}</td>
-        </tr>
-        <tr>
-            <th>ArchiveDateTime</th>
-            <td>{{ item.archiveDateTime ? item.archiveDateTime|date('Y-m-d H:i:s') : '' }}</td>
-        </tr>
-        <tr>
-            <th>ArchiveCause</th>
-            <td>{{ item.archiveCause }}</td>
-        </tr>
-        <tr>
-            <th>ArchiveGameBecome</th>
-            <td>{{ item.archiveGameBecome }}</td>
-        </tr>
-        <tr>
-            <th>MemberItemRatingTotal</th>
-            <td>{{ item.memberItemRatingTotal }}</td>
-        </tr>
-        <tr>
-            <th>MemberItemRatingNb</th>
-            <td>{{ item.memberItemRatingNb }}</td>
-        </tr>
-        <tr>
-            <th>GamePrice</th>
-            <td>{{ item.gamePrice }}</td>
-        </tr>
-        <tr>
-            <th>GameOrigin</th>
-            <td>{{ item.gameOrigin }}</td>
-        </tr>
-        <tr>
-            <th>UserMadeEntry</th>
-            <td>{{ item.userMadeEntry }}</td>
-        </tr>
-        <tr>
-            <th>CopyNumber</th>
-            <td>{{ item.copyNumber }}</td>
-        </tr>
-        <tr>
-            <th>RegisterDateTime</th>
-            <td>{{ item.registerDateTime ? item.registerDateTime|date('Y-m-d H:i:s') : '' }}</td>
-        </tr>
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_item_index') }}">back to list</a>
 
-    <a href="{{ path('app_item_edit', {'id': item.id}) }}">edit</a>
 
-    {{ include('item/_delete_form.html.twig') }}
+
+
+
+    {#    <div>{{ family.id }}</div> #}
+    {#    <h1>{{ item.name }}</h1> #}
+    {#    {% if item.available == 1 %} #}
+    {#        <div class="box2"> #}
+    {#            <h2>Prêter le jeu à une famille?</h2> #}
+    {#            <form style="width: 300px" action="{{ path('app_loan_show', {'idItem': item.id }) }}" method="post"><input #}
+    {#                        name="word" #}
+    {#                        id="loansearchfamily" #}
+    {#                        type="search"/> #}
+    {#                <button style="width: 100px  ; font-size: 12px">Rechercher une famille <span #}
+    {#                            class="material-symbols-outlined"> #}
+    {# family_restroom #}
+    {# </span> #}
+    {#                </button> #}
+    {#            </form> #}
+    {#        </div> #}
+
+    {#    {% endif %} #}
+    {#    {% if item.available == 0 and item.completeness == 1 %} #}
+
+    {#        <div class="box2"> #}
+    {#            <h2>Le jeu a été prété, effectuer un retour?</h2> #}
+    {#            <form style="width: 300px" action="{{ path('app_loan_return', {'idItem': item.id }) }}" method="post"> #}
+    {#                <button #}
+    {#                        style="width: 100px  ; font-size: 12px">Effectuer le retour de l'article #}
+    {#                </button> #}
+    {#            </form> #}
+    {#        </div> #}
+    {#    {% endif %} #}
+    {#    {% if item.completeness == 0 %} #}
+    {#        <div class="box2"> #}
+    {#            <h2>Le jeu est incomplet</h2> #}
+    {#        </div> #}
+    {#    {% endif %} #}
+
+    {#    <table class="table"> #}
+    {#        <tbody> #}
+    {#        <tr> #}
+    {#            <th>Id</th> #}
+    {#            <td>{{ item.id }}</td> #}
+    {#        </tr> #}
+
+    {#        <tr> #}
+    {#            <th>Categorie</th> #}
+    {#            {% for category in item.categories %} #}
+    {#                <td>{{ category }}</td> #}
+    {#            {% else %} #}
+    {#                <td>sans categorie</td> #}
+    {#            {% endfor %} #}
+
+    {#        <tr> #}
+    {#            <th>Name</th> #}
+    {#            <td>{{ item.name }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>Ref</th> #}
+    {#            <td>{{ item.ref }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>Lang</th> #}
+    {#            <td>{{ item.lang }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>PublisherGameDuration</th> #}
+    {#            <td>{{ item.publisherGameDuration }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>OurGameDuration</th> #}
+    {#            <td>{{ item.ourGameDuration }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>PlayerNbMin</th> #}
+    {#            <td>{{ item.playerNbMin }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>PlayerNbMax</th> #}
+    {#            <td>{{ item.playerNbMax }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>AgeMin</th> #}
+    {#            <td>{{ item.ageMin }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>Author</th> #}
+    {#            <td>{{ item.author }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>Illustrator</th> #}
+    {#            <td>{{ item.illustrator }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>Publisher</th> #}
+    {#            <td>{{ item.publisher }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>ItemCondition</th> #}
+    {#            <td>{{ item.itemCondition }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>Completeness</th> #}
+    {#            <td>{{ item.completeness ? 'Yes' : 'No' }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>Available</th> #}
+    {#            <td>{{ item.available ? 'Yes' : 'No' }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>Archive</th> #}
+    {#            <td>{{ item.archive ? 'Yes' : 'No' }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>UpdatePseudoUser</th> #}
+    {#            <td>{{ item.updatePseudoUser }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>UpdateDateTime</th> #}
+    {#            <td>{{ item.UpdateDateTime ? item.UpdateDateTime|date('Y-m-d H:i:s') : '' }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>ArchivePseudoUser</th> #}
+    {#            <td>{{ item.archivePseudoUser }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>ArchiveDateTime</th> #}
+    {#            <td>{{ item.archiveDateTime ? item.archiveDateTime|date('Y-m-d H:i:s') : '' }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>ArchiveCause</th> #}
+    {#            <td>{{ item.archiveCause }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>ArchiveGameBecome</th> #}
+    {#            <td>{{ item.archiveGameBecome }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>MemberItemRatingTotal</th> #}
+    {#            <td>{{ item.memberItemRatingTotal }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>MemberItemRatingNb</th> #}
+    {#            <td>{{ item.memberItemRatingNb }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>GamePrice</th> #}
+    {#            <td>{{ item.gamePrice }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>GameOrigin</th> #}
+    {#            <td>{{ item.gameOrigin }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>UserMadeEntry</th> #}
+    {#            <td>{{ item.userMadeEntry }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>CopyNumber</th> #}
+    {#            <td>{{ item.copyNumber }}</td> #}
+    {#        </tr> #}
+    {#        <tr> #}
+    {#            <th>RegisterDateTime</th> #}
+    {#            <td>{{ item.registerDateTime ? item.registerDateTime|date('Y-m-d H:i:s') : '' }}</td> #}
+    {#        </tr> #}
+    {#        </tbody> #}
+    {#    </table> #}
+
+    {#    <a href="{{ path('app_item_index') }}">back to list</a> #}
+
+    {#    <a href="{{ path('app_item_edit', {'id': item.id}) }}">edit</a> #}
+
+    {#    {{ include('item/_delete_form.html.twig') }} #}
 {% endblock %}

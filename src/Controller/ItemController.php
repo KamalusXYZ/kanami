@@ -7,6 +7,7 @@ use App\Form\ItemType;
 use App\Repository\FamilyRepository;
 use App\Repository\ItemRepository;
 use App\Repository\LoanRepository;
+use App\Repository\RelationshipRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -50,10 +51,13 @@ class ItemController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_item_show', methods: ['GET'])]
-    public function show(Item $item): Response
+    public function show(Item $item, LoanRepository $loanRepository, $id): Response
     {
+
+
         return $this->render('item/show.html.twig', [
             'item' => $item,
+
         ]);
     }
 

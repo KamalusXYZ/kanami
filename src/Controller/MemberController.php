@@ -6,10 +6,18 @@ use App\Entity\Member;
 use App\Form\MemberType;
 use App\Repository\FamilyRepository;
 use App\Repository\MemberRepository;
+use App\Repository\RelationshipRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function Sodium\add;
 
 #[Route('/member')]
 class MemberController extends AbstractController
@@ -37,31 +45,52 @@ class MemberController extends AbstractController
             $family->setMaxLoanSimultaneous($nbMember * 2);
             $memberRepository->add($member, true);
 
-            return $this->redirectToRoute('app_relationship_new', ['idMember'=> $member->getId(), 'idFamily'=> $idFamily, 'member'=>$member, 'family'=>$family], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_relationship_new', ['idMember' => $member->getId(), 'idFamily' => $idFamily, 'member' => $member, 'family' => $family], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('member/new.html.twig', [
             'member' => $member,
             'form' => $form,
-            'family'=> $family,
-            'idFamily'=>$idFamily,
-            'idMember'=>$idMember
+            'family' => $family,
+            'idFamily' => $idFamily,
+            'idMember' => $idMember
         ]);
     }
 
     #[Route('/new-in-existing/{idFamily}', name: 'app_member_new_in_existing', methods: ['GET', 'POST'])]
-    public function newInExisting(Request $request, MemberRepository $memberRepository, FamilyRepository $familyRepository): Response
+    public function newInExisting(Request $request, MemberRepository $memberRepository, FamilyRepository $familyRepository, RelationshipRepository $relationshipRepository): Response
     {
         $member = new Member();
         $idMember = $member->getId();
-        $form = $this->createForm(MemberType::class, $member);
+
+
+
+//        $form = $this->createForm(MemberType::class, $member);
+//        $form->handleRequest($request);
+        $form = $this->createFormBuilder($member)
+            ->add('firstName', TextType::class, ['label' => 'Prénom', 'required' => true])
+            ->add('lastName', TextType::class, ['label' => 'Nom', 'required' => true])
+            ->add('birthDay', DateType::class, ['label' => 'Date de naissance', 'required' => true])
+            ->add('phone', TelType::class, ['label' => 'Numéro de tél.', 'required' => false])
+            ->add('email', EmailType::class, ['label' => 'Email', 'required' => false])
+            ->add('address', TextType::class, ['label' => 'Adresse', 'required' => false])
+            ->add('zipCode', TextType::class, ["label" => "Code Postal: ", 'required' => false, 'attr' => ['maxlength' => 5]])
+            ->add('city', TextType::class, ["label" => "Ville: ", 'required' => false])
+            ->add('country', CountryType::class, ["label" => "Prénom: ", 'required' => false])
+            ->add('otherAddressDetail', TextType::class, ["label" => "Prénom: ", 'required' => false])
+            ->getForm();
+
         $form->handleRequest($request);
+
         $idFamily = $request->get('idFamily');
         $family = $familyRepository->find($idFamily);
+
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $nbMember = $family->getRelationships()->count();
             $family->setMaxLoanSimultaneous($nbMember * 2);
+
             $memberRepository->add($member, true);
 
 
@@ -71,9 +100,9 @@ class MemberController extends AbstractController
         return $this->renderForm('relationship/new.html.twig', [
             'member' => $member,
             'form' => $form,
-            'family'=> $family,
-            'idFamily'=>$idFamily,
-            'idMember'=>$idMember
+            'family' => $family,
+            'idFamily' => $idFamily,
+            'idMember' => $idMember
         ]);
     }
 
@@ -93,18 +122,15 @@ class MemberController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $memberRepository->add($member, true);
 
-            return $this->redirectToRoute('app_relationship_new_owner', ['idMember'=> $member->getId(), 'idFamily'=> $idFamily, 'member'=>$member], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_relationship_new_owner', ['idMember' => $member->getId(), 'idFamily' => $idFamily, 'member' => $member], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('member/new_owner.html.twig', [
             'member' => $member,
             'form' => $form,
-            'family'=> $family
+            'family' => $family
         ]);
     }
-
-
-
 
 
     #[Route('/{id}', name: 'app_member_show', methods: ['GET'])]
@@ -136,7 +162,7 @@ class MemberController extends AbstractController
     #[Route('/{id}', name: 'app_member_delete', methods: ['POST'])]
     public function delete(Request $request, Member $member, MemberRepository $memberRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$member->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $member->getId(), $request->request->get('_token'))) {
             $memberRepository->remove($member, true);
         }
 

@@ -30,16 +30,16 @@ class Member
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $email;
 
-    #[ORM\Column(type: 'string', length: 45)]
+    #[ORM\Column(type: 'string', length: 45, nullable: true)]
     private $address;
 
-    #[ORM\Column(type: 'string', length: 45)]
+    #[ORM\Column(type: 'string', length: 45, nullable: true)]
     private $zipCode;
 
-    #[ORM\Column(type: 'string', length: 45)]
+    #[ORM\Column(type: 'string', length: 45, nullable: true)]
     private $city;
 
-    #[ORM\Column(type: 'string', length: 45)]
+    #[ORM\Column(type: 'string', length: 45, nullable: true)]
     private $country;
 
     #[ORM\Column(type: 'string', length: 45, nullable: true)]
