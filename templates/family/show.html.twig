@@ -6,43 +6,95 @@
 {% endblock %}
 
 {% block body %}
+    <div class="cont-hidden flex-wrap">
 
     <div class="cont-title"><h1>Famille {% for relationship in family.relationships %}
 
                 {% if relationship.isOwner == 1 %}
                     <span style="color: #25963F">{{ relationship.member.lastName|upper }}</span>
                 {% endif %}
+            {% endfor %}
+        </h1>
+
+    </div>
+    <div class="cont radius-bottom flex-wrap">
+
+
+        <div style="text-align: start" class="cont-medium radius"><h2 style="text-align: center">Coordonnées</h2>
+            Numéro d'identification: {{ family.id }} <br>
+            Date d'enregistrement de la famille: {{ family.registerDate|date('d-m-Y') }} <br>
+            Titulaire: {% for relationship in family.relationships %}
+                {% if relationship.isOwner == 1 %}
+                    {{ relationship.member.lastName|upper }} <br>
+                    {{ relationship.member.firstName|capitalize }} <br>
+                    Adresse: {{ relationship.member.address }} <br>
+                    {{ relationship.member.zipCode }} <br>
+                    {{ relationship.member.city }} <br>
+                    {{ relationship.member.otherAddressDetail }} <br> <br>
+                    Contact: <br>
+                    Email: {{ relationship.member.email }} <br>
+                    Numéro de télephone: {{ relationship.member.phone }} <br>
+
+                {% endif %}
+
+            {% endfor %}
+        </div>
+        <div class="cont-medium radius"><h2>Informations</h2>
+            Possibilité de prêt restante: {{ family.maxLoanSimultaneous }} <br>
+            Paiement à jour: <br>
+            {% if family.paymentOK %} <img style="width: 30px" src="/img/available.svg" alt="OK">
+            {% else %} <img style="width: 30px" src="/img/unavailable.svg" alt="NON">
+            {% endif %}
+            <br>
+            Historique des retard depuis l'ouverture du compte: {{ family.delayWarningNb }} <br>
+            Historique des retour incomplet depuis l'ouverture du compte: {{ family.incompleteReturnNb }} <br>
+            Jeux rendu incomplet non résolu: <br>
+            {% if  family.incompleteReturn %}
+                <img style="width: 30px" src="/img/unavailable.svg" alt="OK">
+            {% else %} <img style="width: 30px" src="/img/available.svg" alt="NON">
+            {% endif %}
+            {% if family.incompleteReturn != 0 %}
+                <div class="box">
+                    <button STYLE="color: #B0413E" class=""><a class=""
+                                                               href="{{ path('app_family_resolve', {'idFamily': family.id}) }}">Régler
+                            un
+                            jeu incomplet</a></button>
+                </div>
+            {% endif %}
+            <br>
+
+
+        </div>
+
+        <div class="cont-medium radius"><h2>Historique des prêts</h2>
+            {% for loan in family.loan %}
+                <div class="cont-result">
+                    Jeu: {{ loan.item }} <br>
+                Date de début: {{ loan.startDateTime|date('d-m-Y') }}
+                {% if loan.effectReturnDateTime %}
+                retourné le: {{ loan.effectReturnDateTime|date('d-m-Y') }} <br>
+            {% else %}
+               Retour prévu le: {{ loan.datePreviewBack|date('d-m-Y') }}  <br>
+                {% endif %}
+                    {% if 'now' < loan.datePreviewBack %}
+                        pas de retard (a supprimé ajouté pour test)
+                    {% else %} En retard
+                        {% endif %}
+
+                </div>
 
             {% endfor %}
 
-
-        </h1>
-        {% if family.incompleteReturn != 0 %}
-            <div class="box">
-                <button class=""><a class="" href="{{ path('app_family_resolve', {'idFamily': family.id}) }}">Régler un
-                        jeu incomplet</a></button>
-            </div>
-        {% endif %}
-    </div>
-    <div class="cont radius-bottom flex">
-
-
-        <div class="cont-medium-hidden"><h2>Coordonnées</h2>
-        </div>
-        <div class="cont-medium-hidden"><h2>Informations</h2>
         </div>
 
-        <div class="cont-medium-hidden"><h2>Historique des prêts</h2>
-        </div>
-
-        <div class="cont-medium-hidden"><h2>Liste des membres</h2>
+        <div class="cont-medium radius"><h2>Liste des membres</h2>
             <div class="box">
                 <button class=""><a class="" href="{{ path('app_member_new_in_existing', {'idFamily': family.id}) }}">Ajouter
                         un adhérant</a></button>
             </div>
             {% for relationship in family.relationships %}
                 <div class="cont-result">
-                    {{ relationship.member.firstName }}  {{ relationship.member.lastName }} <br>
+                    {{ relationship.member.firstName }}            {{ relationship.member.lastName }}
                     {{ relationship.member.birthday.format('d-m-Y') }}
                 </div>
 
@@ -53,6 +105,6 @@
 
     </div>
 
-
+    </div>
 
 {% endblock %}
