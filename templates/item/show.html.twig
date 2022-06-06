@@ -10,18 +10,59 @@
         <div class="cont radius-bottom flex-wrap">
 
 
-
             <div style="text-align: start" class="cont-medium radius"><h2 style="text-align: center">Informations
                     interne</h2>
+                <p style="text-align: start">
+                    Réf produit: {{ item.id }}<br>
+                    Réf interne: {{ item.ref }}<br>
+                    Ajouté le: {{ item.registerDateTime|date('d-m-Y') }}<br>
+                    Etat d'usure: {{ item.itemCondition }}<br>
+                    Complet: {% if item.completeness == 0 %} OUI {% else %} NON {% endif %}<br>
+                    Valeur: {{ item.gamePrice }}<br>
+
+
+                </p>
 
             </div>
             <div class="cont-medium radius"><h2>Informations générales</h2>
+                <p style="text-align: start">
+                    Langue: {% if item.lang %} {{ item.lang }}{% else %} Non renseigné {% endif %}<br>
+                    Editeur: {% if item.publisher %} {{ item.publisher }}{% else %} Non renseigné {% endif %}<br>
+                    Auteur: {% if item.author %} {{ item.author }}{% else %} Non renseigné {% endif %}<br>
+                    Illustrateur: Age minimum conseillé par
+                    l'éditeur: {% if item.illustrator %} {{ item.illustrator }}{% else %} Non renseigné {% endif %}<br>
+                    Age minimum conseillé par
+                    l'éditeur: {% if item.PlayerNbMax %} {{ item.playerNbMax }}{% else %} Non renseigné {% endif %}<br>
+                    Nombre de joueurs:
+                    {% if item.playerNbMin and itemPlayerMax %}de {{ item.playerNbMin }} à {{ item.playerNbMax }}{% else %} Non renseigné {% endif %}
+                </p>
+
 
             </div>
 
             <div class="cont-medium radius"><h2>Historique des prêts</h2>
+                <p style="text-align: start ; background-color: #95D6A4"> {% for loan in item.loans %}
+
+                        {% for relation in loan.family.relationships %}
+                            {% if relation.isOwner == 1 %}Famille <span
+                                    style="font-weight: bold">{{ relation.member.lastName|upper }} </span>  {% endif %}
+                        {% endfor %}
+
+                        Prété le: {{ loan.startDateTime|date('d-m-Y') }}   | <br>
+                        {% if loan.effectReturnDateTime %}  rendu le: <span
+                                style="color: #25963F">{{ loan.effectReturnDateTime|date('d-m-Y') }}</span> {% else %}retour prévu le:
+                            <span style="color: #B0413E">{{ loan.datePreviewBack }}</span> {% endif %} |
+                        rendu complet: {% if loan.completenessReturn == 1 %}  <span
+                                style="color: #25963F">OUI</span> {% else %}
+                            <span style="color: #B0413E">NON</span> {% endif %}
+                        {% if loan.returnComment != null %} {{ loan.returnComment }} {% else %} Aucun commentaire
+                        {% endif %}
 
 
+                    {% endfor %}
+
+
+                </p>
             </div>
 
             <div class="cont-medium radius"><h2>Jeux similaires</h2>
