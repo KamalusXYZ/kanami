@@ -64,6 +64,9 @@ class MemberController extends AbstractController
         $idMember = $member->getId();
 
 
+        $idFamily = $request->get('idFamily');
+        $family = $familyRepository->find($idFamily);
+
 
 //        $form = $this->createForm(MemberType::class, $member);
 //        $form->handleRequest($request);
@@ -82,19 +85,15 @@ class MemberController extends AbstractController
 
         $form->handleRequest($request);
 
-        $idFamily = $request->get('idFamily');
-        $family = $familyRepository->find($idFamily);
-
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $nbMember = $family->getRelationships()->count();
-            $family->setMaxLoanSimultaneous($nbMember * 2);
-
+            $family->setMaxLoanSimultaneous($family->getMaxLoanSimultaneous() + ($nbMember * 2));
             $memberRepository->add($member, true);
+            $familyRepository->add($family, true);
 
 
-            return $this->redirectToRoute('app_relationship_new_in_existing', ['idMember'=> $member->getId(), 'idFamily'=> $idFamily, 'member'=>$member, 'family'=>$family], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_relationship_new_in_existing', ['idMember' => $member->getId(), 'idFamily' => $idFamily, 'member' => $member, 'family' => $family], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('relationship/new.html.twig', [

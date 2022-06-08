@@ -8,7 +8,8 @@
         <div>
             <div class="">
                 <form action="{{ path('app_search_item') }}" method="post">
-                    <input placeholder="Rechercher un jeu" name="word" id="search-item" type="search"/>
+                    <input autocomplete="off" placeholder="Rechercher un jeu" name="word" id="search-item"
+                           type="search"/>
                     <button><span class="material-symbols-outlined">
 casino</span></button>
                 </form>
@@ -16,6 +17,7 @@ casino</span></button>
 
             <div>
                 <form action="{{ path('app_search_family') }}" method="post"><input
+                            autocomplete="off"
                             placeholder="Rechercher une famille" name="word"
                             id="familySearch"
                             type="search"/>
@@ -83,24 +85,36 @@ family_restroom
 
 
         </div>
+
         <div>
 
             <br>
 
             {% if resultsFamily %}
+
                 {% for result in resultsFamily %}
+
                     <div class="cont-result flex-align-center">
+
                         {% for relation in result.relationships %}
+
                             {% if relation.family.blocked == 0 %}
+
                                 <div><img src="/img/available.svg" alt="disponible"></div>
+
                             {% elseif relation.family.blocked == 1 %}
+
                                 <div><img src="/img/unavailable.svg" alt="indisponible"></div>
+
                             {% endif %}
+
                         {% endfor %}
 
-                        <div>{{ result.firstName }} {{ result.lastName }}</div>
+
+                        <div class="bold">Famille {{ result.lastName|upper }}</div>
                         {% for relation in result.relationships %}
                             <div><a style="color: #25963F"
+                                    method="post"
                                     href="{{ path('app_family_show', {'idFamily': relation.family.id}) }}">Voir la
                                     fiche
                                     famille</a></div>

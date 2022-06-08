@@ -3,16 +3,17 @@
 {% block title %}Loan{% endblock %}
 
 {% block body %}
-
-    <h1>Retour d'article</h1>
-
-
-    {{ include('loan/_form.html.twig') }}
+    <div class="cont-hidden">
+        <div class="cont-title"><h1>Retour d'article</h1></div>
+        <div class="cont">
 
 
+            {{ include('loan/_form.html.twig') }}
+
+        </div>
 
 
+    </div>
 
-    <a href="{{ path('app_item_show',{'id': item.id}) }}">Retour</a>
 
 {% endblock %}

@@ -3,23 +3,33 @@
 {% block title %}Loan{% endblock %}
 
 {% block body %}
+    <div class="cont-hidden">
+        <div class="cont-title">
+            <h1>Qui va louer le jeu {{ item.name }}</h1>
+        </div>
+        <div class="cont radius-bottom">
+            {% for result in resultsFamily %}
 
-    <h1>Qui va louer le jeu {{ item.name }}</h1>
+                {% for relation in result.relationships %}
+                    {% if relation.isOwner == 1 %}
 
-    {% for result in resultsFamily %}
-    <ul>
-        <li>{{ result.lastname }} {{ result.firstname }}
-            <a href="{{  path('app_loan_new', {'idItem': item.id, 'idMember': result.id}) }}">Choisir ce membre</a>
-        </li>
+                        <a href="{{ path('app_loan_new', {'idItem': item.id, 'idMember': result.id}) }}">
+                            <div style="font-size: 30px ; background-color: rgba(149,214,164,0.3)"
+                                 class="cont-result flex-align-center bold">
+                                Famille {{ result.lastname }}
+                                <img style="width: 30px" src="/img/valid_family.svg" alt=""></div>
+                        </a>
+
+                    {% endif %}
+
+                {% endfor %}
+            {% endfor %}
+        </div>
 
 
-        
-        
-    </ul>
-    {% endfor %}
+    </div>
 
 
 
-    <a href="{{ path('app_item_show',{'id': item.id}) }}">Retour</a>
 
 {% endblock %}

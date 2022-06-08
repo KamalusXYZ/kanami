@@ -3,14 +3,15 @@
 {% block title %}Jeu{% endblock %}
 
 {% block body %}
-    <div class="cont-hidden flex-wrap">
-        <div class="cont-title"><h1>{{ item.name }}
+    <div class="cont-hidden flex-wrap margin-top-0 padding-top-0">
+        <div class="cont-title padding-top-0 margin-top-0"><h1>{{ item.name }}
             </h1>
         </div>
-        <div class="cont radius-bottom flex-wrap">
+        <div class="cont radius-bottom flex-wrap margin-top-0">
 
 
-            <div style="text-align: start" class="cont-medium radius"><h3 style="text-align: center">Informations
+            <div style="text-align: start" class="cont-medium radius margin-top-0 padding-top-0"><h3
+                        class="padding-0 margin-0" style="text-align: center">Informations
                     interne</h3>
                 <p style="text-align: start">
                     Réf produit: <span class="bold">{{ item.id }}</span><br>
@@ -30,31 +31,39 @@
                 </p>
 
             </div>
-            <div class="cont-medium radius"><h3>Informations générales</h3>
+            <div class="cont-medium radius margin-top-0 padding-top-0"><h3 class="margin-top-0 padding-top-0">
+                    Informations générales</h3>
                 <p style="text-align: start">
-                    Langue: {% if item.lang %} <span class="bold"> {{ item.lang }} </span>{% else %} <span class="bold"> Non renseigné </span> {% endif %}
+                    Langue:    {% if item.lang %} <span class="bold"> {{ item.lang }} </span>{% else %} <span class="bold"> Non renseigné </span> {% endif %}
                     <br>
-                    Editeur: {% if item.publisher %} <span class="bold"> {{ item.publisher }} </span> <br>  {% else %}
+                    Editeur:    {% if item.publisher %} <span class="bold"> {{ item.publisher }} </span> <br>  {% else %}
                     <span
                             class="bold"> Non renseigné  </span> {% endif %}<br>
-                    Auteur: {% if item.author %} <span class="bold"> {{ item.author }} </span> <br>  {% else %} <span
+                    Auteur:    {% if item.author %} <span class="bold"> {{ item.author }} </span> <br>  {% else %} <span
                         class="bold"> Non renseigné </span> {% endif %}<br>
-                    Illustrateur: {% if item.illustrator %}  <span class="bold"> {{ item.illustrator }} </span>
+                    Illustrateur:    {% if item.illustrator %}  <span class="bold"> {{ item.illustrator }} </span>
                         <br>  {% else %} <span class="bold"> Non renseigné </span> {% endif %} <br>
-                    Age minimum conseillé par l'éditeur: {% if item.PlayerNbMax %} <span
+                    Age minimum conseillé par l'éditeur:    {% if item.PlayerNbMax %} <span
                             class="bold"> {{ item.playerNbMax }} </span>
                         <br>  {% else %} <span class="bold"> Non renseigné </span> {% endif %} <br>
                     Nombre de
-                    joueurs: {% if item.playerNbMin and itemPlayerMax %} de <span
+                    joueurs:    {% if item.playerNbMin and itemPlayerMax %} de <span
                             class="bold"> {{ item.playerNbMin }} </span> à <span
                             class="bold"> {{ item.playerNbMax }} </span> {% else %} <span
-                            class="bold"> Non  </span> {% endif %}
+                            class="bold"> Non  </span> {% endif %} <br>
+                    Catégorie(s):
+                    {% for category in item.categories %}
+                        <span
+                                class="bold"> {{ category }}</span>
+                    {% endfor %}
                 </p>
+                <div class="cont-result">icone | icone | icone | icone | icone | icone |</div>
 
 
             </div>
 
-            <div class="cont-medium radius"><h3>Historique des prêts</h3>
+            <div class="cont-medium-height-locked radius scroller margin-top-0 padding-top-0"><h3
+                        class="margin-top-0 padding-top-0">Historique des prêts</h3>
                 {% for loan in item.loans %}
 
                     {% for relation in loan.family.relationships %}
@@ -68,7 +77,7 @@
                     Prété le: {{ loan.startDateTime|date('d-m-Y') }} | <br>
                     {% if loan.effectReturnDateTime %}  rendu le: <span
                             style="color: #25963F">{{ loan.effectReturnDateTime|date('d-m-Y') }}</span> {% else %}retour prévu le:
-                        <span style="color: #B0413E">{{ loan.datePreviewBack }}</span> {% endif %} |
+                        <span style="color: #B0413E">{{ loan.datePreviewBack|date('d-m-Y') }}</span> {% endif %} |
                     rendu complet: {% if loan.completenessReturn == 1 %}  <span
                         style="color: #25963F">OUI</span> {% else %}
                     <span style="color: #B0413E">NON</span> {% endif %}
@@ -81,21 +90,20 @@
 
             </div>
 
-            <div class="cont-medium radius text-center"><h3>Prêter</h3>
+            <div class="cont-medium radius text-center margin-top-0 padding-top-0 relative"><h3
+                        class="margin-top-0 padding-top-0">Prêter</h3>
                 {% if item.available == 1 %}
-                    <div class="">
+                    <div class="absolute">
                         <h2>Prêter le jeu à une famille?</h2>
 
                         <form class="text-center" style="width: 300px"
                               action="{{ path('app_loan_show', {'idItem': item.id }) }}"
                               method="post"><input
+                                    autocomplete="off"
                                     name="word"
                                     id="loansearchfamily"
                                     type="search"/>
-                            <button style="width: 100px  ; font-size: 12px">Rechercher une famille <span
-                                        class="material-symbols-outlined">
-     family_restroom
-     </span>
+                            <button style="width: 100px  ; font-size: 12px">Rechercher une famille <img style="width: 30px" src="/img/add_family.svg" alt="">
                             </button>
                         </form>
 

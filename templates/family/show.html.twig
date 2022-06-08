@@ -8,7 +8,7 @@
 {% block body %}
     <div class="cont-hidden flex-wrap">
 
-        <div class="cont-title"><h1>Famille {% for relationship in family.relationships %}
+        <div class="cont-title padding-top-0 margin-top-0"><h1>Famille {% for relationship in family.relationships %}
 
                     {% if relationship.isOwner == 1 %}
                         <span style="color: #25963F">{{ relationship.member.lastName|upper }}</span>
@@ -18,10 +18,11 @@
 
         </div>
 
-        <div class="cont radius-bottom flex-wrap">
+        <div class="cont radius-bottom flex-wrap padding-top-0 margin-top-0">
 
 
-            <div style="text-align: start" class="cont-medium radius"><h2 style="text-align: center">Coordonnées</h2>
+            <div style="text-align: start" class="cont-medium radius padding-top-0"><h3
+                        class="padding-top-0 margin-top-0" style="text-align: center">Coordonnées</h3>
                 Numéro d'identification: {{ family.id }} <br>
                 Date d'enregistrement de la famille: {{ family.registerDate|date('d-m-Y') }} <br>
                 Titulaire: {% for relationship in family.relationships %}
@@ -40,7 +41,10 @@
 
                 {% endfor %}
             </div>
-            <div class="cont-medium radius"><h2>Informations</h2>
+            <div class="cont-medium radius padding-top-0"><h3 class="padding-top-0 margin-top-0">
+                    Informations</h3>
+
+
                 Possibilité de prêt restante: {{ family.maxLoanSimultaneous }} <br>
                 Paiement à jour: <br>
                 {% if family.paymentOK %} <img style="width: 30px" src="/img/available.svg" alt="OK">
@@ -70,7 +74,9 @@
 
             </div>
 
-            <div class="cont-medium radius"><h2>Historique des prêts</h2>
+            <div class="cont-medium-height-locked radius scroller padding-top-0"><h3 class="padding-top-0 margin-top-0">
+                    Historique des
+                    prêts</h3>
                 {% for loan in family.loan %}
                     <div class="cont-result">
                         Jeu: {{ loan.item }} <br>
@@ -91,11 +97,12 @@
 
             </div>
 
-            <div class="cont-medium radius"><h2>Liste des membres</h2>
+            <div class="cont-medium radius  padding-top-0"><h3 class="padding-top-0 margin-top-0">Liste des membres</h3>
                 <div class="box">
                     <button class=""><a class=""
-                                        href="{{ path('app_member_new_in_existing', {'idFamily': family.id}) }}">Ajouter
-                            un adhérant</a></button>
+                                        href="{{ path('app_member_new_in_existing', {'idFamily': family.id}) }}">
+                            Ajouter
+                            un adhérant </a></button>
                 </div>
                 {% for relationship in family.relationships %}
                     <div class="cont-result">

@@ -3,9 +3,10 @@
 {% block title %}New Loan{% endblock %}
 
 {% block body %}
-    <h1>Prêter le jeu <span style="color: #B0413E">  {{ item.name }} </span> à la famille <span style="color: #B0413E"> {{ member.lastName }}</span> ?</h1>
+    <div class="cont">
+    <div ><h1>Prêter le jeu <span style="color: #B0413E">  {{ item.name }} </span> à la famille <span style="color: #B0413E"> {{ member.lastName }}</span> ?</h1></div>
 
-    {{ include('loan/_form.html.twig') }}
-
-    <a href="{{ path('app_item_show',{'id': item.id}) }}">Retour</a>
+  <div style="justify-content: center">  {{ include('loan/_form.html.twig') }}
+  </div>
+    </div>
 {% endblock %}
