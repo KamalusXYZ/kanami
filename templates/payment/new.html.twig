@@ -3,16 +3,20 @@
 {% block title %}Nouveau paiement de cotisation{% endblock %}
 
 {% block body %}
-    <h1>Paiement de la cotisation</h1>
-    <p>Pour pouvoir effectuer un emprûnt ou participer à une cession la cotisation doit être payée. Néanmoins, vous pouvez finir l’enregistrement de la famille sans valider cette étape, et un délai de 15 jours sera accorder pour le paiement.
-        <br> <strong>Pour ça choisissez "Payez plus tard" le mode de paiement</strong> </p>
+    <div class="cont-hidden ">
+        <div class="cont-title"><h1>Paiement de la cotisation</h1></div>
+        <div class="cont margin-0 padding-0">
+
+            <p class="bold text-center">Pour pouvoir effectuer un emprûnt ou participer à une cession la cotisation doit être payée. Néanmoins,
+                vous
+                pouvez finir l’enregistrement de la famille sans valider cette étape, et un délai de 15 jours sera
+                accorder
+                pour le paiement.
+                <br> <strong>Pour ça choisissez "Payez plus tard" le mode de paiement</strong></p>
 
 
-    {{ include('payment/_form.html.twig') }}
+            {{ include('payment/_form.html.twig') }}
+        </div>
 
-{#    <button><a href="{{ path('app_payment_new') }}">Payez plus tard</a></button>#}
-
-{#, {'idFamily': idFamily}, {'idMember': idMember})#}
-    
-    <a href="{{ path('app_payment_index') }}">back to list</a>
+    </div>
 {% endblock %}

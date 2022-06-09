@@ -3,9 +3,14 @@
 {% block title %}New CategoryDependance{% endblock %}
 
 {% block body %}
-    <h1>Create new CategoryDependance</h1>
 
-    {{ include('category_dependance/_form.html.twig') }}
+    <div class="cont-hidden ">
+        <div class="cont-title"><h1>Choisissez une catégorie</h1></div>
+        <div class="cont margin-0 padding-0">
 
-    <a href="{{ path('app_category_dependance_index') }}">back to list</a>
+
+            {{ include('category_dependance/_form.html.twig') }}
+
+        </div>
+    </div>
 {% endblock %}

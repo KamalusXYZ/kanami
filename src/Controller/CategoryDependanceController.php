@@ -2,12 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
 use App\Entity\CategoryDependance;
-use App\Entity\Item;
 use App\Form\CategoryDependanceType;
 use App\Repository\CategoryDependanceRepository;
-use App\Repository\CategoryRepository;
 use App\Repository\ItemRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,7 +39,7 @@ class CategoryDependanceController extends AbstractController
             $categoryDependanceRepository->add($categoryDependance, true);
 
 
-            return $this->redirectToRoute('app_category_dependance_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_main', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('category_dependance/new.html.twig', [
@@ -81,7 +78,7 @@ class CategoryDependanceController extends AbstractController
     #[Route('/{id}', name: 'app_category_dependance_delete', methods: ['POST'])]
     public function delete(Request $request, CategoryDependance $categoryDependance, CategoryDependanceRepository $categoryDependanceRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$categoryDependance->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $categoryDependance->getId(), $request->request->get('_token'))) {
             $categoryDependanceRepository->remove($categoryDependance, true);
         }
 

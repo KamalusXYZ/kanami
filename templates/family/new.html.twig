@@ -3,9 +3,15 @@
 {% block title %}New Family{% endblock %}
 
 {% block body %}
-    <h1>Ajouter une nouvelle famille</h1>
+    <div class="cont-hidden ">
+        <div class="cont-title"><h1>Ajouter une nouvelle famille</h1></div>
 
-    {{ include('family/_form.html.twig') }}
+        <div class="cont margin-0 padding-0">
 
-    <a href="{{ path('app_main') }}">retour à l'acceuil</a>
+            <p style="font-size: 20px" class="bold text-center">Cliquez sur le bouton pour lancer la création d'une nouvelle fiche famille.</p>
+            {{ include('family/_form.html.twig') }}
+
+        </div>
+    </div>
+
 {% endblock %}

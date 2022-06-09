@@ -3,12 +3,17 @@
 {% block title %}Ajout nouveau membre pour la famille {% endblock %}
 
 {% block body %}
-    <h1>Ajouter un membre supplémentaire ou validez la famille en l'état</h1>
+    <div class="cont-hidden ">
+        <div class="cont-title"><h1>Ajouter un membre supplémentaire ou validez la famille en l'état</h1></div>
+
+        <div class="cont margin-0 padding-0">
+
+            {{ include('member/_form.html.twig') }}
+            <button><a href="{{ path('app_payment_new', {'idFamily': family.id}) }}">Valider les membres de la famille,
+                    et
+                    passer à la phase de paiement</a></button>
+        </div>
 
 
-    {{ include('member/_form.html.twig') }}
-
-<button><a href="{{ path('app_payment_new', {'idFamily': family.id}) }}">Valider les membres de la famille, et passer à la phase de paiement</a></button>
-
-
+    </div>
 {% endblock %}

@@ -3,17 +3,22 @@
 {% block title %}Nouveau paiement de dépot de garantie{% endblock %}
 
 {% block body %}
-    <h1>Paiement dépot de garantie</h1>
-    <p>Pour pouvoir effectuer un emprûnt ou participer un dépot de garantie doit être donné. Néanmoins, vous pouvez
-        finir l’enregistrement de la famille sans valider cette étape, et un délai de 15 jours sera accorder pour le
-        paiement.
-        <br> <strong>Pour ça choisissez "Payez plus tard" le mode de paiement</strong>
-    </p>
+    <div class="cont-hidden ">
+        <div class="cont-title"><h1>Paiement dépot de garantie</h1></div>
+        <div class="cont margin-0 padding-0">
 
 
-    {{ include('payment/_form.html.twig') }}
+            <p class="text-center bold">Pour pouvoir effectuer un emprûnt ou participer un dépot de garantie doit être donné. Néanmoins, vous
+                pouvez
+                finir l’enregistrement de la famille sans valider cette étape, et un délai de 15 jours sera accorder
+                pour le
+                paiement.
+                <br> <strong>Pour ça choisissez "Payez plus tard" le mode de paiement</strong>
+            </p>
 
-    {#    <button><a href="{{ path('app_payment_index') }}">Payez plus tard</a></button> #}
 
-    <a href="{{ path('app_payment_index') }}">back to list</a>
+            {{ include('payment/_form.html.twig') }}
+
+        </div>
+    </div>
 {% endblock %}

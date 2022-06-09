@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}KaNaMi{% endblock %}
+
+{% block body %}
+    {#    // supprimer plus tard le style min height 500px #}
+    <div style="min-height: 500px" class="cont-small radius-bottom-left padding-0 bg-white margin-0">
+
+
+    </div>
+
+    {#    supprimer plus tard le style min height 500px #}
+    <div style="min-height: 500px" class="cont-big radius-bottom-right padding-0 bg-white">
+
+        <h1>Reglages</h1>
+
+        <button class=""><a class="" href="{{ path('app_category_new') }}">Ajouter une catégorie</a></button>
+
+        <button class=""><a class="" href="{{ path('app_family_new') }}">Ajouter une famille</a></button>
+
+        <button class=""><a class="text-white text-decoration-none" href="{{ path('app_item_new') }}">Ajouter un
+                jeu</a></button>
+
+
+    </div>
+
+    </div>
+{% endblock %}

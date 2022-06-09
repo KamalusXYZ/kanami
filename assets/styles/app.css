@@ -14,6 +14,8 @@ body {
 
     background-image: url("https://lh3.googleusercontent.com/BoNssU4yW1fSjpblBYpAuB917yBmYolbBt6rAoS71E5nZ02XHhnUihBAU2TZolfrx8ijsez4r_8ohTucyt9OBaqy59WxuTvWGcPXCO3vHjzV6xgwBw=w1864-rj");
     background-size: cover;
+    background-attachment: fixed;
+
 
     --couleur-pri: #739AD6;
     --couleur-pri-light: #8BB3EA;
@@ -294,6 +296,11 @@ h1 {
     border: 5px solid #333333;
 }
 
+.text-center {
+    text-align: center;
+}
+
+
 .bold {
     font-weight: bold;
 }
@@ -389,6 +396,13 @@ button:active {
 
 }
 
+.flex {
+    display: flex;
+    justify-content: space-between;
+
+
+}
+
 .flex-wrap {
     display: flex;
     justify-content: space-between;
@@ -440,6 +454,14 @@ tfoot {
 
 .scroller {
 
+    overflow-y: scroll;
+    scrollbar-color: rebeccapurple green;
+    scrollbar-width: thin;
+}
+
+
+.scroller {
+
     scroll-behavior: smooth;
     overflow-y: scroll;
     scrollbar-color: white;
@@ -479,17 +501,19 @@ css pour accéder à des div créées par symfony
 
 }
 
-.cont form div div{
+.cont form div div {
 
     text-align: center;
     display: flex;
     flex-direction: column;
 }
+
 .cont form div div div {
 
     text-align: center;
 }
-.absolute form{
+
+.absolute form {
     left: 50%;
     top: 80%;
     margin-left: -25%;
@@ -497,7 +521,7 @@ css pour accéder à des div créées par symfony
     margin-top: -25%;
 }
 
-.relative{
+.relative {
 
     position: relative;
 }

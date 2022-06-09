@@ -3,10 +3,13 @@
 {% block title %}Nouveau membre pour la famille la nouvelle famille {% endblock %}
 
 {% block body %}
-    <h1>Ajouter un titulaire à la famille</h1>
-    <p>Avant de valider les détails de la famille, vous devez choisir le titulaire du compte: </p>
+    <div class="cont-hidden ">
+        <div class="cont-title"><h1>Ajouter un titulaire à la famille</h1></div>
+        <div class="cont margin-0 padding-0">
+            <p style="font-size: 20px" class="text-center bold">Avant de valider les détails de la famille, vous devez
+                choisir le titulaire du compte: </p>
+            <div>{{ include('member/_form.html.twig') }}</div>
 
-    {{ include('member/_form.html.twig') }}
-
-    <a href="{{ path('app_member_index') }}">back to list</a>
+        </div>
+    </div>>
 {% endblock %}

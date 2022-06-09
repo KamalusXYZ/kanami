@@ -3,12 +3,17 @@
 {% block title %}Ajout d'une famille{% endblock %}
 
 {% block body %}
-    <h1>Confirmation</h1>
-    <p>Confirmez que la famille {{ member.lastName }} va etre créee avec pour titulaire {{  member.firstName }}</p>
+
+    <div class="cont-hidden ">
+        <div class="cont-title"><h1>Confirmation</h1></div>
+        <div class="cont margin-0 padding-0">
+            <p class="bold text-center" style="font-size: 20px">Confirmez que la famille {{ member.lastName|upper }} va
+                etre
+                créee avec pour
+                titulaire {{ member.firstName|upper }}</p>
 
 
-
-    {{ include('relationship/_form.html.twig') }}
-
-
+            {{ include('relationship/_form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}
