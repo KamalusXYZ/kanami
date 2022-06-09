@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <div class="cont-small radius-bottom-left padding-0 bg-white">
+    <div class="cont-small radius-bottom-left padding-0 bg-white margin-0">
         <div>
             <div class="">
                 <form action="{{ path('app_search_item') }}" method="post">
@@ -34,7 +34,7 @@ family_restroom
 
 
     </div>
-    <div class="cont-big radius-bottom-right padding-0 bg-white">
+    <div class="cont-big radius-bottom-right padding-0 bg-white margin-0">
         <div>
             {% if resultsItem != '' %}
                 <p>Il y a {{ resultsItem|length }} résultat(s). <br>

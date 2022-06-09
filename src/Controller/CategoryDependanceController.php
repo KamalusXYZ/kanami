@@ -39,7 +39,7 @@ class CategoryDependanceController extends AbstractController
             $categoryDependanceRepository->add($categoryDependance, true);
 
 
-            return $this->redirectToRoute('app_main', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_settings', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('category_dependance/new.html.twig', [

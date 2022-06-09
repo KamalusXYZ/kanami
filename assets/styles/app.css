@@ -11,6 +11,7 @@ ajouter au header:
 
 body {
     font-family: 'Roboto', sans-serif;
+    font-size: 12px!important;
 
     background-image: url("https://lh3.googleusercontent.com/BoNssU4yW1fSjpblBYpAuB917yBmYolbBt6rAoS71E5nZ02XHhnUihBAU2TZolfrx8ijsez4r_8ohTucyt9OBaqy59WxuTvWGcPXCO3vHjzV6xgwBw=w1864-rj");
     background-size: cover;
@@ -416,6 +417,14 @@ button:active {
     justify-content: space-between;
     align-items: center;
 }
+
+.flex-space-center-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
 
 .flex-left {
     display: flex;

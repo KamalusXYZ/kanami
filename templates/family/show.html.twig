@@ -22,7 +22,8 @@
 
 
             <div style="text-align: start" class="cont-medium radius padding-top-0"><h3
-                        class="padding-top-0 margin-top-0" style="text-align: center">Coordonnées</h3>
+                        class="padding-top-0 margin-top-0 margin-bottom-0 margin-5" style="text-align: center">
+                    Coordonnées</h3>
                 Numéro d'identification: {{ family.id }} <br>
                 Date d'enregistrement de la famille: {{ family.registerDate|date('d-m-Y') }} <br>
                 Titulaire: {% for relationship in family.relationships %}
@@ -35,13 +36,14 @@
                         {{ relationship.member.otherAddressDetail }} <br> <br>
                         Contact: <br>
                         Email: {{ relationship.member.email }} <br>
-                        Numéro de télephone: {{ relationship.member.phone }} <br>
+                        Numéro de télephone: {{ relationship.member.phone }}
 
                     {% endif %}
 
                 {% endfor %}
             </div>
-            <div class="cont-medium radius padding-top-0"><h3 class="padding-top-0 margin-top-0">
+            <div class="cont-medium radius padding-top-0"><h3
+                        class="padding-top-0 margin-top-0 margin-bottom-0 margin-5">
                     Informations</h3>
 
 
@@ -74,7 +76,8 @@
 
             </div>
 
-            <div class="cont-medium-height-locked radius scroller padding-top-0"><h3 class="padding-top-0 margin-top-0">
+            <div class="cont-medium-height-locked radius scroller padding-top-0"><h3
+                        class="padding-top-0 margin-top-0 margin-bottom-0 margin-5">
                     Historique des
                     prêts</h3>
                 {% for loan in family.loan %}
@@ -97,10 +100,11 @@
 
             </div>
 
-            <div class="cont-medium radius  padding-top-0"><h3 class="padding-top-0 margin-top-0">Liste des membres</h3>
+            <div class="cont-medium radius  "><h3 class="padding-top-0 margin-top-0 margin-bottom-0 margin-5">Liste des
+                    membres</h3>
                 <div class="box">
-                    <button class=""><a class=""
-                                        href="{{ path('app_member_new_in_existing', {'idFamily': family.id}) }}">
+                    <button class="margin-0"><a class=""
+                                                href="{{ path('app_member_new_in_existing', {'idFamily': family.id}) }}">
                             Ajouter
                             un adhérant </a></button>
                 </div>
