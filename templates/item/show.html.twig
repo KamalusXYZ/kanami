@@ -65,7 +65,7 @@
             <div class="cont-medium-height-locked radius scroller margin-top-0 padding-top-0"><h3
                         class="margin-top-0 padding-top-0">Historique des prêts</h3>
                 {% for loan in item.loans %}
-
+                    
                     {% for relation in loan.family.relationships %}
                         {% if relation.isOwner == 1 %}
                             <div class="padding-5 margin-5 border-1 radius-top-left" style="text-align: start ; background-color: #95D6A4">

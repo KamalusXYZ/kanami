@@ -11,7 +11,7 @@ ajouter au header:
 
 body {
     font-family: 'Roboto', sans-serif;
-    font-size: 12px!important;
+    font-size: 12px !important;
 
     background-image: url("https://lh3.googleusercontent.com/BoNssU4yW1fSjpblBYpAuB917yBmYolbBt6rAoS71E5nZ02XHhnUihBAU2TZolfrx8ijsez4r_8ohTucyt9OBaqy59WxuTvWGcPXCO3vHjzV6xgwBw=w1864-rj");
     background-size: cover;
@@ -99,7 +99,7 @@ h1 {
     width: 30%;
     background-color: rgba(196, 196, 196, 0.3);
     border: 4px solid var(--couleur-pri-light);
-    margin:3px auto;
+    margin: 3px auto;
     text-align: center;
     padding: 8px;
 
@@ -312,6 +312,26 @@ h1 {
     background-color: white;
 }
 
+.bg-red {
+
+    background-color: rgba(176, 65, 62, 0.3);
+}
+
+.bg-green-light {
+
+    background-color: rgba(149, 214, 164, 0.3);
+}
+
+.bg-green {
+
+    background-color: rgba(37, 150, 63, 0.4);
+}
+
+.bg-black-light {
+
+    background-color: rgba(51, 51, 51, 0.3);
+}
+
 
 a {
     color: inherit;
@@ -419,6 +439,13 @@ button:active {
 }
 
 .flex-space-center-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.flex-space-center {
     display: flex;
     justify-content: center;
     align-items: center;
