@@ -142,7 +142,7 @@
             {% for relationship in family.relationships %}
                 <div class="cont-result">
                     {{ relationship.member.firstName }}            {{ relationship.member.lastName }}
-                    {{ relationship.member.birthday.format('d-m-Y') }}
+                    {{ relationship.member.birthday|date('d-m-Y') }}
                 </div>
 
 

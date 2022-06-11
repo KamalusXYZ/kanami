@@ -72,6 +72,7 @@ class FamilyController extends AbstractController
 
 
 
+
         return $this->render('family/show.html.twig', [
             'family' => $family,
         ]);
@@ -127,4 +128,7 @@ class FamilyController extends AbstractController
 
         return $this->redirectToRoute('app_family_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+
 }

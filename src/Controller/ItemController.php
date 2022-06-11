@@ -53,10 +53,17 @@ class ItemController extends AbstractController
     #[Route('/{id}', name: 'app_item_show', methods: ['GET'])]
     public function show(Item $item, LoanRepository $loanRepository, $id): Response
     {
-
+        $loans = $loanRepository->findBy(array('item' => $id, 'effectReturnDateTime' => null));
+        $loan = '';
+        foreach ( $loans as $loan){
+            $loan = $loan;
+        }
+        $family =  $loan->getFamily();
 
         return $this->render('item/show.html.twig', [
             'item' => $item,
+            'loan' => $loan,
+            'family' => $family
 
         ]);
     }

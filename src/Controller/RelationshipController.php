@@ -81,7 +81,7 @@ class RelationshipController extends AbstractController
             $relationship->setFamily($Family);
             $relationship->setMember($member);
             $relationshipRepository->add($relationship, true);
-            return $this->redirectToRoute('app_family_show' , ['idFamily' => $idFamily], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_family_show', ['idFamily' => $idFamily], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm($is_owner == 0 ? 'relationship/new.html.twig' : 'relationship/new_owner.html.twig', [
@@ -125,5 +125,14 @@ class RelationshipController extends AbstractController
         }
 
         return $this->redirectToRoute('app_relationship_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    public function getAge()
+    {
+
+
+        $dateInterval = $this->diff(new \DateTime());
+
+        return $dateInterval->y;
     }
 }

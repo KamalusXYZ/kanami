@@ -167,4 +167,5 @@ class MemberController extends AbstractController
 
         return $this->redirectToRoute('app_member_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }
