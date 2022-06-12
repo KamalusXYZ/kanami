@@ -3,12 +3,21 @@
 {% block title %}Ajout d'une famille{% endblock %}
 
 {% block body %}
-    <h1>Confirmation</h1>
-    <p>Ajouter le membre {{ member.lastName }} {{ member.firstName  }}</p>
+    <div class="cont-hidden ">
 
+        <div class="cont-title"><h1>Ajouter un nouveau membre à la
+                famille {% for relationship in family.relationships %}
 
+                    {% if relationship.isOwner == 1 %}
+                        <span style="color: #25963F">{{ relationship.member.lastName|upper }}</span>
+                    {% endif %}
+                {% endfor %}
+            </h1>
 
-    {{ include('relationship/_form.html.twig') }}
+        </div>
 
-
+        <div class="cont margin-0 padding-0">
+            {{ include('relationship/_form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}

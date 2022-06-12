@@ -67,7 +67,7 @@ class RelationshipController extends AbstractController
     public function newInExisting(Request $request, RelationshipRepository $relationshipRepository, FamilyRepository $familyRepository, MemberRepository $memberRepository, $is_owner = 0): Response
     {
         $idFamily = $request->get('idFamily');
-        $Family = $familyRepository->find(id: $idFamily);
+        $family = $familyRepository->find(id: $idFamily);
         $idMember = $request->get('idMember');
         $member = $memberRepository->find(id: $idMember);
 
@@ -78,7 +78,7 @@ class RelationshipController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $relationship->setIsOwner($is_owner);
-            $relationship->setFamily($Family);
+            $relationship->setFamily($family);
             $relationship->setMember($member);
             $relationshipRepository->add($relationship, true);
             return $this->redirectToRoute('app_family_show', ['idFamily' => $idFamily], Response::HTTP_SEE_OTHER);
@@ -87,7 +87,8 @@ class RelationshipController extends AbstractController
         return $this->renderForm($is_owner == 0 ? 'relationship/new.html.twig' : 'relationship/new_owner.html.twig', [
             'relationship' => $relationship,
             'form' => $form,
-            'member' => $member
+            'member' => $member,
+            'family'=> $family
         ]);
     }
 

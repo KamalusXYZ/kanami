@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <div class="cont-small radius-bottom-left padding-0 bg-white margin-0">
+    <div class="cont-small-height-locked radius-bottom-left padding-0 bg-white margin-0 flex-justify-center align-center">
         <div>
             <div class="">
                 <form action="{{ path('app_search_item') }}" method="post">
@@ -34,7 +34,7 @@ family_restroom
 
 
     </div>
-    <div class="cont-big radius-bottom-right padding-0 bg-white margin-0">
+    <div class="cont-big-height-locked radius-bottom-right padding-0 bg-white margin-0">
         <div>
             {% if resultsItem != '' %}
                 <p>Il y a {{ resultsItem|length }} résultat(s). <br>
@@ -56,7 +56,7 @@ family_restroom
                             <div><img src="/img/unavailable.svg" alt="indisponible"></div>
                         {% endif %}
                         <div style="font-weight: bold ; font-size: 20px; text-align: left">{{ result.name }}</div>
-                        <div><a style="color: #25963F" href="{{ path('app_item_show', { 'id': result.id }) }}">Voir
+                        <div><a style="color: #25963F ; font-size: 25px" href="{{ path('app_item_show', { 'id': result.id }) }}">Voir
                                 la
                                 fiche du jeu</a></div>
 

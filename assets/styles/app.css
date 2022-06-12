@@ -449,6 +449,17 @@ button:active {
     align-items: center;
 }
 
+.flex-justify-center {
+    display: flex;
+    justify-content: center;
+
+
+}
+.align-center{
+
+    align-items: center;
+}
+
 .flex-space-center-wrap {
     display: flex;
     justify-content: center;
@@ -514,7 +525,23 @@ tfoot {
     scrollbar-color: white;
     scrollbar-width: thin;
 }
+#search-item{
 
+    min-height: 35px;
+    font-size: 15px;
+
+}
+#familySearch{
+
+    min-height: 35px;
+    font-size: 15px;
+
+}
+#loansearchfamily{
+
+    height: fit-content;
+    font-size: 18px;
+}
 
 /**
 css pour accéder à des div créées par symfony
