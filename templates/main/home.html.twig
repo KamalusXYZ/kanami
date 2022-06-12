@@ -92,10 +92,14 @@ family_restroom
 
                         {% endfor %}
 
-
-                        <div class="bold">Famille {{ result.lastName|upper }}</div>
                         {% for relation in result.relationships %}
-                            <div><a style="color: #25963F"
+                            <div style="font-size: 25px" class="bold">
+                                <a style="color: #25963F ; font-size: 25px"
+                                   method="post"
+                                   href="{{ path('app_family_show', {'idFamily': relation.family.id}) }}">Famille {{ result.lastName|upper }}</a>
+                            </div>
+
+                            <div><a style="color: #25963F ; font-size: 25px"
                                     method="post"
                                     href="{{ path('app_family_show', {'idFamily': relation.family.id}) }}">Voir la
                                     fiche

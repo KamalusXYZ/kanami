@@ -7,6 +7,7 @@ use App\Form\ItemType;
 use App\Repository\FamilyRepository;
 use App\Repository\ItemRepository;
 use App\Repository\LoanRepository;
+use App\Repository\MemberRepository;
 use App\Repository\RelationshipRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -51,19 +52,21 @@ class ItemController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_item_show', methods: ['GET'])]
-    public function show(Item $item, LoanRepository $loanRepository, $id): Response
+    public function show(Item $item, LoanRepository $loanRepository,MemberRepository $memberRepository,RelationshipRepository $relationshipRepository, $id): Response
     {
         $loans = $loanRepository->findBy(array('item' => $id, 'effectReturnDateTime' => null));
         $loan = '';
-        foreach ( $loans as $loan){
+        foreach ($loans as $loan) {
             $loan = $loan;
         }
-        $family =  $loan->getFamily();
+
+
+
 
         return $this->render('item/show.html.twig', [
             'item' => $item,
             'loan' => $loan,
-            'family' => $family
+
 
         ]);
     }
