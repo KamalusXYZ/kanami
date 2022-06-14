@@ -455,7 +455,8 @@ button:active {
 
 
 }
-.align-center{
+
+.align-center {
 
     align-items: center;
 }
@@ -525,19 +526,22 @@ tfoot {
     scrollbar-color: white;
     scrollbar-width: thin;
 }
-#search-item{
+
+#search-item {
 
     min-height: 35px;
     font-size: 15px;
 
 }
-#familySearch{
+
+#familySearch {
 
     min-height: 35px;
     font-size: 15px;
 
 }
-#loansearchfamily{
+
+#loansearchfamily {
 
     height: fit-content;
     font-size: 18px;
@@ -598,5 +602,13 @@ css pour accéder à des div créées par symfony
 .relative {
 
     position: relative;
+}
+
+video {
+
+    width: 100%;
+    object-fit: scale-down;
+box-sizing: border-box;
+
 }
 
