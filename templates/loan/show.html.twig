@@ -14,9 +14,9 @@
                     {% if relation.isOwner == 1 %}
 
                         <a href="{{ path('app_loan_new', {'idItem': item.id, 'idMember': result.id}) }}">
-                            <div style="font-size: 30px ; background-color: rgba(149,214,164,0.3)"
-                                 class="cont-result flex-align-center bold">
-                                Famille {{ result.lastname }}
+                            <div style=" background-color: rgba(149,214,164,0.2)"
+                                 class="cont-result flex-align-center font-size-20">
+                                Famille {{ result.lastname|upper }}
                                 <img style="width: 30px" src="/img/valid_family.svg" alt=""></div>
                         </a>
 

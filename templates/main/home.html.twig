@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <div class="cont-small-height-locked radius-bottom-left padding-0 bg-white margin-0 flex-justify-center align-center">
+    <div class="cont-small-min-height-locked radius-bottom-left padding-0 bg-white margin-0 flex-justify-center align-center">
         <div>
             <div class="">
                 <form action="{{ path('app_search_item') }}" method="post">
@@ -34,11 +34,13 @@ family_restroom
 
 
     </div>
-    <div class="cont-big-height-locked radius-bottom-right padding-0 bg-white margin-0">
+    <div class="cont-big-min-height-locked radius-bottom-right padding-0 bg-white margin-0">
         <div>
             {% if resultsItem != '' %}
-                <p>Il y a {{ resultsItem|length }} résultat(s). <br>
-                    Voici les résultats de la recherche pour : <strong>{{ searchWord }}</strong></p>
+                <p class="bold font-size-15">
+                    Voici les {{ resultsItem|length }} résultat(s) pour la recherche: <strong
+                            class="font-size-20"> {{ searchWord|upper }}</strong>
+                </p>
             {% endif %}
             {% if resultsFamily %}
                 <p>Voici les résultats de la recherche pour : <strong>{{ searchWord }}</strong></p>
@@ -56,7 +58,8 @@ family_restroom
                             <div><img src="/img/unavailable.svg" alt="indisponible"></div>
                         {% endif %}
                         <div style="font-weight: bold ; font-size: 20px; text-align: left">{{ result.name }}</div>
-                        <div><a style="color: #25963F ; font-size: 25px" href="{{ path('app_item_show', { 'id': result.id }) }}">Voir
+                        <div><a style="color: #25963F ; font-size: 25px"
+                                href="{{ path('app_item_show', { 'id': result.id }) }}">Voir
                                 la
                                 fiche du jeu</a></div>
 
