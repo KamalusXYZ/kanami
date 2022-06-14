@@ -97,7 +97,7 @@ h1 {
 
 .cont-small {
     width: 30%;
-    background-color: rgba(196, 196, 196, 0.3);
+    background-color: rgba(139, 179, 234, 0.2);
     border: 4px solid var(--couleur-pri-light);
     margin: 3px auto;
     text-align: center;
@@ -107,7 +107,7 @@ h1 {
 
 .cont-medium {
     width: 500px;
-    background-color: rgba(196, 196, 196, 0.3);
+    background-color: rgba(139, 179, 234, 0.2);
     border: 4px solid var(--couleur-pri-light);
     margin: 3px auto;
     text-align: center;
@@ -117,7 +117,7 @@ h1 {
 
 .cont-big {
     width: 68%;
-    background-color: rgba(196, 196, 196, 0.3);
+    background-color: rgba(139, 179, 234, 0.2);
     border: 4px solid var(--couleur-pri-light);
     margin: 3px auto;
     text-align: center;
@@ -127,7 +127,7 @@ h1 {
 
 .cont-small-height-locked {
     width: 30%;
-    background-color: rgba(196, 196, 196, 0.3);
+    background-color: rgba(139, 179, 234, 0.2);
     border: 4px solid var(--couleur-pri-light);
     margin: 3px auto;
     text-align: center;
@@ -137,7 +137,7 @@ h1 {
 
 .cont-medium-height-locked {
     width: 500px;
-    background-color: rgba(196, 196, 196, 0.3);
+    background-color: rgba(139, 179, 234, 0.2);
     border: 4px solid var(--couleur-pri-light);
     margin: 3px auto;
     text-align: center;
@@ -147,12 +147,42 @@ h1 {
 
 .cont-big-height-locked {
     width: 68%;
-    background-color: rgba(196, 196, 196, 0.3);
+    background-color: rgba(139, 179, 234, 0.2);
     border: 4px solid var(--couleur-pri-light);
     margin: 3px auto;
     text-align: center;
     padding: 8px;
     height: 300px;
+}
+
+.cont-small-min-height-locked {
+    width: 30%;
+    background-color: rgba(139, 179, 234, 0.2);
+    border: 4px solid var(--couleur-pri-light);
+    margin: 3px auto;
+    text-align: center;
+    padding: 8px;
+    min-height: 300px;
+}
+
+.cont-medium-min-height-locked {
+    width: 500px;
+    background-color: rgba(139, 179, 234, 0.2);
+    border: 4px solid var(--couleur-pri-light);
+    margin: 3px auto;
+    text-align: center;
+    padding: 8px;
+    min-height: 300px;
+}
+
+.cont-big-min-height-locked {
+    width: 68%;
+    background-color: rgba(139, 179, 234, 0.2);
+    border: 4px solid var(--couleur-pri-light);
+    margin: 3px auto;
+    text-align: center;
+    padding: 8px;
+    min-height: 300px;
 }
 
 .cont-small-hidden {
@@ -299,11 +329,6 @@ h1 {
 
 .text-center {
     text-align: center;
-}
-
-
-.bold {
-    font-weight: bold;
 }
 
 
@@ -455,7 +480,8 @@ button:active {
 
 
 }
-.align-center{
+
+.align-center {
 
     align-items: center;
 }
@@ -525,19 +551,22 @@ tfoot {
     scrollbar-color: white;
     scrollbar-width: thin;
 }
-#search-item{
+
+#search-item {
 
     min-height: 35px;
     font-size: 15px;
 
 }
-#familySearch{
+
+#familySearch {
 
     min-height: 35px;
     font-size: 15px;
 
 }
-#loansearchfamily{
+
+#loansearchfamily {
 
     height: fit-content;
     font-size: 18px;
@@ -599,4 +628,39 @@ css pour accéder à des div créées par symfony
 
     position: relative;
 }
+
+/******Fonts (size , weight,...)/
+ */
+.font-size-15 {
+    font-size: 15px;
+}
+
+.font-size-20 {
+    font-size: 20px;
+}
+
+.font-size-25 {
+    font-size: 25px;
+}
+
+.font-size-30 {
+    font-size: 30px;
+}
+
+.font-size-35 {
+    font-size: 35px;
+}
+
+.font-size-40 {
+    font-size: 40px;
+}
+
+
+.bold {
+    font-weight: bold;
+}
+
+
+
+
 
