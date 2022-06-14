@@ -4,8 +4,7 @@
 
 {% block body %}
 
-    <div style="height: 612px"
-         class="cont-small-height-locked radius-bottom-left padding-0 bg-white margin-0 flex-justify-center align-center ">
+    <div class="cont-small-min-height-locked radius-bottom-left padding-0 bg-white margin-0 flex-justify-center align-center">
         <div>
             <div class="">
                 <form action="{{ path('app_search_item') }}" method="post">
@@ -35,28 +34,19 @@ family_restroom
 
 
     </div>
-    <div style="height: 612px" class="cont-big-height-locked  padding-0 bg-white margin-0">
+    <div class="cont-big-min-height-locked radius-bottom-right padding-0 bg-white margin-0">
         <div>
             {% if resultsItem != '' %}
-                <p>Il y a {{ resultsItem|length }} résultat(s). <br>
-                    Voici les résultats de la recherche pour : <strong>{{ searchWord }}</strong></p>
+                <p class="bold font-size-15">
+                    Voici les {{ resultsItem|length }} résultat(s) pour la recherche: <strong
+                            class="font-size-20"> {{ searchWord|upper }}</strong>
+                </p>
             {% endif %}
             {% if resultsFamily %}
                 <p>Voici les résultats de la recherche pour : <strong>{{ searchWord }}</strong></p>
             {% endif %}
 
-            {% if resultsItem == null %}
-                <div style="">
-                    <video _ngcontent-nxg-c28="" aria-hidden="true" tabindex="-1" class="" loop="loop"
-                           autoplay="autoplay"
-                           poster="undefined=w960-rj">
-                        <source _ngcontent-nxg-c28=""
-                                data-src="https://kstatic.googleusercontent.com/files/2ae55adccf63bac71ab324690aa09258ae234c78ca76a129cb224f49eb61ccf7540fdc6080abf69a53a62138890a8ef7aa84139c091bfa0a045e5fce84de3d24"
-                                src="https://kstatic.googleusercontent.com/files/2ae55adccf63bac71ab324690aa09258ae234c78ca76a129cb224f49eb61ccf7540fdc6080abf69a53a62138890a8ef7aa84139c091bfa0a045e5fce84de3d24">
-                    </video>
-                </div>
 
-            {% endif %}
 
             {% if resultsItem %}
                 {% for result in resultsItem %}
