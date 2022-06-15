@@ -57,14 +57,23 @@
                                 class="bold"> {{ category }}</span>
                     {% endfor %}
                 </p>
-                <div class="cont-result">
+                <div class="cont-result flex-align-center">
 
-                    {% if  item.playerNbMin and item.playerNbMax %}
-                        <img src="/img/nb_player.svg"> De {{ item.playerNbMin }} à {{ item.playerNbMax }}
+                    <div class="radius padding-5">
 
-                    {% endif %}
-                    {% if item.lang %} <img src="/img/planet.svg" alt="langue"> {{ item.lang }}  {% endif %}
-                    {% if item.ageMin %} <img src="/img/persons.svg" alt="langue"> {{ item.ageMin }}  {% endif %}
+                        {% if  item.playerNbMin and item.playerNbMax %} <div> <img width="32px" height="32px"
+                                    src="/img/nb_players.svg"></div> <div> De {{ item.playerNbMin }} à {{ item.playerNbMax }} joueur(s)</div> {% endif %}
+                    </div>
+                    <div class="radius padding-5" style=" display: inline">
+                        {% if item.lang %} <div><img width="32px" height="32px" src="/img/planet.svg" alt="langue"></div> <div> {{ item.lang }} </div> {% endif %}
+                    </div>
+                    <div class="radius padding-5" style=" display: inline">
+                        {% if item.ageMin %} <div> <img width="32px" height="32px" src="/img/age_min.svg" alt="age mini"> </div> <div>à partir de {{ item.ageMin }} ans</div>  {% endif %}
+                    </div>
+                    <div class="radius padding-5" style=" display: inline">
+                        {% if item.publisherGameDuration %} <div> <img src="/img/time_duration.svg"
+                                                                       alt="durée d'une partie"></div> <div>{{ item.publisherGameDuration }} </div> {% endif %}
+                    </div>
 
 
                 </div>
