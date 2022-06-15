@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <div class="cont-small-min-height-locked radius-bottom-left padding-0 bg-white margin-0 flex-justify-center align-center">
+    <div class="cont-small-height-locked radius-bottom-left padding-0 bg-white margin-0 flex-justify-center align-center">
         <div>
             <div class="">
                 <form action="{{ path('app_search_item') }}" method="post">
@@ -34,88 +34,100 @@ family_restroom
 
 
     </div>
-    <div class="cont-big-min-height-locked radius-bottom-right padding-0 bg-white margin-0">
-        <div>
-            {% if resultsItem != '' %}
-                <p class="bold font-size-15">
-                    Voici les {{ resultsItem|length }} résultat(s) pour la recherche: <strong
-                            class="font-size-20"> {{ searchWord|upper }}</strong>
-                </p>
-            {% endif %}
-            {% if resultsFamily %}
-                <p>Voici les résultats de la recherche pour : <strong>{{ searchWord }}</strong></p>
-            {% endif %}
+    <div class="cont-big-height-locked padding-0 bg-white margin-0">
+
+        {% if resultsItem == "" and resultsFamily == "" %}
+
+            <video loop="loop" autoplay="autoplay"
+                   src="https://kstatic.googleusercontent.com/files/2ae55adccf63bac71ab324690aa09258ae234c78ca76a129cb224f49eb61ccf7540fdc6080abf69a53a62138890a8ef7aa84139c091bfa0a045e5fce84de3d24">
+
+
+            </video>
+        {% endif %}
 
 
 
-            {% if resultsItem %}
-                {% for result in resultsItem %}
-                    <div class="cont-result flex-align-center">
 
-                        {% if result.available == 1 %}
+        {% if resultsItem != '' %}
+            <p class="bold font-size-15">
+                Voici les {{ resultsItem|length }} résultat(s) pour la recherche: <strong
+                        class="font-size-20"> {{ searchWord|upper }}</strong>
+            </p>
+        {% endif %}
+        {% if resultsFamily %}
+            <p>Voici les résultats de la recherche pour : <strong>{{ searchWord }}</strong></p>
+        {% endif %}
+
+
+
+        {% if resultsItem %}
+            {% for result in resultsItem %}
+                <div class="cont-result flex-align-center">
+
+                    {% if result.available == 1 %}
+                        <div><img src="/img/available.svg" alt="disponible"></div>
+                    {% elseif result.available ==0 %}
+                        <div><img src="/img/unavailable.svg" alt="indisponible"></div>
+                    {% endif %}
+                    <div style="font-weight: bold ; font-size: 20px; text-align: left">{{ result.name }}</div>
+                    <div><a style="color: #25963F ; font-size: 25px"
+                            href="{{ path('app_item_show', { 'id': result.id }) }}">Voir
+                            la
+                            fiche du jeu</a></div>
+
+                </div>
+            {% endfor %}
+
+        {% endif %}
+
+
+    </div>
+
+    <div>
+
+        <br>
+
+        {% if resultsFamily %}
+
+            {% for result in resultsFamily %}
+
+                <div class="cont-result flex-align-center">
+
+                    {% for relation in result.relationships %}
+
+                        {% if relation.family.blocked == 0 %}
+
                             <div><img src="/img/available.svg" alt="disponible"></div>
-                        {% elseif result.available ==0 %}
+
+                        {% elseif relation.family.blocked == 1 %}
+
                             <div><img src="/img/unavailable.svg" alt="indisponible"></div>
+
                         {% endif %}
-                        <div style="font-weight: bold ; font-size: 20px; text-align: left">{{ result.name }}</div>
+
+                    {% endfor %}
+
+                    {% for relation in result.relationships %}
+                        <div style="font-size: 25px" class="bold">
+                            <a style="color: #25963F ; font-size: 25px"
+                               method="post"
+                               href="{{ path('app_family_show', {'idFamily': relation.family.id}) }}">Famille {{ result.lastName|upper }}</a>
+                        </div>
+
                         <div><a style="color: #25963F ; font-size: 25px"
-                                href="{{ path('app_item_show', { 'id': result.id }) }}">Voir
-                                la
-                                fiche du jeu</a></div>
+                                method="post"
+                                href="{{ path('app_family_show', {'idFamily': relation.family.id}) }}">Voir la
+                                fiche
+                                famille</a></div>
+                    {% endfor %}
 
-                    </div>
-                {% endfor %}
+                </div>
+            {% endfor %}
 
-            {% endif %}
-
-
-        </div>
-
-        <div>
-
-            <br>
-
-            {% if resultsFamily %}
-
-                {% for result in resultsFamily %}
-
-                    <div class="cont-result flex-align-center">
-
-                        {% for relation in result.relationships %}
-
-                            {% if relation.family.blocked == 0 %}
-
-                                <div><img src="/img/available.svg" alt="disponible"></div>
-
-                            {% elseif relation.family.blocked == 1 %}
-
-                                <div><img src="/img/unavailable.svg" alt="indisponible"></div>
-
-                            {% endif %}
-
-                        {% endfor %}
-
-                        {% for relation in result.relationships %}
-                            <div style="font-size: 25px" class="bold">
-                                <a style="color: #25963F ; font-size: 25px"
-                                   method="post"
-                                   href="{{ path('app_family_show', {'idFamily': relation.family.id}) }}">Famille {{ result.lastName|upper }}</a>
-                            </div>
-
-                            <div><a style="color: #25963F ; font-size: 25px"
-                                    method="post"
-                                    href="{{ path('app_family_show', {'idFamily': relation.family.id}) }}">Voir la
-                                    fiche
-                                    famille</a></div>
-                        {% endfor %}
-
-                    </div>
-                {% endfor %}
-
-            {% endif %}
+        {% endif %}
 
 
-        </div>
+    </div>
     </div>
 
     </div>

@@ -132,7 +132,7 @@ h1 {
     margin: 3px auto;
     text-align: center;
     padding: 8px;
-    height: 300px;
+    height: 612px;
 }
 
 .cont-medium-height-locked {
@@ -142,7 +142,7 @@ h1 {
     margin: 3px auto;
     text-align: center;
     padding: 8px;
-    height: 300px;
+    height: 612px;
 }
 
 .cont-big-height-locked {
@@ -152,7 +152,7 @@ h1 {
     margin: 3px auto;
     text-align: center;
     padding: 8px;
-    height: 300px;
+    height: 612px;
 }
 
 .cont-small-min-height-locked {
@@ -660,7 +660,18 @@ css pour accéder à des div créées par symfony
     font-weight: bold;
 }
 
+video{
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    transition: background-color 200ms cubic-bezier(0.2, 0, 0, 1);
+    border-radius: inherit;
+    z-index: 2;
+    box-sizing: border-box;
+}
 
 
 

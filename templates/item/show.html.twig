@@ -47,7 +47,7 @@
                             class="bold"> {{ item.playerNbMax }} </span>
                         <br>  {% else %} <span class="bold"> Non renseigné </span> {% endif %} <br>
                     Nombre de
-                    joueurs: {% if item.playerNbMin and itemPlayerMax %} de <span
+                    joueurs: {% if item.playerNbMin and item.playerNbMax %} de <span
                             class="bold"> {{ item.playerNbMin }} </span> à <span
                             class="bold"> {{ item.playerNbMax }} </span> {% else %} <span
                             class="bold"> Non  </span> {% endif %} <br>
@@ -57,13 +57,22 @@
                                 class="bold"> {{ category }}</span>
                     {% endfor %}
                 </p>
-                <div class="cont-result"><img src="/img/nb_player.svg"> <small>de {{ item.playerNbMin}} à {{ item.playerNbMax}}</small>
-                    | icone | icone | icone | icone | icone |</div>
+                <div class="cont-result">
+
+                    {% if  item.playerNbMin and item.playerNbMax %}
+                        <img src="/img/nb_player.svg"> De {{ item.playerNbMin }} à {{ item.playerNbMax }}
+
+                    {% endif %}
+                    {% if item.lang %} <img src="/img/planet.svg" alt="langue"> {{ item.lang }}  {% endif %}
+                    {% if item.ageMin %} <img src="/img/persons.svg" alt="langue"> {{ item.ageMin }}  {% endif %}
+
+
+                </div>
 
 
             </div>
 
-            <div class="cont-medium-height-locked radius scroller margin-top-0 padding-top-0"><h3
+            <div class="cont-medium-min-height-locked radius scroller margin-top-0 padding-top-0"><h3
                         class="margin-top-0 padding-top-0  margin-5">Historique des prêts</h3>
                 {% for loan in item.loans %}
 
