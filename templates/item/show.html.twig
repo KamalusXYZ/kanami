@@ -22,8 +22,8 @@
                     d'usure: {% if item.itemCondition %} <span class="bold"> {{ item.itemCondition }} </span> {% else %}
                         <span class="bold">  Non renseigné </span> {% endif %}
                     <br>
-                    Complet: {% if item.completeness == 0 %} <span class="bold"> OUI </span> {% else %} <span
-                        class="bold"> NON </span> {% endif %}<br>
+                    Complet: {% if item.completeness == 1 %} <span class="bold "> OUI </span> {% else %} <span
+                        class="bold color-red"> NON </span> {% endif %}<br>
                     Valeur: {% if item.gamePrice %} <span class="bold"> {{ item.gamePrice }} </span> {% else %} <span
                         class="bold"> Non renseigné </span> {% endif %}<br>
 
