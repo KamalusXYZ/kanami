@@ -20,7 +20,18 @@ class ItemType extends AbstractType
         $builder
             ->add('name', TextType::class, ["label" => "Nom: "])
             ->add('ref', TextType::class, ["label" => "Référence interne à la ludothèque: ", 'required' => false])
-            ->add('lang', LanguageType::class, ["label" => "Langue: ", 'required' => false])
+            ->add('lang', ChoiceType::class, [
+                'choices' => [
+                    'Français' => 'Français',
+                    'Anglais' => 'Anglais',
+                    'Allemand' => 'Allemand',
+                    'Espagnol' => 'Espagnol',
+                    'Italien' => 'Italien',
+                    'Autre' => 'Autre',
+
+                ],
+                'preferred_choices' => ['Français'],
+            ])
             ->add('publisherGameDuration', ChoiceType::class, [
                 'choices' => [
 
@@ -69,10 +80,10 @@ class ItemType extends AbstractType
             ])
             ->add('completeness', CheckboxType::class, ["label" => "Cochez la case si le jeu est complet: ", 'required' => false])
             ->add('available', CheckboxType::class, ["label" => "Cochez la case si le jeu est disponible: ", 'required' => false])
-            ->add('gamePrice', MoneyType::class, ["label" => "Valeur en euro du jeu: ", 'required' => false,
+            ->add('gamePrice', MoneyType::class, ["label" => "Valeur du jeu: ", 'required' => false,
                 'empty_data' => 0])
             ->add('gameOrigin', TextType::class, ["label" => "Provenance: ", 'required' => false])
-            ->add('copyNumber', TextType::class, ["label" => "Remplir uniquement si le jeu est possédé en plusiers exemplaire, indiquez le numéro de l'exemplaire: ", 'required' => false]);
+            ->add('copyNumber', IntegerType::class, ["label" => "Remplir uniquement si le jeu est possédé en plusieurs exemplaire, indiquez le numéro de l'exemplaire: ", 'required' => false]);
 
     }
 

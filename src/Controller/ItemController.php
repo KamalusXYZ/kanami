@@ -143,7 +143,7 @@ class ItemController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_item_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Item $item, ItemRepository $itemRepository): Response
+    public function edit(Request $request, Item $item, ItemRepository $itemRepository, $id): Response
     {
         $form = $this->createForm(ItemType::class, $item);
         $form->handleRequest($request);
@@ -151,7 +151,7 @@ class ItemController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $itemRepository->add($item, true);
 
-            return $this->redirectToRoute('app_item_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_item_show', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('item/edit.html.twig', [
@@ -159,6 +159,8 @@ class ItemController extends AbstractController
             'form' => $form,
         ]);
     }
+
+
 
     #[Route('/{id}', name: 'app_item_delete', methods: ['POST'])]
     public function delete(Request $request, Item $item, ItemRepository $itemRepository): Response

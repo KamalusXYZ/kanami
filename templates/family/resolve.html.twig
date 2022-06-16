@@ -24,6 +24,8 @@
 
                         <button ><a href="{{ path('app_resolve_confirmation', {'idItem': loan.item.id , 'idFamily': loan.family.id} ) }}">La famille a retrouvé ou remplacé la pièce manquante</a> </button>
                         <button ><a href="{{ path('app_resolve_confirmation', {'idItem': loan.item.id , 'idFamily': loan.family.id} ) }}">La famille va payer le jeu</a> </button>
+                        <button ><a href="{{ path('app_resolve_confirmation', {'idItem': loan.item.id , 'idFamily': loan.family.id} ) }}">La ludothèque annule le contentieux avec la famille</a> </button>
+
                     </div>
 
             {% endfor %}

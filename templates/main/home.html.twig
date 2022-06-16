@@ -53,82 +53,84 @@ family_restroom
                 Voici les {{ resultsItem|length }} résultat(s) pour la recherche: <strong
                         class="font-size-20"> {{ searchWord|upper }}</strong>
             </p>
+
+            {% if resultsItem %}
+                {% for result in resultsItem %}
+                    <div class="cont-result flex-align-center">
+
+                        {% if result.available == 1 %}
+                            <div><img src="/img/available.svg" alt="disponible"></div>
+                        {% elseif result.available ==0 %}
+                            <div><img src="/img/unavailable.svg" alt="indisponible"></div>
+                        {% endif %}
+                        <div style="font-weight: bold ; font-size: 20px; text-align: left">{{ result.name }}</div>
+                        <div><a style="color: #25963F ; font-size: 25px"
+                                href="{{ path('app_item_show', { 'id': result.id }) }}">Voir
+                                la
+                                fiche du jeu</a></div>
+
+                    </div>
+                {% endfor %}
+
+            {% endif %}
+
         {% endif %}
         {% if resultsFamily %}
             <p>Voici les résultats de la recherche pour : <strong>{{ searchWord }}</strong></p>
-        {% endif %}
-
-
-
-        {% if resultsItem %}
-            {% for result in resultsItem %}
-                <div class="cont-result flex-align-center">
-
-                    {% if result.available == 1 %}
-                        <div><img src="/img/available.svg" alt="disponible"></div>
-                    {% elseif result.available ==0 %}
-                        <div><img src="/img/unavailable.svg" alt="indisponible"></div>
-                    {% endif %}
-                    <div style="font-weight: bold ; font-size: 20px; text-align: left">{{ result.name }}</div>
-                    <div><a style="color: #25963F ; font-size: 25px"
-                            href="{{ path('app_item_show', { 'id': result.id }) }}">Voir
-                            la
-                            fiche du jeu</a></div>
-
-                </div>
-            {% endfor %}
 
         {% endif %}
+        <div>
+
+            <br>
+
+            {% if resultsFamily %}
+
+                {% for result in resultsFamily %}
+
+                    <div class="cont-result flex-align-center">
+
+                        {% for relation in result.relationships %}
+
+                            {% if relation.family.blocked == 0 %}
+
+                                <div><img src="/img/available.svg" alt="disponible"></div>
+
+                            {% elseif relation.family.blocked == 1 %}
+
+                                <div><img src="/img/unavailable.svg" alt="indisponible"></div>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                        {% for relation in result.relationships %}
+                            <div style="font-size: 25px" class="bold">
+                                <a style="color: #25963F ; font-size: 25px"
+                                   method="post"
+                                   href="{{ path('app_family_show', {'idFamily': relation.family.id}) }}">Famille {{ result.lastName|upper }}</a>
+                            </div>
+
+                            <div><a style="color: #25963F ; font-size: 25px"
+                                    method="post"
+                                    href="{{ path('app_family_show', {'idFamily': relation.family.id}) }}">Voir la
+                                    fiche
+                                    famille</a></div>
+                        {% endfor %}
+
+                    </div>
+                {% endfor %}
+
+            {% endif %}
+
+
+        </div>
+    </div>
+
 
 
     </div>
 
-    <div>
 
-        <br>
-
-        {% if resultsFamily %}
-
-            {% for result in resultsFamily %}
-
-                <div class="cont-result flex-align-center">
-
-                    {% for relation in result.relationships %}
-
-                        {% if relation.family.blocked == 0 %}
-
-                            <div><img src="/img/available.svg" alt="disponible"></div>
-
-                        {% elseif relation.family.blocked == 1 %}
-
-                            <div><img src="/img/unavailable.svg" alt="indisponible"></div>
-
-                        {% endif %}
-
-                    {% endfor %}
-
-                    {% for relation in result.relationships %}
-                        <div style="font-size: 25px" class="bold">
-                            <a style="color: #25963F ; font-size: 25px"
-                               method="post"
-                               href="{{ path('app_family_show', {'idFamily': relation.family.id}) }}">Famille {{ result.lastName|upper }}</a>
-                        </div>
-
-                        <div><a style="color: #25963F ; font-size: 25px"
-                                method="post"
-                                href="{{ path('app_family_show', {'idFamily': relation.family.id}) }}">Voir la
-                                fiche
-                                famille</a></div>
-                    {% endfor %}
-
-                </div>
-            {% endfor %}
-
-        {% endif %}
-
-
-    </div>
-    </div>
 
     </div>
 {% endblock %}
