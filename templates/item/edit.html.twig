@@ -3,67 +3,18 @@
 {% block title %}Edit Item{% endblock %}
 
 {% block body %}
-<div class="cont-hidden flex-wrap margin-top-0 padding-top-0">
-    <div class="cont-title padding-top-0 margin-top-0">
-        <h1>Modifier le jeu: <span style="color: #25963F">{{ item.name }}</span></h1>
-    </div>
-    <div class="cont radius-bottom flex-wrap margin-top-0">
+    <div class="cont-hidden flex-wrap margin-top-0 padding-top-0">
+        <div class="cont-title padding-top-0 margin-top-0">
+            <h1>Modifier le jeu: <span style="color: #25963F">{{ item.name }}</span></h1>
+        </div>
+        <div class="cont radius-bottom flex-wrap margin-top-0">
 
 
-        <div> {{ form_label(form.name) }}
-            {{ form_widget(form.name, {'attr' : {'class' : 'input nom'} }) }}</div>
-        <div>
-            {{ form_label(form.ref) }}
-            {{ form_widget(form.ref, {'attr' : {'class' : 'input ref'} }) }}</div>
-        <div>
-            {{ form_label(form.lang) }}
-            {{ form_widget(form.lang, {'attr' : {'class' : 'input lang'} }) }}</div>
-        <div>
-            {{ form_label(form.publisherGameDuration) }}
-            {{ form_widget(form.publisherGameDuration, {'attr' : {'class' : 'input publisherGameDuration'} }) }}</div>
-        <div>
-            {{ form_label(form.ourGameDuration) }}
-            {{ form_widget(form.ourGameDuration, {'attr' : {'class' : 'input ourGameDuration'} }) }}</div>
-        <div>
-            {{ form_label(form.playerNbMin) }}
-            {{ form_widget(form.playerNbMin, {'attr' : {'class' : 'input playerNbMin'} }) }}</div>
-        <div>
-            {{ form_label(form.playerNbMax) }}
-            {{ form_widget(form.playerNbMax, {'attr' : {'class' : 'input playerNbMax'} }) }}</div>
-        <div>
-            {{ form_label(form.ageMin) }}
-            {{ form_widget(form.ageMin, {'attr' : {'class' : 'input ageMin'} }) }}</div>
-        <div>
-            {{ form_label(form.author) }}
-            {{ form_widget(form.author, {'attr' : {'class' : 'input author'} }) }}</div>
-        <div>
-            {{ form_label(form.illustrator) }}
-            {{ form_widget(form.illustrator, {'attr' : {'class' : 'input illustrator'} }) }}</div>
-        <div>
-            {{ form_label(form.publisher) }}
-            {{ form_widget(form.publisher, {'attr' : {'class' : 'input publisher'} }) }}</div>
-        <div>
-            {{ form_label(form.itemCondition) }}
-            {{ form_widget(form.itemCondition, {'attr' : {'class' : 'input itemCondition'} }) }}</div>
-        <div>
-            {{ form_label(form.completeness) }}
-            {{ form_widget(form.completeness, {'attr' : {'class' : 'input completeness'} }) }}</div>
-        <div>
-
-            <div>
-                {{ form_label(form.gamePrice) }}
-                {{ form_widget(form.gamePrice, {'attr' : {'class' : 'input gamePrice'} }) }}</div>
-            <div>
-                {{ form_label(form.gameOrigin) }}
-                {{ form_widget(form.gameOrigin, {'attr' : {'class' : 'input gameOrigin'} }) }}</div>
-            <div>
-                {{ form_label(form.copyNumber) }}
-                {{ form_widget(form.copyNumber, {'attr' : {'class' : 'input copyNumber'} }) }}</div>
 
 
-            <button>{{ button_label|default('Save') }}</button>
+            {{ include('item/_form.html.twig', {'button_label': 'Metre à jour'}) }}
 
 
         </div>
     </div>
-    {% endblock %}
+{% endblock %}
