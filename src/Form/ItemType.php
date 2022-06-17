@@ -63,8 +63,8 @@ class ItemType extends AbstractType
             ->add('playerNbMin', IntegerType::class, ["label" => "Nombre de joueur minimum: ", 'required' => false,])
             ->add('playerNbMax', IntegerType::class, ["label" => "Nombre de joueur maximum: ", 'required' => false])
             ->add('ageMin', IntegerType::class, ["label" => "Age minimum conseillé par l'éditeur: ", 'required' => false])
-            ->add('author', TextType::class, ["label" => "Auteur: ", 'required' => false])
-            ->add('illustrator', TextType::class, ["label" => "Illustrateur: ", 'required' => false])
+            ->add('author', TextType::class, ["label" => "Auteur(s):  (si plusieurs séparez les par des virgules) ", 'required' => false])
+            ->add('illustrator', TextType::class, ["label" => "Illustrateur(s):  (si plusieurs séparez les par des virgules) ", 'required' => false])
             ->add('publisher', TextType::class, ["label" => "Editeur: ", 'required' => false])
             ->add('itemCondition', ChoiceType::class, [
                 'choices' => [

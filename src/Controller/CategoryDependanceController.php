@@ -23,7 +23,7 @@ class CategoryDependanceController extends AbstractController
     }
 
     #[Route('/new/{idItem}', name: 'app_category_dependance_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CategoryDependanceRepository $categoryDependanceRepository, ItemRepository $itemRepository): Response
+    public function new(Request $request, CategoryDependanceRepository $categoryDependanceRepository, ItemRepository $itemRepository, $idItem): Response
     {
 
         $categoryDependance = new CategoryDependance();
@@ -39,7 +39,7 @@ class CategoryDependanceController extends AbstractController
             $categoryDependanceRepository->add($categoryDependance, true);
 
 
-            return $this->redirectToRoute('app_settings', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_category_dependance_new', ['idItem'=> $idItem], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('category_dependance/new.html.twig', [

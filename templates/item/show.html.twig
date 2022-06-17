@@ -198,7 +198,7 @@
 
                             </p>
                             <div class="cont-small-hidden flex">
-                                <form style="width: 300px" action="{{ path('app_family_resolve', {'idFamily': family.id}) }}"
+                                <form style="width: 300px" action="{{ path('app_loan_return',  {'idItem': item.id }) }}"
                                       method="post">
                                     <button
                                             style="width: 100px  ; font-size: 12px">Effectuer le retour de l'article
@@ -225,24 +225,24 @@
 
 
 
-{#resoudre le probleme de coherence#}
-{#                {% for loan in item.loans %}#}
+                {# resoudre le probleme de coherence #}
+                {#                {% for loan in item.loans %} #}
 
-{#                    {% for relation in loan.family.relationships %}#}
-{#                        {% if loan.completenessReturn == 0 %}#}
-{#                            {% if relation.isOwner == 1 %}#}
-{#                                <p class="font-size-20">Une famille a rendu le jeu incomplet. <br>#}
-{#                                    Voir la fiche de la famille:#}
-{#                                    <a href="{{ path('app_family_show', {'idFamily': loan.family }) }}"><span#}
-{#                                                class="bold color-blue">{{ relation.member.lastName|upper }} </span>#}
-{#                                    </a>#}
-{#                                </p>#}
+                {#                    {% for relation in loan.family.relationships %} #}
+                {#                        {% if loan.completenessReturn == 0 %} #}
+                {#                            {% if relation.isOwner == 1 %} #}
+                {#                                <p class="font-size-20">Une famille a rendu le jeu incomplet. <br> #}
+                {#                                    Voir la fiche de la famille: #}
+                {#                                    <a href="{{ path('app_family_show', {'idFamily': loan.family }) }}"><span #}
+                {#                                                class="bold color-blue">{{ relation.member.lastName|upper }} </span> #}
+                {#                                    </a> #}
+                {#                                </p> #}
 
-{#                            {% endif %}#}
-{#                        {% endif %}#}
+                {#                            {% endif %} #}
+                {#                        {% endif %} #}
 
-{#                    {% endfor %}#}
-{#                {% endfor %}#}
+                {#                    {% endfor %} #}
+                {#                {% endfor %} #}
 
 
             </div>
