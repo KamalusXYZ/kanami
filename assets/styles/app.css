@@ -673,7 +673,6 @@ video{
     box-sizing: border-box;
 }
 
-
 /**************TEST POUR NAVBAR ISSU DU WEB/***
 
  */
@@ -702,7 +701,7 @@ video{
 
 /* Add a color to the active/current link */
 .topnav a.active {
-    background-color: #04AA6D;
+    background-color: #25963F;
     color: white;
 }
 

@@ -12,6 +12,9 @@ use App\Repository\RelationshipRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -52,15 +55,13 @@ class ItemController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_item_show', methods: ['GET'])]
-    public function show(Item $item, LoanRepository $loanRepository,MemberRepository $memberRepository,RelationshipRepository $relationshipRepository, $id): Response
+    public function show(Item $item, LoanRepository $loanRepository, MemberRepository $memberRepository, RelationshipRepository $relationshipRepository, $id): Response
     {
         $loans = $loanRepository->findBy(array('item' => $id, 'effectReturnDateTime' => null));
         $loan = '';
         foreach ($loans as $loan) {
             $loan = $loan;
         }
-
-
 
 
         return $this->render('item/show.html.twig', [
@@ -145,7 +146,73 @@ class ItemController extends AbstractController
     #[Route('/{id}/edit', name: 'app_item_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Item $item, ItemRepository $itemRepository, $id): Response
     {
-        $form = $this->createForm(ItemType::class, $item);
+        $form = $this->createFormBuilder($item)
+            ->add('name', TextType::class, ["label" => "Nom: "])
+            ->add('ref', TextType::class, ["label" => "Référence interne à la ludothèque: ", 'required' => false])
+            ->add('lang', ChoiceType::class, [
+                'choices' => [
+                    'Français' => 'Français',
+                    'Anglais' => 'Anglais',
+                    'Allemand' => 'Allemand',
+                    'Espagnol' => 'Espagnol',
+                    'Italien' => 'Italien',
+                    'Autre' => 'Autre',
+
+                ],
+                'preferred_choices' => ['Français'],
+            ])
+            ->add('publisherGameDuration', ChoiceType::class, [
+                'choices' => [
+
+                    'Moins de 15m' => "Moins de 15m",
+                    'moins de 30m' => "moins de 30m",
+                    'de 30m à 1h' => "de 30m à 1h",
+                    'de 1h à 2h' => "de 1h à 2h",
+                    'de 2h à 3h' => "de 2h à 3h",
+                    'de 3h à 4h' => "de 3h à 4h",
+                    'plus de 4h' => "plus de 4h",
+
+
+                ], "label" => "Durée d'une partie selon l'éditeur: ", 'required' => false
+            ])
+            ->add('ourGameDuration', ChoiceType::class, [
+                'choices' => [
+
+                    'Moins de 15m' => "Moins de 15m",
+                    'moins de 30m' => "moins de 30m",
+                    'de 30m à 1h' => "de 30m à 1h",
+                    'de 1h à 2h' => "de 1h à 2h",
+                    'de 2h à 3h' => "de 2h à 3h",
+                    'de 3h à 4h' => "de 3h à 4h",
+                    'plus de 4h' => "plus de 4h",
+
+
+                ], "label" => "Durée d'une partie selon l'estimation de la ludo: ", 'required' => false
+            ])
+            ->add('playerNbMin', IntegerType::class, ["label" => "Nombre de joueur minimum: ", 'required' => false,])
+            ->add('playerNbMax', IntegerType::class, ["label" => "Nombre de joueur maximum: ", 'required' => false])
+            ->add('ageMin', IntegerType::class, ["label" => "Age minimum conseillé par l'éditeur: ", 'required' => false])
+            ->add('author', TextType::class, ["label" => "Auteur: ", 'required' => false])
+            ->add('illustrator', TextType::class, ["label" => "Illustrateur: ", 'required' => false])
+            ->add('publisher', TextType::class, ["label" => "Editeur: ", 'required' => false])
+            ->add('itemCondition', ChoiceType::class, [
+                'choices' => [
+
+                    'Neuf' => "Neuf",
+                    'Moyen' => "Moyen",
+                    'Usé' => "Usé",
+                    'Très usé' => "Très usé",
+                    'à définir' => "à définir",
+
+
+                ], "label" => "Etat d'usure du jeu: ", 'required' => false
+            ])
+            ->add('gamePrice', MoneyType::class, ["label" => "Valeur du jeu: ", 'required' => false,
+                'empty_data' => 0])
+            ->add('gameOrigin', TextType::class, ["label" => "Provenance: ", 'required' => false])
+            ->add('copyNumber', IntegerType::class, ["label" => "Remplir uniquement si le jeu est possédé en plusieurs exemplaire, indiquez le numéro de l'exemplaire: ", 'required' => false])
+            ->getForm();
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -161,7 +228,6 @@ class ItemController extends AbstractController
     }
 
 
-
     #[Route('/{id}', name: 'app_item_delete', methods: ['POST'])]
     public function delete(Request $request, Item $item, ItemRepository $itemRepository): Response
     {
@@ -171,4 +237,6 @@ class ItemController extends AbstractController
 
         return $this->redirectToRoute('app_item_index', [], Response::HTTP_SEE_OTHER);
     }
+
+ 
 }

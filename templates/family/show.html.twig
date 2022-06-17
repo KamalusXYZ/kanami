@@ -86,9 +86,7 @@
                 prêts</h3>
 
 
-            {% for loan in family.loan|sort() %}
-
-
+            {% for loan in family.loan %}
 
                 {% if loan.effectReturnDateTime %}
                     <div class="cont-result bg-green-light">
@@ -99,9 +97,13 @@
                         {% else %}
                             Retour prévu le: {{ loan.datePreviewBack|date('d-m-Y') }}  <br>
                         {% endif %}
-                        {% if 'now' < loan.datePreviewBack %}
-                            pas de retard (a supprimé ajouté pour test)
-                        {% else %} En retard
+                        {% if 'now' > loan.datePreviewBack %}
+                            En retard
+                        {% endif %}
+                        {% if loan.completenessReturn == 0 %}
+                            <span class="color-red">Retour incomplet</span>
+                        {% else %}
+                            <span class="color-green"> Retour complet</span>
                         {% endif %}
 
                     </div>
@@ -142,7 +144,8 @@
             {% for relationship in family.relationships %}
                 <div class="cont-result">
                     {{ relationship.member.firstName }}            {{ relationship.member.lastName }}
-                    {{ relationship.member.birthday|date('d-m-Y') }}
+                    {{ relationship.member.birthday|date('d-m-Y') }} <a
+                            href="{{ path('app_member_delete', {'id': relationship.member.id }) }}"> Supprimer le membre </a>
                 </div>
 
 

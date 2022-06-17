@@ -16,6 +16,32 @@ class SettingsController extends AbstractController
             'controller_name' => 'SettingsController',
         ]);
     }
+    #[Route('/settings-family', name: 'app_settings_family')]
+    public function indexFamily(): Response
+    {
+
+        return $this->render('main/settingsfamily.html.twig', [
+            'controller_name' => 'SettingsController',
+        ]);
+    }
+
+    #[Route('/settings-item', name: 'app_settings_item')]
+public function indexItem(): Response
+{
+
+    return $this->render('main/settingsitem.html.twig', [
+        'controller_name' => 'SettingsController',
+    ]);
+
+}
+    #[Route('/settings-member', name: 'app_settings_member')]
+    public function indexMember(): Response
+    {
+
+        return $this->render('main/settingsmember.html.twig', [
+            'controller_name' => 'SettingsController',
+        ]);
+    }
 
 
 }

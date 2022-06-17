@@ -56,9 +56,9 @@
                     Editeur: {% if item.publisher %} <span class="bold"> {{ item.publisher }} </span> <br>  {% else %}
                         <span
                                 class="bold"> Non renseigné <br> </span> {% endif %}
-                    Auteur: {% if item.author %} <span class="bold"> {{ item.author }} </span> <br>  {% else %} <span
+                    Auteur(s): {% if item.author %} <span class="bold"> {{ item.author }} </span> <br>  {% else %} <span
                             class="bold"> Non renseigné <br> </span> {% endif %}
-                    Illustrateur: {% if item.illustrator %}  <span class="bold"> {{ item.illustrator }} <br> </span>
+                    Illustrateur(s): {% if item.illustrator %}  <span class="bold"> {{ item.illustrator }} <br> </span>
                     {% else %} <span class="bold"> Non renseigné <br> </span> {% endif %}
 
 
@@ -118,10 +118,11 @@
                         <span style="color: #B0413E">{{ loan.datePreviewBack|date('d-m-Y') }}</span> {% endif %}
                     {% if loan.completenessReturn != null %}
                         Rendu complet: {% if loan.completenessReturn == 1 %}  <span
-                            style="color: #25963F">OUI</span> {% elseif loan.completenessReturn == 0 %}
+                            style="color: #25963F">OUI</span> le {{ loan.effectReturnDateTime|date('d-m-Y') }}  {% elseif loan.completenessReturn == 0 %}
                         <span style="color: #B0413E">NON</span>  {% endif %}
 
-                        {% if loan.returnComment != null %} {{ loan.returnComment }} {% else %} Aucun commentaire
+
+                        {% if loan.returnComment != null %}|{{ loan.returnComment }} {% else %}| Aucun commentaire
                         {% endif %}
                     {% endif %}
 

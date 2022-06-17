@@ -12,17 +12,13 @@
         <div class="topnav">
 
             <a href="{{ path('app_settings') }}">Réglage général</a>
-            <a class="active" href="settingsfamily.html.twig">Famille</a>
-            <a href="#contact">Jeux</a>
-            <a href="#about">Membres du staff</a>
+            <a class="active" href="{{ path('app_settings_family') }}">Famille</a>
+            <a href="{{ path('app_settings_item') }}">Jeux</a>
+            <a href="{{ path('app_settings_member') }}">Membres du staff</a>
         </div>
 
-        <button class=""><a class="" href="{{ path('app_category_new') }}">Ajouter une catégorie</a></button>
 
         <button class=""><a class="" href="{{ path('app_family_new') }}">Ajouter une famille</a></button>
-
-        <button class=""><a class="text-white text-decoration-none" href="{{ path('app_item_new') }}">Ajouter un
-                jeu</a></button>
 
 
     </div>
