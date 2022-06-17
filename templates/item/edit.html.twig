@@ -6,10 +6,20 @@
     <div class="cont-hidden flex-wrap margin-top-0 padding-top-0">
         <div class="cont-title padding-top-0 margin-top-0">
             <h1>Modifier le jeu: <span style="color: #25963F">{{ item.name }}</span></h1>
+            {% if  loan.family %}
+            <p class="font-size-20 color-red">
+                Le jeu est incomplet suite à un prêt, pour résoudre le litige vous avez 3 solutions en cliquant sur le
+                bouton suivant:
+                <button class="warning-button" style="min-width: 100px"><a
+                            href="{{ path('app_family_resolve', {'idFamily': loan.family.id}) }}">Se rendre à la page de
+                        résolution des litige.</a></button> {% endif %}
+            </p>
         </div>
         <div class="cont radius-bottom flex-wrap margin-top-0">
 
-
+            {% for l in loan %}
+                {{ l.family }}
+            {% endfor %}
 
 
             {{ include('item/_form.html.twig', {'button_label': 'Metre à jour'}) }}

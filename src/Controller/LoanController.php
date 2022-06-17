@@ -102,7 +102,7 @@ class LoanController extends AbstractController
                     'item' => $item,
                     'member' => $member,
                     'family' => $family,
-//                    'owner' => $owner
+
                 ]);
 
             }
@@ -117,7 +117,7 @@ class LoanController extends AbstractController
             'item' => $item,
             'member' => $member,
             'family' => $family,
-//            'owner' => $owner
+
 
 
         ]);

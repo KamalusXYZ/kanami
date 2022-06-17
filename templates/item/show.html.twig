@@ -119,11 +119,15 @@
                     {% if loan.completenessReturn != null %}
                         Rendu complet: {% if loan.completenessReturn == 1 %}  <span
                             style="color: #25963F">OUI</span> le {{ loan.effectReturnDateTime|date('d-m-Y') }}  {% elseif loan.completenessReturn == 0 %}
-                        <span style="color: #B0413E">NON</span>  {% endif %}
+                        <span style="color: #B0413E">NON</span>
+
+
+                    {% endif %}
 
 
                         {% if loan.returnComment != null %}|{{ loan.returnComment }} {% else %}| Aucun commentaire
                         {% endif %}
+
                     {% endif %}
 
                     </div>
@@ -194,7 +198,7 @@
 
                             </p>
                             <div class="cont-small-hidden flex">
-                                <form style="width: 300px" action="{{ path('app_loan_return', {'idItem': item.id }) }}"
+                                <form style="width: 300px" action="{{ path('app_family_resolve', {'idFamily': family.id}) }}"
                                       method="post">
                                     <button
                                             style="width: 100px  ; font-size: 12px">Effectuer le retour de l'article
@@ -207,11 +211,39 @@
 
                     </div>
                 {% endif %}
+
                 {% if item.completeness == 0 %}
-                    <div class="box2">
+                    <div>
                         <h2>Le jeu est incomplet</h2>
                     </div>
                 {% endif %}
+                {% if item.available == 0 %}
+                    <div>
+                        <h2 class="color-red">Indisponible</h2>
+                    </div>
+                {% endif %}
+
+
+
+{#resoudre le probleme de coherence#}
+{#                {% for loan in item.loans %}#}
+
+{#                    {% for relation in loan.family.relationships %}#}
+{#                        {% if loan.completenessReturn == 0 %}#}
+{#                            {% if relation.isOwner == 1 %}#}
+{#                                <p class="font-size-20">Une famille a rendu le jeu incomplet. <br>#}
+{#                                    Voir la fiche de la famille:#}
+{#                                    <a href="{{ path('app_family_show', {'idFamily': loan.family }) }}"><span#}
+{#                                                class="bold color-blue">{{ relation.member.lastName|upper }} </span>#}
+{#                                    </a>#}
+{#                                </p>#}
+
+{#                            {% endif %}#}
+{#                        {% endif %}#}
+
+{#                    {% endfor %}#}
+{#                {% endfor %}#}
+
 
             </div>
         </div>

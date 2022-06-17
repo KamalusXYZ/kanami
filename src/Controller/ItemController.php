@@ -3,17 +3,21 @@
 namespace App\Controller;
 
 use App\Entity\Item;
+use App\Entity\Payment;
 use App\Form\ItemType;
 use App\Repository\FamilyRepository;
 use App\Repository\ItemRepository;
 use App\Repository\LoanRepository;
 use App\Repository\MemberRepository;
+use App\Repository\PaymentRepository;
 use App\Repository\RelationshipRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -120,6 +124,110 @@ class ItemController extends AbstractController
         ]);
     }
 
+    #[Route('/pay-to-resolving/item{idItem}/family{idFamily}', name: 'app_pay_to_resolve_confirmation', methods: ['GET', 'POST'])]
+    public function payToResolveConfirmation(Request $request, PaymentRepository $paymentRepository, LoanRepository $loanRepository, ItemRepository $itemRepository, FamilyRepository $familyRepository, $idItem, $idFamily): Response
+    {
+        $date = date_create("now");
+        $payment = new Payment();
+        $loan = 0;
+        $item = $itemRepository->find($idItem);
+        $family = $familyRepository->find($idFamily);
+        $loans = $loanRepository->findBy(array('item' => $idItem));
+        foreach ($loans as $loan)
+            $loan = $loan;
+
+        $loanStayIncomplete = count($loanRepository->findBy(array('family' => $idFamily, 'completenessReturn' => 0)));
+
+        $form = $this->createFormBuilder($payment)
+            ->add('paymentKind', ChoiceType::class, [
+                'choices' => [
+                    'Carte bancaire' => 'Carte bancaire',
+                    'Espèce' => 'Espèce',
+                    'Chèque' => 'Chèque',
+                    'Autre ' => 'autre',
+                ], 'label' => 'Moyen de paiement:'
+            ])
+            ->add('paymentAmount', MoneyType::class, ['label' => 'Somme à payer pour ce jeu:', 'required' => true])
+            ->add('paymentComment', TextareaType::class, ['label' => 'Commentaire suite à la résolution du litige.'])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $family->setBlocked(0);
+            $family->setIncompleteReturn(0);
+            $loan->setReturnComment('Jeu remboursé');
+            $loan->setCompletenessReturn(1);
+            $item->setAvailable(1);
+            $item->setCompleteness(1);
+            $payment->setPaymentDate($date);
+            $itemRepository->add($item, true);
+            $loanRepository->add($loan, true);
+            $familyRepository->add($family, true);
+            $paymentRepository->add($payment, true);
+
+            return $this->redirectToRoute('app_family_check', ['idFamily' => $idFamily], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('item/resolve.html.twig', [
+            'item' => $item,
+            'form' => $form,
+            'family' => $family,
+
+        ]);
+    }
+
+    #[Route('/free-resolving/item{idItem}/family{idFamily}', name: 'app_free_resolve_confirmation', methods: ['GET', 'POST'])]
+    public function freeResolveConfirmation(Request $request, PaymentRepository $paymentRepository, LoanRepository $loanRepository, ItemRepository $itemRepository, FamilyRepository $familyRepository, $idItem, $idFamily): Response
+    {
+        $date = date_create("now");
+        $payment = new Payment();
+        $loan = 0;
+        $item = $itemRepository->find($idItem);
+        $family = $familyRepository->find($idFamily);
+        $loans = $loanRepository->findBy(array('item' => $idItem));
+        foreach ($loans as $loan)
+            $loan = $loan;
+
+        $loanStayIncomplete = count($loanRepository->findBy(array('family' => $idFamily, 'completenessReturn' => 0)));
+
+        $form = $this->createFormBuilder($item)
+            ->add('available', CheckboxType::class, ['label' => 'Le jeu est t il remis en circulation? Si vous ne cochez pas, le seul moyen de le remettre en circulation sera de recréer une nouvelle fiche.'])
+            ->add('completeness', CheckboxType::class, ['label' => 'ATTENTION En cochant cette case le jeu si il est remis en circulation sera considéré comme complet dans cette état!  '])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $payment->setPaymentKind("Pas de règlement: annulation de la dette.");
+            $payment->setPaymentDate($date);
+            $payment->setFamily($family);
+            $payment->setPaymentAmount(0);
+            $payment->setPaymentComment("Litige clos: dette non reglée.");
+            $family->setBlocked(0);
+            $family->setIncompleteReturn(0);
+            $loan->setReturnComment('Jeu non restitué par la famille');
+            $loan->setCompletenessReturn(1);
+            $item->setAvailable(1);
+            $item->setCompleteness(1);
+            $payment->setPaymentDate($date);
+            $itemRepository->add($item, true);
+            $loanRepository->add($loan, true);
+            $familyRepository->add($family, true);
+            $paymentRepository->add($payment, true);
+
+            return $this->redirectToRoute('app_family_check', ['idFamily' => $idFamily], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('item/resolve.html.twig', [
+            'item' => $item,
+            'form' => $form,
+            'family' => $family,
+
+        ]);
+    }
+
+
     #[Route('/check/family{idFamily}', name: 'app_family_check', methods: ['GET', 'POST'])]
     public function checkFamily(Request $request, FamilyRepository $familyRepository, LoanRepository $loanRepository, $idFamily): Response
     {
@@ -138,14 +246,32 @@ class ItemController extends AbstractController
 
         return $this->renderForm('family/show.html.twig', [
             'idFamily' => $idFamily,
-            'family' => $family
+            'family' => $family,
+
 
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_item_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Item $item, ItemRepository $itemRepository, $id): Response
+    public function edit(Request $request,FamilyRepository $familyRepository, Item $item, ItemRepository $itemRepository,LoanRepository $loanRepository, $id): Response
     {
+        // recherche d'un pret qui a été restitué incomplet.[arrive sous forme de tableau]
+        $loan = '';
+        $loans =  $loanRepository->findBy(['item'=>$id, 'completenessReturn'=> 0]);
+        //boucle sur le tableau qui ne doit contenir qu'un resultat
+        foreach ($loans as $loan){
+           $loan = $loan;
+
+
+        }
+
+
+
+
+
+
+
+
         $form = $this->createFormBuilder($item)
             ->add('name', TextType::class, ["label" => "Nom: "])
             ->add('ref', TextType::class, ["label" => "Référence interne à la ludothèque: ", 'required' => false])
@@ -224,6 +350,7 @@ class ItemController extends AbstractController
         return $this->renderForm('item/edit.html.twig', [
             'item' => $item,
             'form' => $form,
+            'loan'=> $loan
         ]);
     }
 
@@ -238,5 +365,5 @@ class ItemController extends AbstractController
         return $this->redirectToRoute('app_item_index', [], Response::HTTP_SEE_OTHER);
     }
 
- 
+
 }

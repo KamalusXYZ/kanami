@@ -8,29 +8,32 @@
 {% block body %}
 
 
-    
-        <div class="cont">
 
-            <h1>Résolution de contentieux pour la famille
-                {% for relation in family.relationships %}
-                    {% if relation.isOwner == 1 %}
-                        {{ relation.member.lastName }}
-                    {% endif %}
-                {% endfor %}
-            </h1>
-            <p>Confirmer que la famille
-                {% for relation in family.relationships %}
-                    {% if relation.isOwner == 1 %}
-                        {{ relation.member.lastName }}
-                    {% endif %}
-                {% endfor %}
-                a résolu le contentieux concernant le jeu
-                {{ item }}
+    <div class="cont">
 
-            </p>
-            <p>    {{ include('loan/_form.html.twig') }}</p>
+        <h1>Résolution de contentieux pour la famille
+            {% for relation in family.relationships %}
+                {% if relation.isOwner == 1 %}
+                    {{ relation.member.lastName }}
+                {% endif %}
+            {% endfor %}
+        </h1>
 
-        </div>
+        <p class="text-center font-size-20"> Prix du
+            jeu: {% if  item.gamePrice > 0 %} {{ item.gamePrice }} {% else %} non défini {% endif %}
+            <br> Confirmer que la famille
+            {% for relation in family.relationships %}
+                {% if relation.isOwner == 1 %}
+                    {{ relation.member.lastName }}
+                {% endif %}
+            {% endfor %}
+            a résolu le contentieux concernant le jeu
+            {{ item }}
+
+        </p>
+        <p>    {{ include('loan/_form.html.twig') }}</p>
+
+    </div>
 
 
 
