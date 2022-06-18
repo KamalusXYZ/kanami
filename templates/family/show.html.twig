@@ -133,7 +133,8 @@
 
 
         </div>
-        <div class="cont-medium-min-height-locked radius  "><h3 class="padding-top-0 margin-top-0 margin-bottom-0 margin-5">Liste des
+        <div class="cont-medium-min-height-locked radius  "><h3
+                    class="padding-top-0 margin-top-0 margin-bottom-0 margin-5">Liste des
                 membres</h3>
             <div class="box margin-5">
                 <button class="margin-0"><a class=""
@@ -142,12 +143,14 @@
                         un adhérant </a></button>
             </div>
             {% for relationship in family.relationships %}
-                <div class="cont-result">
-                    {{ relationship.member.firstName }}            {{ relationship.member.lastName }}
-                    {{ relationship.member.birthday|date('d-m-Y') }} <a
-                            href="{{ path('app_member_delete', {'id': relationship.member.id }) }}"> Supprimer le membre </a>
-                </div>
-
+                {% if relationship.member.archive != 1 %}
+                    <div class="cont-result">
+                        {{ relationship.member.firstName }}            {{ relationship.member.lastName }}
+                        {{ relationship.member.birthday|date('d-m-Y') }} <a
+                                href="{{ path('app_member_delete', {'id': relationship.member.id }) }}"> Supprimer le
+                            membre </a>
+                    </div>
+                {% endif %}
 
             {% endfor %}
 

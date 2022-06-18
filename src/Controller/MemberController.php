@@ -41,6 +41,7 @@ class MemberController extends AbstractController
         $family = $familyRepository->find($idFamily);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $nbMember = $family->getRelationships()->count();
             $family->setMaxLoanSimultaneous($nbMember * 2);
             $memberRepository->add($member, true);
@@ -153,13 +154,22 @@ class MemberController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_member_delete', methods: ['POST'])]
-    public function delete(Request $request, Member $member, MemberRepository $memberRepository): Response
+    public function delete(Request $request,FamilyRepository $familyRepository,RelationshipRepository $relationshipRepository, Member $member, MemberRepository $memberRepository, $id): Response
     {
+        $relations = $relationshipRepository->findBy(['member'=>$id]);
+        $relation = '';
+        foreach ($relations as $relation){
+            $relation = $relation;
+    }
+        $idFamily = $relation->getFamily()->getId();
+
+
         if ($this->isCsrfTokenValid('delete' . $member->getId(), $request->request->get('_token'))) {
-            $memberRepository->remove($member, true);
+            $member->setArchive(1);
+            $memberRepository->add($member,true);
         }
 
-        return $this->redirectToRoute('app_member_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_family_show', ['idFamily'=>$idFamily], Response::HTTP_SEE_OTHER);
     }
 
 }
