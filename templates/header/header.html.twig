@@ -6,10 +6,12 @@
             </div>
             <div>
                 <a href="/"><img width="125px" src="/img/titre_logo.png" alt="Logo"></a>
+
             </div>
 
-
+            <div style="padding-left: 50px" class="font-size-35">{{ "now"|date("d/m/Y", "Europe/Paris") }}</div>
         </div>
+
         <div class="flex-right">
             <div class="rotate">
                 <a href="{{ path('app_settings') }}"><img id="setting-icon" src="/img/setting.svg" alt="reglage"></a>
