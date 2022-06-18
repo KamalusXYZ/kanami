@@ -253,23 +253,17 @@ class ItemController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_item_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request,FamilyRepository $familyRepository, Item $item, ItemRepository $itemRepository,LoanRepository $loanRepository, $id): Response
+    public function edit(Request $request, FamilyRepository $familyRepository, Item $item, ItemRepository $itemRepository, LoanRepository $loanRepository, $id): Response
     {
         // recherche d'un pret qui a été restitué incomplet.[arrive sous forme de tableau]
         $loan = '';
-        $loans =  $loanRepository->findBy(['item'=>$id, 'completenessReturn'=> 0]);
+        $loans = $loanRepository->findBy(['item' => $id, 'completenessReturn' => 0]);
         //boucle sur le tableau qui ne doit contenir qu'un resultat
-        foreach ($loans as $loan){
-           $loan = $loan;
+        foreach ($loans as $loan) {
+            $loan = $loan;
 
 
         }
-
-
-
-
-
-
 
 
         $form = $this->createFormBuilder($item)
@@ -350,7 +344,7 @@ class ItemController extends AbstractController
         return $this->renderForm('item/edit.html.twig', [
             'item' => $item,
             'form' => $form,
-            'loan'=> $loan
+            'loan' => $loan
         ]);
     }
 
