@@ -52,7 +52,7 @@ class SettingsController extends AbstractController
         $qb = $em->createQueryBuilder()
             ->select('i')
             ->from('App:Item', 'i')
-            ->where('i.archive = 0')
+            ->where('i.archive = 1')
             ->orderBy('i.name', 'ASC');
 
 

@@ -22,7 +22,9 @@
             <div class="cont-result bg-red-light">
                 <p class="font-size-15 bold">
                     {{ item|upper }}
-                    <button class="font-size-15 padding-5"><a href="#">Remettre le jeu en circulation</a></button>
+                    {{ include('item/_replace_form.html.twig') }}
+                   
+
                 </p>
                 Date de suppression du jeu:: <span
                         class="bold">{% if item.archivedateTime %} {{ item.archiveDateTime|date('d-m-Y') }} {% else %} Aucune info. {% endif %}</span>
