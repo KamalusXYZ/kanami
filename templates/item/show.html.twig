@@ -15,16 +15,15 @@
                 <h3
                         class="padding-0  margin-5 bold font-size-25 color-blue"
                         style="text-align: center"><span style="color: #333333">Nom du jeu: </span> {{ item.name }}
-                    <button class="padding-5 margin-0">
+                    <button class="padding-5 margin-5">
                         <a href="{{ path('app_item_edit', {'id': item.id} ) }}">
                             <img width="20px" src="/img/edit.svg" alt="éditer">
                         </a>
+                        {{ include('item/_delete_form.html.twig') }}
                     </button>
-                    <button class="padding-5 margin-0">
-                        <a href="{{ path('app_item_delete', {'id': item.id} ) }}">
-                            <img width="20px" src="/img/delete.svg" alt="supprimer">
-                        </a>
-                    </button>
+
+
+
                 </h3>
                 <p style="text-align: start">
                     Réf produit: <span class="bold">{{ item.id }}</span><br>
