@@ -39,11 +39,20 @@ class MemberController extends AbstractController
         $form->handleRequest($request);
         $idFamily = $request->get('idFamily');
         $family = $familyRepository->find($idFamily);
+        $nbMember = 0;
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $nbMember = $family->getRelationships()->count();
+            $relationships = $family->getRelationships();
+            foreach ($relationships as $relationship) {
+
+                if ($relationship->getMember()->isArchive() != 1) $nbMember += +1;
+            }
+
             $family->setMaxLoanSimultaneous($nbMember * 2);
+            $member->setArchive(0);
+
+            $familyRepository->add($family, true);
             $memberRepository->add($member, true);
 
             return $this->redirectToRoute('app_relationship_new', ['idMember' => $member->getId(), 'idFamily' => $idFamily, 'member' => $member, 'family' => $family], Response::HTTP_SEE_OTHER);
@@ -59,12 +68,20 @@ class MemberController extends AbstractController
     }
 
     #[Route('/new-in-existing/{idFamily}', name: 'app_member_new_in_existing', methods: ['GET', 'POST'])]
-    public function newInExisting(Request $request, MemberRepository $memberRepository, FamilyRepository $familyRepository, RelationshipRepository $relationshipRepository): Response
+    public function newInExisting(Request $request, MemberRepository $memberRepository, FamilyRepository $familyRepository, RelationshipRepository $relationshipRepository, $idFamily): Response
     {
         $member = new Member();
         $idMember = $member->getId();
-        $idFamily = $request->get('idFamily');
+
         $family = $familyRepository->find($idFamily);
+        $nbMember = 0;
+
+        $relationships = $family->getRelationships();
+        foreach ($relationships as $relationship) {
+
+            if ($relationship->getMember()->isArchive() != 1) $nbMember = $nbMember + 1;
+        }
+
 
         $form = $this->createFormBuilder($member)
             ->add('firstName', TextType::class, ['label' => 'Prénom', 'required' => true])
@@ -83,9 +100,13 @@ class MemberController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+
+
+            $family->setMaxLoanSimultaneous((($nbMember * 2) + 2));
+
+            $member->setArchive(0);
+
             $memberRepository->add($member, true);
-            $nbMember = $family->getRelationships()->count();
-            $family->setMaxLoanSimultaneous(($nbMember * 2) +2);
             $familyRepository->add($family, true);
 
             return $this->redirectToRoute('app_relationship_new_in_existing', ['idMember' => $member->getId(), 'idFamily' => $idFamily, 'member' => $member, 'family' => $family], Response::HTTP_SEE_OTHER);
@@ -102,7 +123,7 @@ class MemberController extends AbstractController
 
 
     #[Route('/new-owner/{idFamily}', name: 'app_member_new_owner', methods: ['GET', 'POST'])]
-    public function newOwner(Request $request, MemberRepository $memberRepository, $idFamily, FamilyRepository $familyRepository): Response
+    public function newOwner(Request $request, MemberRepository $memberRepository, FamilyRepository $familyRepository, $idFamily): Response
     {
 
         $member = new Member();
@@ -114,6 +135,7 @@ class MemberController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $memberRepository->add($member, true);
 
             return $this->redirectToRoute('app_relationship_new_owner', ['idMember' => $member->getId(), 'idFamily' => $idFamily, 'member' => $member], Response::HTTP_SEE_OTHER);
@@ -154,22 +176,46 @@ class MemberController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_member_delete', methods: ['POST'])]
-    public function delete(Request $request,FamilyRepository $familyRepository,RelationshipRepository $relationshipRepository, Member $member, MemberRepository $memberRepository, $id): Response
+    public function delete(Request $request, FamilyRepository $familyRepository, RelationshipRepository $relationshipRepository, Member $member, MemberRepository $memberRepository, $id): Response
     {
-        $relations = $relationshipRepository->findBy(['member'=>$id]);
+
+        $rel = $relationshipRepository->findOneBy(['member' => $id]);
+        $idFamily = $rel->getFamily()->getId();
+
+
+        $family = $familyRepository->find($idFamily);
+        $nbMember = 0;
+
+        $relationships = $family->getRelationships();
+        foreach ($relationships as $relationship) {
+
+            if ($relationship->getMember()->isArchive() != 1) {
+
+                $nbMember = $nbMember + 1;
+
+            }
+        }
+
+
+        $relations = $relationshipRepository->findBy(['member' => $id]);
         $relation = '';
-        foreach ($relations as $relation){
+
+        foreach ($relations as $relation) {
             $relation = $relation;
-    }
+        }
         $idFamily = $relation->getFamily()->getId();
 
 
         if ($this->isCsrfTokenValid('delete' . $member->getId(), $request->request->get('_token'))) {
+
+            $family->setMaxLoanSimultaneous($nbMember * 2 - 2);
+
             $member->setArchive(1);
-            $memberRepository->add($member,true);
+            $familyRepository->add($family, true);
+            $memberRepository->add($member, true);
         }
 
-        return $this->redirectToRoute('app_family_show', ['idFamily'=>$idFamily], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_family_show', ['idFamily' => $idFamily], Response::HTTP_SEE_OTHER);
     }
 
 }

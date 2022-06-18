@@ -144,11 +144,22 @@
             </div>
             {% for relationship in family.relationships %}
                 {% if relationship.member.archive != 1 %}
-                    <div class="cont-result">
-                        {{ relationship.member.firstName }}            {{ relationship.member.lastName }}
+                    <div class="cont-result font-size-20">
+                        {{ relationship.member.firstName|capitalize }}            {{ relationship.member.lastName|upper }}
                         {{ relationship.member.birthday|date('d-m-Y') }} <a
-                                href="{{ path('app_member_delete', {'id': relationship.member.id }) }}"> Supprimer le
-                            membre </a>
+                                href="{{ path('app_member_delete', {'id': relationship.member.id, 'idFamily': relationship.family }) }}">
+
+                            <div style="font-size: 12px"
+                                 class="color-red flex-justify-center">
+                                <div class="radius margin-5 "
+                                     style="background-color: rgba(176,65,62,0.2); padding: 3px ; border: 1px solid #B0413E">
+                                    Supprimer le membre
+                                </div>
+
+
+                            </div>
+
+                        </a>
                     </div>
                 {% endif %}
 
