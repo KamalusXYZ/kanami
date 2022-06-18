@@ -337,10 +337,11 @@ h1 {
     background-color: white;
 }
 
-.bg-red {
+.bg-red-light {
 
     background-color: rgba(176, 65, 62, 0.3);
 }
+
 
 .bg-green-light {
 
@@ -701,7 +702,7 @@ video{
 
 /* Add a color to the active/current link */
 .topnav a.active {
-    background-color: #25963F;
+    background-color: #508f5e;
     color: white;
 }
 

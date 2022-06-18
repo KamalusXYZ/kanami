@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}KaNaMi{% endblock %}
+
+{% block body %}
+    {#    // supprimer plus tard le style min height 500px #}
+
+
+    {#    supprimer plus tard le style min height 500px #}
+    <div style="min-height: 500px" class="cont radius-bottom-right padding-0 bg-white">
+
+        <div class="topnav">
+
+            <a href="{{ path('app_settings') }}">Réglage général</a>
+            <a href="{{ path('app_settings_family') }}">Famille</a>
+            <a class="active" href="{{ path('app_settings_item') }}">Jeux</a>
+            <a href="{{ path('app_settings_member') }}">Membres du staff</a>
+        </div>
+
+        <div><h1>Liste des jeux supprimés</h1></div>
+        {% for item in resultsItem %}
+            <div class="cont-result bg-red-light">
+                <p class="font-size-15 bold">
+                    {{ item|upper }}
+                    <button class="font-size-15 padding-5"><a href="#">Remettre le jeu en circulation</a></button>
+                </p>
+                Date de suppression du jeu:: <span
+                        class="bold">{% if item.archivedateTime %} {{ item.archiveDateTime|date('d-m-Y') }} {% else %} Aucune info. {% endif %}</span>
+                Motif de
+                suppression: <span
+                        class="bold"> {% if item.archiveCause %} {{ item.archiveCause }} {% else %} Aucune info. {% endif %}</span>
+                Suite à la suppression qu'est devenu le
+                jeu: <span
+                        class="bold">{% if item.archiveGameBecome %} {{ item.archiveGameBecome }} {% else %} Aucune info. {% endif %}</span>
+                Pesonnel qui a supprimé le jeu:: <span
+                        class="bold">{% if item.archivePseudoUser %} {{ item.archivePseudoUser }} {% else %} Aucune info. {% endif %}</span>
+
+
+            </div>
+
+        {% endfor %}
+
+
+    </div>
+
+    </div>
+{% endblock %}
