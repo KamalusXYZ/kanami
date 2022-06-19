@@ -381,4 +381,17 @@ class ItemController extends AbstractController
     }
 
 
+    #[Route('/set-available/{id}', name: 'app_item_set_available', methods: ['POST'])]
+    public function setAvailableMethods(Request $request, Item $item, ItemRepository $itemRepository, $id): Response
+    {
+
+        if ($this->isCsrfTokenValid('available' . $item->getId(), $request->request->get('_token'))) {
+
+
+            $item->setAvailable(1);
+            $itemRepository->add($item, true);
+        }
+
+        return $this->redirectToRoute('app_item_show',  ['id' => $id], Response::HTTP_SEE_OTHER);
+    }
 }

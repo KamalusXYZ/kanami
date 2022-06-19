@@ -237,7 +237,8 @@
                         {% if item.loans != null %}
                             <p>Le jeu est indisponible pour des raisons autre qu'un retour de prêt incomplet.
                             </p>
-                            <button>Rendre disponible</button>
+
+                            <div class="padding-10">{{ include('item/_available_form.html.twig') }}</div>
                             <button>Rendre complet</button>
                         {% endif %}
 
@@ -246,7 +247,10 @@
                             {% if loan.completenessReturn != 1 %}
                                 <p>Le jeu est indisponible pour des raisons autre qu'un retour de prêt incomplet.
                                 </p>
-                                <button>Rendre disponible</button>
+
+                                <button><a href="{{ path('app_item_set_available', {'id': item.id }) }}">Rendre
+                                        disponible</a></button>
+                                <div class="padding-10">{{ include('item/_available_form.html.twig') }}</div>
                                 <button>Rendre complet</button>
 
                             {% endif %}
