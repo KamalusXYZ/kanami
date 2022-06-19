@@ -135,18 +135,19 @@
 
                         {% endif %}
 
-                        {% if loan.completenessReturn != null %}
-                            Rendu complet: {% if loan.completenessReturn == 1 %}  <span
-                                style="color: #25963F">OUI</span> le {{ loan.effectReturnDateTime|date('d-m-Y') }}  {% elseif loan.completenessReturn == 0 %}
-                            <span style="color: #B0413E">NON</span>
-
-                        {% endif %}
-
-
-
-
-                            {% if loan.returnComment != null %}| {{ loan.returnComment }} {% else %}| Aucun commentaire
+                        {% if loan.effectReturnDateTime %}
+                            {% if loan.completenessReturn == 1 %} Complet: <span
+                                    style="color: #25963F">OUI</span> le {{ loan.effectReturnDateTime|date('d-m-Y') }}  
+                                {% if loan.returnComment != null %}| {{ loan.returnComment }} {% else %}| Aucun commentaire
+                                {% endif %}
                             {% endif %}
+
+
+
+
+
+
+
 
                         {% endif %}
 

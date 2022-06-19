@@ -32,7 +32,7 @@ class CategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $categoryRepository->add($category, true);
 
-            return $this->redirectToRoute('app_settings', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_settings_item', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('category/new.html.twig', [

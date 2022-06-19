@@ -81,32 +81,15 @@ class LoanController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if ($item->isAvailable(1)) {
-                $loan->setCompletenessReturn(1);
-                $loan->setStartDateTime($dateTime);
-                $loan->setDatePreviewBack($backDateTime);
-                $loan->setItem($item);
-                $loan->setFamily($family);
-                $family->setMaxLoanSimultaneous($family->getMaxLoanSimultaneous() - 1);
-                $item->setAvailable(0);
+            $loan->setCompletenessReturn(1);
+            $loan->setStartDateTime($dateTime);
+            $loan->setDatePreviewBack($backDateTime);
+            $loan->setItem($item);
+            $loan->setFamily($family);
+            $family->setMaxLoanSimultaneous($family->getMaxLoanSimultaneous() - 1);
+            $item->setAvailable(0);
+            $loanRepository->add($loan, true);
 
-
-                $loanRepository->add($loan, true);
-
-            } else {
-
-                print 'Le jeu est indisponible';
-                return $this->renderForm('loan/new.html.twig', [
-                    'loan' => $loan,
-                    'form' => $form,
-                    'idItem' => $idItem,
-                    'item' => $item,
-                    'member' => $member,
-                    'family' => $family,
-
-                ]);
-
-            }
 
             return $this->redirectToRoute('app_main', [], Response::HTTP_SEE_OTHER);
         }
@@ -118,7 +101,6 @@ class LoanController extends AbstractController
             'item' => $item,
             'member' => $member,
             'family' => $family,
-
 
 
         ]);
