@@ -17,28 +17,38 @@
             <a href="{{ path('app_settings_member') }}">Membres du staff</a>
         </div>
 
-        <div><h1>Liste des jeux supprimés</h1></div>
+        <div><h1>Liste des jeux supprimés</h1>
+            <p class="color-black font-size-20 text-center">Cliquez sur l'icone <img width="20px"
+                                                                         src="/img/unarchive.svg"
+                                                                         alt="supprimer"> pour remettre un jeu en circulation.</p>
+        </div>
         {% for item in resultsItem %}
-            <div class="cont-result bg-red-light">
-                <p class="font-size-15 bold">
-                    {{ item|upper }}
-                    {{ include('item/_replace_form.html.twig') }}
-                   
+            <div class="cont-result bg-red-light flex-justify-center">
 
-                </p>
-                Date de suppression du jeu:: <span
-                        class="bold">{% if item.archivedateTime %} {{ item.archiveDateTime|date('d-m-Y') }} {% else %} Aucune info. {% endif %}</span>
-                Motif de
-                suppression: <span
-                        class="bold"> {% if item.archiveCause %} {{ item.archiveCause }} {% else %} Aucune info. {% endif %}</span>
-                Suite à la suppression qu'est devenu le
-                jeu: <span
-                        class="bold">{% if item.archiveGameBecome %} {{ item.archiveGameBecome }} {% else %} Aucune info. {% endif %}</span>
-                Pesonnel qui a supprimé le jeu:: <span
-                        class="bold">{% if item.archivePseudoUser %} {{ item.archivePseudoUser }} {% else %} Aucune info. {% endif %}</span>
+               <div> <p class="font-size-15 bold">
+                       {{ item|upper }}
+                   </p>
+                   <p>
+                       Date de suppression du jeu: <span style="margin-right: 5px"
+                                                         class="bold">{% if item.archivedateTime %} {{ item.archiveDateTime|date('d-m-Y') }} {% else %} Aucune info. {% endif %}</span> |
+                       Motif de
+                       suppression: <span  style="margin-right: 5px"
+                                           class="bold"> {% if item.archiveCause %} {{ item.archiveCause }} {% else %} Aucune info. {% endif %}</span> |
+                       Suite à la suppression qu'est devenu le
+                       jeu: <span style="margin-right: 5px"
+                                  class="bold">{% if item.archiveGameBecome %} {{ item.archiveGameBecome }} {% else %} Aucune info. {% endif %}</span> |
+                       Membre qui a supprimé le jeu:  <span
+                               class="bold">{% if item.archivePseudoUser %} {{ item.archivePseudoUser }} {% else %} Aucune info. {% endif %}</span> |
+                       Jeu complet? <span style="margin-right: 5px"
+                                          class="bold">{% if item.completeness == 1 %} Oui {% else %} Non ou inconnu {% endif %}</span>
+                       <br>
+
+                   </p></div>
+                <div class="padding-10">{{ include('item/_replace_form.html.twig') }}</div>
 
 
             </div>
+
 
         {% endfor %}
 

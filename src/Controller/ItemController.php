@@ -356,22 +356,23 @@ class ItemController extends AbstractController
             $item->setArchive(1);
             $itemRepository->add($item, true);
         }
-        dd($item);
+
 
         return $this->redirectToRoute('app_main', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/replace/{id}', name: 'app_item_replace', methods: ['POST, GET'])]
+    #[Route('/replace/{id}', name: 'app_item_replace', methods: ['POST'])]
     public function replace(Request $request, Item $item, ItemRepository $itemRepository): Response
     {
+
         if ($this->isCsrfTokenValid('replace' . $item->getId(), $request->request->get('_token'))) {
 
-            dd($item);
+
             $item->setArchive(0);
             $itemRepository->add($item, true);
         }
 
-        return $this->redirectToRoute('app_list_item_deleted', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_item_list_deleted', [], Response::HTTP_SEE_OTHER);
     }
 
 
