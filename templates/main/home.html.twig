@@ -4,37 +4,39 @@
 
 {% block body %}
 
-    <div class="cont-small-height-locked radius-bottom-left padding-0 bg-white margin-0 align-center">
+    <div class="cont-small-height-locked radius-bottom-left padding-0 bg-white margin-0">
         <div>
-            <div style="margin-top: 30px">
-                <form action="{{ path('app_search_item') }}" method="post">
-                    <input autocomplete="off" placeholder="Rechercher un jeu" name="word" id="search-item"
-                           type="search"/>
-                    <button><span class="material-symbols-outlined">
-casino</span></button>
-                </form>
-            </div>
 
-            <div>
-                <form action="{{ path('app_search_family') }}" method="post"><input
+            <form action="{{ path('app_search_item') }}" method="post">
+                <div style="margin-top: 30px; display: flex; align-items: center; justify-content: center ">
+                    <input style="; margin-right: 1px!important;" autocomplete="off" placeholder="Rechercher un jeu" name="word" id="search-item"
+                           type="search"/>
+                    <button class="padding-5"><span class="material-symbols-outlined">casino</span></button>
+
+                </div>
+
+            </form>
+
+
+            <form action="{{ path('app_search_family') }}" method="post">
+                <div style="margin-top: 30px; display: flex; align-items: center; justify-content: center">
+                    <input style="; margin-right: 1px!important;"
                             autocomplete="off"
                             placeholder="Rechercher une famille" name="word"
                             id="familySearch"
                             type="search"/>
-                    <button><span
-                                class="material-symbols-outlined">
-family_restroom
-</span>
+                    <button class="padding-5"><span
+                                class="material-symbols-outlined">family_restroom</span>
                     </button>
-                </form>
-            </div>
+                </div>
+            </form>
 
 
         </div>
 
 
     </div>
-    <div class="cont-big-height-locked padding-0 bg-white margin-0">
+    <div class="cont-index-height-locked padding-0 bg-white margin-0">
 
         {% if resultsItem == "" and resultsFamily == "" %}
 

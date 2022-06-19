@@ -106,7 +106,7 @@ h1 {
 }
 
 .cont-medium {
-    width: 500px;
+    width: 46%;
     background-color: rgba(139, 179, 234, 0.2);
     border: 4px solid var(--couleur-pri-light);
     margin: 3px auto;
@@ -132,17 +132,17 @@ h1 {
     margin: 3px auto;
     text-align: center;
     padding: 8px;
-    height: 612px;
+    height: 400px;
 }
 
 .cont-medium-height-locked {
-    width: 500px;
+    width: 46%;
     background-color: rgba(139, 179, 234, 0.2);
     border: 4px solid var(--couleur-pri-light);
     margin: 3px auto;
     text-align: center;
     padding: 8px;
-    height: 612px;
+    height: 400px;
 }
 
 .cont-big-height-locked {
@@ -152,7 +152,7 @@ h1 {
     margin: 3px auto;
     text-align: center;
     padding: 8px;
-    height: 612px;
+    height: 400px;
 }
 
 .cont-small-min-height-locked {
@@ -166,7 +166,7 @@ h1 {
 }
 
 .cont-medium-min-height-locked {
-    width: 500px;
+    width: 46%;
     background-color: rgba(139, 179, 234, 0.2);
     border: 4px solid var(--couleur-pri-light);
     margin: 3px auto;
@@ -185,6 +185,16 @@ h1 {
     min-height: 300px;
 }
 
+.cont-index-height-locked {
+    width: 68%;
+    background-color: rgba(139, 179, 234, 0.2);
+    border: 4px solid var(--couleur-pri-light);
+    margin: 3px auto;
+    text-align: center;
+    padding: 8px;
+    height: 612px;
+}
+
 .cont-small-hidden {
     width: 30%;
     margin: 3px auto;
@@ -193,7 +203,7 @@ h1 {
 }
 
 .cont-medium-hidden {
-    width: 500px;
+    width: 46%;
     margin: 3px auto;
     text-align: center;
 
@@ -485,7 +495,7 @@ button:active {
 }
 
 .align-center {
-
+    display: flex;
     align-items: center;
 }
 

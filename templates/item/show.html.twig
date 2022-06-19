@@ -3,118 +3,124 @@
 {% block title %}Jeu{% endblock %}
 
 {% block body %}
-    <div class="cont-hidden flex-wrap margin-top-0 padding-top-0">
-        <div class="cont-title padding-top-0 margin-top-0"><h1>{{ item.name }}
-            </h1>
+<div class="cont-hidden flex-wrap margin-top-0 padding-top-0">
+    <div class="cont-title padding-top-0 margin-top-0"><h1>{{ item.name }}
+        </h1>
+    </div>
+    <div class="cont radius-bottom flex-wrap margin-top-0">
+
+
+        <div style="text-align: start" class="cont-medium radius margin-top-0 padding-top-0">
+
+            <h5
+                    class="padding-0  margin-5 bold font-size-15 color-blue"
+                    style="text-align: center"><span style="color: #333333">Nom du jeu: </span> {{ item.name }}
+                <button class="padding-5 margin-5">
+                    <a href="{{ path('app_item_edit', {'id': item.id} ) }}">
+                        <img width="20px" src="/img/edit.svg" alt="éditer">
+                    </a>
+                    {{ include('item/_delete_form.html.twig') }}
+                </button>
+
+
+            </h5>
+            <p style="text-align: start">
+                Réf produit: <span class="bold">{{ item.id }}</span><br>
+                Réf interne: {% if item.ref %} <span class="bold">{{ item.ref }}</span>{% else %} <span
+                    class="bold"> Non renseigné </span> {% endif %}<br>
+                Ajouté le:<span class="bold">  {{ item.registerDateTime|date('d-m-Y') }} </span> <br>
+                Etat
+                d'usure: {% if item.itemCondition %} <span class="bold"> {{ item.itemCondition }} </span> {% else %}
+                    <span class="bold">  Non renseigné </span> {% endif %}
+                <br>
+                Complet: {% if item.completeness == 1 %} <span class="bold "> OUI </span> {% else %} <span
+                    class="bold color-red"> NON </span> {% endif %}<br>
+                Valeur: {% if item.gamePrice %} <span class="bold"> {{ item.gamePrice }} </span> {% else %} <span
+                    class="bold"> Non renseigné </span> {% endif %}<br>
+
+
+            </p>
+
         </div>
-        <div class="cont radius-bottom flex-wrap margin-top-0">
+        <div class="cont-medium radius margin-top-0 padding-top-0">
+            <h3 class="margin-top-0 padding-top-0  margin-5">
+                Informations générales
 
+            </h3>
+            <p style="text-align: start">
+                Langue: {% if item.lang %} <span class="bold"> {{ item.lang }} <br> </span>{% else %} <span
+                        class="bold"> Non renseigné <br> </span> {% endif %}
 
-            <div style="text-align: start" class="cont-medium radius margin-top-0 padding-top-0">
-
-                <h3
-                        class="padding-0  margin-5 bold font-size-25 color-blue"
-                        style="text-align: center"><span style="color: #333333">Nom du jeu: </span> {{ item.name }}
-                    <button class="padding-5 margin-5">
-                        <a href="{{ path('app_item_edit', {'id': item.id} ) }}">
-                            <img width="20px" src="/img/edit.svg" alt="éditer">
-                        </a>
-                        {{ include('item/_delete_form.html.twig') }}
-                    </button>
-
-
-
-                </h3>
-                <p style="text-align: start">
-                    Réf produit: <span class="bold">{{ item.id }}</span><br>
-                    Réf interne: {% if item.ref %} <span class="bold">{{ item.ref }}</span>{% else %} <span
-                        class="bold"> Non renseigné </span> {% endif %}<br>
-                    Ajouté le:<span class="bold">  {{ item.registerDateTime|date('d-m-Y') }} </span> <br>
-                    Etat
-                    d'usure: {% if item.itemCondition %} <span class="bold"> {{ item.itemCondition }} </span> {% else %}
-                        <span class="bold">  Non renseigné </span> {% endif %}
-                    <br>
-                    Complet: {% if item.completeness == 1 %} <span class="bold "> OUI </span> {% else %} <span
-                        class="bold color-red"> NON </span> {% endif %}<br>
-                    Valeur: {% if item.gamePrice %} <span class="bold"> {{ item.gamePrice }} </span> {% else %} <span
-                        class="bold"> Non renseigné </span> {% endif %}<br>
-
-
-                </p>
-
-            </div>
-            <div class="cont-medium radius margin-top-0 padding-top-0">
-                <h3 class="margin-top-0 padding-top-0  margin-5">
-                    Informations générales
-
-                </h3>
-                <p style="text-align: start">
-                    Langue: {% if item.lang %} <span class="bold"> {{ item.lang }} <br> </span>{% else %} <span
+                Editeur: {% if item.publisher %} <span class="bold"> {{ item.publisher }} </span> <br>  {% else %}
+                    <span
                             class="bold"> Non renseigné <br> </span> {% endif %}
-
-                    Editeur: {% if item.publisher %} <span class="bold"> {{ item.publisher }} </span> <br>  {% else %}
-                        <span
-                                class="bold"> Non renseigné <br> </span> {% endif %}
-                    Auteur(s): {% if item.author %} <span class="bold"> {{ item.author }} </span> <br>  {% else %} <span
-                            class="bold"> Non renseigné <br> </span> {% endif %}
-                    Illustrateur(s): {% if item.illustrator %}  <span class="bold"> {{ item.illustrator }} <br> </span>
-                    {% else %} <span class="bold"> Non renseigné <br> </span> {% endif %}
+                Auteur(s): {% if item.author %} <span class="bold"> {{ item.author }} </span> <br>  {% else %} <span
+                        class="bold"> Non renseigné <br> </span> {% endif %}
+                Illustrateur(s): {% if item.illustrator %}  <span class="bold"> {{ item.illustrator }} <br> </span>
+                {% else %} <span class="bold"> Non renseigné <br> </span> {% endif %}
 
 
-                    Catégorie(s):
-                    {% for category in item.categories %}
-                        <span
-                                class="bold"> {{ category }}</span>
-                    {% endfor %}
-                </p>
-                <div class="cont-result flex-align-center">
+                Catégorie(s):
+                {% for category in item.categories %}
+                    <span
+                            class="bold"> {{ category }}</span>
+                {% endfor %}
+            </p>
+            <div class="cont-result flex-align-center">
 
-                    <div class="radius padding-5">
+                <div class="radius padding-5">
 
-                        {% if  item.playerNbMin and item.playerNbMax %}
-                            <div><img width="24px" height="24px"
-                                      src="/img/nb_players.svg"></div>
-                            <div> De {{ item.playerNbMin }} à {{ item.playerNbMax }} joueur(s)</div> {% endif %}
-                    </div>
-                    <div class="radius padding-5" style=" display: inline">
-                        {% if item.lang %}
-                            <div><img width="24px" height="24px" src="/img/planet.svg" alt="langue"></div>
-                            <div> {{ item.lang }} </div> {% endif %}
-                    </div>
-                    <div class="radius padding-5" style=" display: inline">
-                        {% if item.ageMin %}
-                            <div><img width="24px" height="24px" src="/img/age_min.svg" alt="age mini"></div>
-                            <div>à partir de {{ item.ageMin }} ans</div>  {% endif %}
-                    </div>
-                    <div class="radius padding-5" style=" display: inline">
-                        {% if item.publisherGameDuration %}
-                            <div><img width="24px" height="24px" src="/img/time_duration.svg"
-                                      alt="durée d'une partie"></div>
-                            <div>{{ item.publisherGameDuration }} </div> {% endif %}
-                    </div>
-
-
+                    {% if  item.playerNbMin and item.playerNbMax %}
+                        <div><img width="24px" height="24px"
+                                  src="/img/nb_players.svg"></div>
+                        <div> De {{ item.playerNbMin }} à {{ item.playerNbMax }} joueur(s)</div> {% endif %}
+                </div>
+                <div class="radius padding-5" style=" display: inline">
+                    {% if item.lang %}
+                        <div><img width="24px" height="24px" src="/img/planet.svg" alt="langue"></div>
+                        <div> {{ item.lang }} </div> {% endif %}
+                </div>
+                <div class="radius padding-5" style=" display: inline">
+                    {% if item.ageMin %}
+                        <div><img width="24px" height="24px" src="/img/age_min.svg" alt="age mini"></div>
+                        <div>à partir de {{ item.ageMin }} ans</div>  {% endif %}
+                </div>
+                <div class="radius padding-5" style=" display: inline">
+                    {% if item.publisherGameDuration %}
+                        <div><img width="24px" height="24px" src="/img/time_duration.svg"
+                                  alt="durée d'une partie"></div>
+                        <div>{{ item.publisherGameDuration }} </div> {% endif %}
                 </div>
 
 
             </div>
 
-            <div class="cont-medium-min-height-locked radius scroller margin-top-0 padding-top-0"><h3
-                        class="margin-top-0 padding-top-0  margin-5">Historique des prêts</h3>
-                {% for loan in item.loans %}
 
-                    {% for relation in loan.family.relationships %}
-                        {% if relation.isOwner == 1 %}
-                            <div class="padding-5 margin-5 border-1 radius-top-left" style="text-align: start ; background-color: #95D6A4">
+        </div>
 
-                            Famille <span
-                                style="font-weight: bold">{{ relation.member.lastName|upper }} </span> {% endif %}
+        <div class="cont-medium-height-locked radius scroller margin-top-0 padding-top-0"><h3
+                    class="margin-top-0 padding-top-0  margin-5">Historique des prêts</h3>
+            {% for loan in item.loans|reverse %}
+
+            {% for relation in loan.family.relationships %}
+            {% if relation.isOwner == 1 %}
+            {% if loan.effectReturnDateTime %}
+            <div class="padding-5 margin-5 border-1 radius-top-left"
+                 style="text-align: start ; background-color: #95D6A4">
+                {% else %}
+                <div class="padding-5 margin-5 border-1 radius-top-left"
+                     style="text-align: start ; background-color: #25963F">
+                    {% endif %}
+                    Famille <span
+                            style="font-weight: bold">{{ relation.member.lastName|upper }} </span> {% endif %}
                     {% endfor %}
 
-                    Prété le: {{ loan.startDateTime|date('d-m-Y') }}  <br>
-                    {% if loan.effectReturnDateTime %}  rendu le: <span
-                            style="color: #25963F">{{ loan.effectReturnDateTime|date('d-m-Y') }}</span> {% else %}Retour prévu le:
-                        <span style="color: #B0413E">{{ loan.datePreviewBack|date('d-m-Y') }}</span> {% endif %}
+                    Prété le: {{ loan.startDateTime|date('d-m-Y') }} <br>
+                    {% if loan.effectReturnDateTime %}  Rendu le: <span
+                            style="color: #25963F">{{ loan.effectReturnDateTime|date('d-m-Y') }}</span> {% else %}
+                        <span class="bold"
+                              style="color: black ">Retour prévu le:
+                        {{ loan.datePreviewBack|date('d-m-Y') }}</span> {% endif %}
                     {% if loan.completenessReturn != null %}
                         Rendu complet: {% if loan.completenessReturn == 1 %}  <span
                             style="color: #25963F">OUI</span> le {{ loan.effectReturnDateTime|date('d-m-Y') }}  {% elseif loan.completenessReturn == 0 %}
@@ -124,19 +130,19 @@
                     {% endif %}
 
 
-                        {% if loan.returnComment != null %}|{{ loan.returnComment }} {% else %}| Aucun commentaire
+                        {% if loan.returnComment != null %}| {{ loan.returnComment }} {% else %}| Aucun commentaire
                         {% endif %}
 
                     {% endif %}
 
-                    </div>
+                </div>
 
                 {% endfor %}
 
 
             </div>
 
-            <div class="cont-medium radius text-center margin-top-0 padding-top-0 relative"><h3
+            <div class="cont-medium-height-locked  radius text-center margin-top-0 padding-top-0 relative"><h3
                         class="margin-top-0 padding-top-0 margin-5">Prêt et retour</h3>
                 {% if item.available == 1 %}
                     <div class="absolute">
@@ -250,9 +256,4 @@
     </div>
 
 
-
-
-
-
-
-{% endblock %}
+    {% endblock %}
