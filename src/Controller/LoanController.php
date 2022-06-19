@@ -82,6 +82,7 @@ class LoanController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             if ($item->isAvailable(1)) {
+                $loan->setCompletenessReturn(1);
                 $loan->setStartDateTime($dateTime);
                 $loan->setDatePreviewBack($backDateTime);
                 $loan->setItem($item);

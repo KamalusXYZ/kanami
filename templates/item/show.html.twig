@@ -117,17 +117,32 @@
 
                         Prété le: {{ loan.startDateTime|date('d-m-Y') }} <br>
                         {% if loan.effectReturnDateTime %}  Rendu le: <span
-                                style="color: #25963F">{{ loan.effectReturnDateTime|date('d-m-Y') }}</span> {% else %}
+                                style="color: #25963F">{{ loan.effectReturnDateTime|date('d-m-Y') }}</span>
+
+                            {% if loan.completenessReturn == 0 %}
+                                <span class="color-red">incomplet</span>
+
+                            {% endif %}
+
+
+                        {% else %}
                             <span class="bold"
                                   style="color: black ">Retour prévu le:
-                        {{ loan.datePreviewBack|date('d-m-Y') }}</span> {% endif %}
+                        {{ loan.datePreviewBack|date('d-m-Y') }}</span>
+
+
+
+
+                        {% endif %}
+
                         {% if loan.completenessReturn != null %}
                             Rendu complet: {% if loan.completenessReturn == 1 %}  <span
                                 style="color: #25963F">OUI</span> le {{ loan.effectReturnDateTime|date('d-m-Y') }}  {% elseif loan.completenessReturn == 0 %}
                             <span style="color: #B0413E">NON</span>
 
-
                         {% endif %}
+
+
 
 
                             {% if loan.returnComment != null %}| {{ loan.returnComment }} {% else %}| Aucun commentaire
@@ -144,6 +159,13 @@
 
                 <div class="cont-medium-height-locked  radius text-center margin-top-0 padding-top-0 relative"><h3
                             class="margin-top-0 padding-top-0 margin-5">Prêt et retour</h3>
+                    {% if item.available == 0 %}
+                        <p><span class="color-red font-size-20">Indisponible</span></p>
+                    {% endif %}
+                    {% if item.completeness == 0 %}
+                        <p><span class="color-red font-size-20">Incomplet</span></p>
+                    {% endif %}
+
                     {% if item.available == 1 %}
                         <div class="absolute">
                             <h2>Prêter le jeu à une famille?</h2>
@@ -165,18 +187,33 @@
                         </div>
 
                     {% endif %}
-                    {% if item.available == 0 and item.completeness == 1 %}
 
-                        <div class="box2">
-                            {% if item.available == 0 %}
 
-                            {% endif %}
-                            <h2>Le jeu a été prété, effectuer un retour?</h2>
+                    <div class="box2">
+                        {% if item.available == 0 and item.completeness == 1 %}
+                        {% if loan.completenessReturn != 1 %}
 
-                            <div class="cont-result"><p>Retour prévu: <span
-                                            class="bold">{{ loan.datePreviewBack|date('d-m-Y') }}</span> <br>
-                                    {% if loan.datePreviewBack < "now" %}
-                                        <br> <span class="color-red bold">RETARD:
+                            {% for relation in loan.family.relationships %}
+                                {% if relation.isOwner == 1 %}
+                                    Incomplétude chez la famille:
+                                    <a href="{{ path('app_family_show', {'idFamily': loan.family }) }}"><span
+                                                class="bold color-blue">{{ relation.member.lastName|upper }} (voir la fiche famille)</span>
+                                    </a>
+
+                                {% endif %}
+
+
+                            {% endfor %}
+
+
+                        {% endif %}
+
+                        <h2>Le jeu a été prété, effectuer un retour?</h2>
+
+                        <div class="cont-result"><p>Retour prévu: <span
+                                        class="bold">{{ loan.datePreviewBack|date('d-m-Y') }}</span> <br>
+                                {% if loan.datePreviewBack < "now" %}
+                                    <br> <span class="color-red bold">RETARD:
                                  {% for relation in loan.family.relationships %}
                                      {% if relation.isOwner == 1 %}
                                          <a style="text-decoration-style: solid"
@@ -189,96 +226,37 @@
 
                                  {% endfor %}
                                 </span>
+                                {% endif %}
+                            </p>
+                            <p>Actuellement chez la famille:
+                                {% for relation in loan.family.relationships %}
+                                    {% if relation.isOwner == 1 %}
+                                        <a href="{{ path('app_family_show', {'idFamily': loan.family }) }}"><span
+                                                    class="bold color-blue">{{ relation.member.lastName|upper }} (voir la fiche famille)</span>
+                                        </a>
+
                                     {% endif %}
-                                </p>
-                                <p>Actuellement chez la famille:
-                                    {% for relation in loan.family.relationships %}
-                                        {% if relation.isOwner == 1 %}
-                                            <a href="{{ path('app_family_show', {'idFamily': loan.family }) }}"><span
-                                                        class="bold color-blue">{{ relation.member.lastName|upper }} (voir la fiche famille)</span>
-                                            </a>
-
-                                        {% endif %}
 
 
-                                    {% endfor %}
+                                {% endfor %}
 
 
-                                </p>
-                                <div class="cont-small-hidden flex">
-                                    <form style="width: 300px"
-                                          action="{{ path('app_loan_return',  {'idItem': item.id }) }}"
-                                          method="post">
-                                        <button
-                                                style="width: 100px  ; font-size: 12px">Effectuer le retour de l'article
-                                        </button>
-                                    </form>
-                                </div>
-
+                            </p>
+                            <div class="cont-small-hidden flex">
+                                <form style="width: 300px"
+                                      action="{{ path('app_loan_return',  {'idItem': item.id }) }}"
+                                      method="post">
+                                    <button
+                                            style="width: 100px  ; font-size: 12px">Effectuer le retour de l'article
+                                    </button>
+                                </form>
                             </div>
 
-
                         </div>
+
+
+                    </div>
                     {% endif %}
-
-                    {% if item.completeness == 0 %}
-                        <div>
-                            <h2>Le jeu est incomplet</h2>
-                        </div>
-                    {% endif %}
-                    {% if item.available == 0 %}
-                        <div>
-                            <h2 class="color-red">Indisponible</h2>
-                        </div>
-                    {% endif %}
-
-                    {% if item.available == 0 %}
-
-                        {% if item.loans != null %}
-                            <p>Le jeu est indisponible pour des raisons autre qu'un retour de prêt incomplet.
-                            </p>
-
-                            <div class="padding-10">{{ include('item/_available_form.html.twig') }}</div>
-                            <button>Rendre complet</button>
-                        {% endif %}
-
-                        {% for loan in item.loans %}
-
-                            {% if loan.completenessReturn != 1 %}
-                                <p>Le jeu est indisponible pour des raisons autre qu'un retour de prêt incomplet.
-                                </p>
-
-                                <button><a href="{{ path('app_item_set_available', {'id': item.id }) }}">Rendre
-                                        disponible</a></button>
-                                <div class="padding-10">{{ include('item/_available_form.html.twig') }}</div>
-                                <button>Rendre complet</button>
-
-                            {% endif %}
-
-                        {% endfor %}
-
-
-                    {% endif %}
-
-
-                    {# resoudre le probleme de coherence #}
-                    {#                {% for loan in item.loans %} #}
-
-                    {#                    {% for relation in loan.family.relationships %} #}
-                    {#                        {% if loan.completenessReturn == 0 %} #}
-                    {#                            {% if relation.isOwner == 1 %} #}
-                    {#                                <p class="font-size-20">Une famille a rendu le jeu incomplet. <br> #}
-                    {#                                    Voir la fiche de la famille: #}
-                    {#                                    <a href="{{ path('app_family_show', {'idFamily': loan.family }) }}"><span #}
-                    {#                                                class="bold color-blue">{{ relation.member.lastName|upper }} </span> #}
-                    {#                                    </a> #}
-                    {#                                </p> #}
-
-                    {#                            {% endif %} #}
-                    {#                        {% endif %} #}
-
-                    {#                    {% endfor %} #}
-                    {#                {% endfor %} #}
 
 
                 </div>
