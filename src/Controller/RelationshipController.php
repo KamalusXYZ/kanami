@@ -23,10 +23,10 @@ class RelationshipController extends AbstractController
         ]);
     }
 
-    private function manageNew(Request $request, RelationshipRepository $relationshipRepository, FamilyRepository $familyRepository, MemberRepository $memberRepository, $is_owner = 0): Response
+    private function manageNew(Request $request, RelationshipRepository $relationshipRepository, FamilyRepository $familyRepository, MemberRepository $memberRepository,$idFamily, $idMember, $is_owner ): Response
     {
         $idFamily = $request->get('idFamily');
-        $Family = $familyRepository->find(id: $idFamily);
+        $family = $familyRepository->find(id: $idFamily);
         $idMember = $request->get('idMember');
         $member = $memberRepository->find(id: $idMember);
 
@@ -37,7 +37,7 @@ class RelationshipController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $relationship->setIsOwner($is_owner);
-            $relationship->setFamily($Family);
+            $relationship->setFamily($family);
             $relationship->setMember($member);
             $relationshipRepository->add($relationship, true);
             return $this->redirectToRoute($is_owner == 0 ? 'app_member_new' : 'app_member_new', ['idFamily' => $idFamily], Response::HTTP_SEE_OTHER);
@@ -46,21 +46,22 @@ class RelationshipController extends AbstractController
         return $this->renderForm($is_owner == 0 ? 'relationship/new.html.twig' : 'relationship/new_owner.html.twig', [
             'relationship' => $relationship,
             'form' => $form,
-            'member' => $member
+            'member' => $member,
+            'family'=> $family
         ]);
     }
 
     #[Route('/family/{idFamily}/member/{idMember}/new_owner', name: 'app_relationship_new_owner', methods: ['GET', 'POST'])]
-    public function newOwner(Request $request, RelationshipRepository $relationshipRepository, FamilyRepository $familyRepository, MemberRepository $memberRepository): Response
+    public function newOwner(Request $request, RelationshipRepository $relationshipRepository, FamilyRepository $familyRepository, MemberRepository $memberRepository ,$idFamily, $idMember): Response
     {
-        return $this->manageNew($request, $relationshipRepository, $familyRepository, $memberRepository, 1);
+        return $this->manageNew($request, $relationshipRepository, $familyRepository, $memberRepository,$idFamily, $idMember, 1);
     }
 
     #[Route('/family/{idFamily}/member/{idMember}/new', name: 'app_relationship_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, RelationshipRepository $relationshipRepository, FamilyRepository $familyRepository, MemberRepository $memberRepository): Response
+    public function new(Request $request, RelationshipRepository $relationshipRepository, FamilyRepository $familyRepository, MemberRepository $memberRepository, $idFamily, $idMember): Response
     {
 
-        return $this->manageNew($request, $relationshipRepository, $familyRepository, $memberRepository, 0);
+        return $this->manageNew($request, $relationshipRepository, $familyRepository, $memberRepository,$idFamily, $idMember, 0);
     }
 
     #[Route('/family/{idFamily}/member/{idMember}/new_in_existing', name: 'app_relationship_new_in_existing', methods: ['GET', 'POST'])]

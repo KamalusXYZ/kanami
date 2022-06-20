@@ -28,8 +28,8 @@ class PaymentType extends AbstractType
 
                 ],"label" => "Choisissez le mode de paiement: ", 'required' => true
             ])
-            ->add('paymentAmount', MoneyType::class, ["label" => "Montant: ", 'required' => false,
-                'empty_data' => 0])
+            ->add('paymentAmount', MoneyType::class, ["label" => "Montant: ", 'required' => false]
+            )
             ->add('paymentComment', TextareaType::class, ["label" => "Commentaire: ", 'required' => false,
                 'empty_data' => 'Aucun commentaire'])
             ->add('family', HiddenType::class)

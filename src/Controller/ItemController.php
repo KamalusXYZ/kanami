@@ -386,8 +386,12 @@ class ItemController extends AbstractController
 
         if ($this->isCsrfTokenValid('available' . $item->getId(), $request->request->get('_token'))) {
 
+            if($item->isAvailable() == 1){
+                $item->setAvailable(0);
+            } elseif($item->setAvailable() == 0) {
+                $item->isAvailable(1);
+            }
 
-            $item->setAvailable(0);
             $itemRepository->add($item, true);
         }
 

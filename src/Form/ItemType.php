@@ -18,6 +18,7 @@ class ItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+
             ->add('name', TextType::class, ["label" => "Nom: "])
             ->add('ref', TextType::class, ["label" => "Référence interne à la ludothèque: ", 'required' => false])
             ->add('lang', ChoiceType::class, [

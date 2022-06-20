@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Family;
 use App\Entity\Member;
 use App\Form\MemberType;
 use App\Repository\FamilyRepository;
@@ -30,30 +31,49 @@ class MemberController extends AbstractController
         ]);
     }
 
-    #[Route('/new/{idFamily}', name: 'app_member_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, MemberRepository $memberRepository, FamilyRepository $familyRepository): Response
+    #[Route('/new/family{idFamily}', name: 'app_member_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, MemberRepository $memberRepository, FamilyRepository $familyRepository, $idFamily): Response
     {
         $member = new Member();
         $idMember = $member->getId();
-        $form = $this->createForm(MemberType::class, $member);
-        $form->handleRequest($request);
-        $idFamily = $request->get('idFamily');
+
         $family = $familyRepository->find($idFamily);
+
         $nbMember = 0;
+
+        $relationships = $family->getRelationships();
+        foreach ($relationships as $relationship) {
+
+            if ($relationship->getMember()->isArchive() != 1) $nbMember = $nbMember + 1;
+        }
+
+
+        $form = $this->createFormBuilder($member)
+            ->add('firstName', TextType::class, ['label' => 'Prénom', 'required' => true])
+            ->add('lastName', TextType::class, ['label' => 'Nom', 'required' => true])
+            ->add('birthDay', DateType::class, ['label' => 'Date de naissance', 'required' => true])
+            ->add('phone', TelType::class, ['label' => 'Numéro de tél.', 'required' => false])
+            ->add('email', EmailType::class, ['label' => 'Email', 'required' => false])
+            ->add('address', TextType::class, ['label' => 'Adresse', 'required' => false])
+            ->add('zipCode', TextType::class, ["label" => "Code Postal: ", 'required' => false, 'attr' => ['maxlength' => 5]])
+            ->add('city', TextType::class, ["label" => "Ville: ", 'required' => false])
+            ->add('country', CountryType::class, ["label" => "Pays: ", 'required' => false])
+            ->add('otherAddressDetail', TextType::class, ["label" => "Complément d'adresse: ", 'required' => false])
+            ->getForm();
+
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $relationships = $family->getRelationships();
-            foreach ($relationships as $relationship) {
 
-                if ($relationship->getMember()->isArchive() != 1) $nbMember += +1;
-            }
 
-            $family->setMaxLoanSimultaneous($nbMember * 2);
+            $family->setMaxLoanSimultaneous((($nbMember * 2) + 2));
+
             $member->setArchive(0);
 
-            $familyRepository->add($family, true);
             $memberRepository->add($member, true);
+            $familyRepository->add($family, true);
+
 
             return $this->redirectToRoute('app_relationship_new', ['idMember' => $member->getId(), 'idFamily' => $idFamily, 'member' => $member, 'family' => $family], Response::HTTP_SEE_OTHER);
         }
@@ -92,8 +112,8 @@ class MemberController extends AbstractController
             ->add('address', TextType::class, ['label' => 'Adresse', 'required' => false])
             ->add('zipCode', TextType::class, ["label" => "Code Postal: ", 'required' => false, 'attr' => ['maxlength' => 5]])
             ->add('city', TextType::class, ["label" => "Ville: ", 'required' => false])
-            ->add('country', CountryType::class, ["label" => "Prénom: ", 'required' => false])
-            ->add('otherAddressDetail', TextType::class, ["label" => "Prénom: ", 'required' => false])
+            ->add('country', CountryType::class, ["label" => "Pays: ", 'required' => false])
+            ->add('otherAddressDetail', TextType::class, ["label" => "Complément d'adresse: ", 'required' => false])
             ->getForm();
 
         $form->handleRequest($request);

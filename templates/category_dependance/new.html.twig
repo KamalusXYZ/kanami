@@ -6,12 +6,26 @@
 
     <div class="cont-hidden ">
         <div class="cont-title"><h1>Choisissez une catégorie</h1></div>
-        <div class="cont margin-0 padding-0">
+
+        <div class="cont margin-0 padding-0 flex">
 
 
             {{ include('category_dependance/_form.html.twig') }}
+            <div class="cont-result ">
+                <h3 class="text-center margin-5 padding-5 ">Catégorie(s) séléctionnées</h3>
+                <div class="flex-wrap"></div>
 
+                {% if categories %}
+                    {% for cat in categories %}
+                        <span class="padding-10 margin-5 bold"> {{ cat }}</span>
+                    {% endfor %}
+                {% endif %}
+
+            </div>
+            <div>
+                <button><a href="{{ path('app_main', {'idItem': 'idItem' }) }}">Validation finale du jeu</a></button>
+            </div>
         </div>
-        <button><a href="{{ path('app_main', {'idItem': 'idItem' }) }}">Ajouter le jeu</a></button>
+
     </div>
 {% endblock %}

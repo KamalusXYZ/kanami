@@ -63,11 +63,13 @@ class LoanController extends AbstractController
     public function new(Request $request, FamilyRepository $familyRepository, RelationshipRepository $relationshipRepository, ItemRepository $itemRepository, MemberRepository $memberRepository, LoanRepository $loanRepository, $idItem, $idMember): Response
     {
 
+
+
         $item = $itemRepository->find($idItem);
         $member = $memberRepository->find($idMember);
 
-        $relation = $relationshipRepository->find($idMember);
 
+        $relation = $relationshipRepository->findOneBy(['member'=> $idMember]);
         $family = $relation->getFamily();
 
         $dateTime = date_create("now");

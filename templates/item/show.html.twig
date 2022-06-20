@@ -189,34 +189,35 @@
                 <div class="cont-medium-height-locked  radius text-center margin-top-0 padding-top-0 relative">
                     {#                    Verification des completudes et disponibilité pour afficher les boutons actif ou pas, qui declenche des methods differetnes #}
 
-                    {% set test = false %}
-                    {% for loan in item.loans %}
+{#                    {% set test = false %}#}
+{#                    {% for loan in item.loans %}#}
 
-                        {% if loan.effectReturnDateTime and loan.completenessReturn != 0 %}
-                            {% set test = true %}
-                        {% else %}
-                            {% set test = false %}
-                        {% endif %}
-                    {% endfor %}
+{#                        {% if loan.effectReturnDateTime and loan.completenessReturn != 0 %}#}
+{#                            {% set test = true %}#}
+{#                        {% else %}#}
+{#                            {% set test = false %}#}
+{#                        {% endif %}#}
+{#                    {% endfor %}#}
 
-                    {% if test == true %}
-                        <div class="flex-justify-center font-size-15 padding-5" style="border-bottom: 2px solid #333333">
-                            {% if item.available %}
-                                <div>
-                                    <div style="margin-right: 20px"><img width="30px" src="/img/active.svg" alt="disponible">
-                                    </div>
-                                    <div style="margin-right: 20px">Disponible</div>
-                                </div>
-                            {% endif %}
-                            {% if item.completeness %}
-                                <div>
-                                    <div style="margin-right: 20px"><img width="30px" src="/img/active.svg" alt="complet">
-                                    </div>
-                                    <div style="margin-right: 20px">Complet</div>
-                                </div>
-                            {% endif %}
-                        </div>
-                    {% endif %}
+{#                    {% if test == true %}#}
+{#                        <div class="flex-justify-center font-size-15 padding-5" style="border-bottom: 2px solid #333333">#}
+{#                            {% if item.available %}#}
+{#                                <div>#}
+{#                                    <div style="margin-right: 20px">#}
+{#                                        {{ include('item/_available_form.html.twig') }}#}
+{#                                    </div>#}
+{#                                    <div style="margin-right: 20px">Disponible</div>#}
+{#                                </div>#}
+{#                            {% endif %}#}
+{#                            {% if item.completeness %}#}
+{#                                <div>#}
+{#                                    <div style="margin-right: 20px"><img width="30px" src="/img/active.svg" alt="complet">#}
+{#                                    </div>#}
+{#                                    <div style="margin-right: 20px">Complet</div>#}
+{#                                </div>#}
+{#                            {% endif %}#}
+{#                        </div>#}
+{#                    {% endif %}#}
 
                     {#                    fin des boutons de verifications de completude et de dispo #}
                     <h3

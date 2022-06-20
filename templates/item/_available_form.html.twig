@@ -2,8 +2,6 @@
       onsubmit="return confirm('Etes vous sur de vouloir remettre rendre disponible:  {{ item.name }}?');">
     <input type="hidden" name="_token" value="{{ csrf_token('available' ~ item.id) }}">
 
-    <button style="max-height: 45px" class="margin-0 padding-5">Rendre disponible <br> <img width="20px"
-                                                                                            src="/img/available.svg"
-                                                                                            alt="rendre disponible">
-    </button>
+   <button class="margin-0 padding-0" > <img width="30px"src="/img/active.svg" alt="rendre disponible"></button>
+
 </form>
