@@ -33,7 +33,7 @@
                     Adresse: {{ relationship.member.address }} <br>
                     <span class="bold">{{ relationship.member.zipCode }} <br>
                     {{ relationship.member.city }} <br>
-                    {{ relationship.member.otherAddressDetail }} <br> <br></span>
+                    {{ relationship.member.otherAddressDetail }} <br></span>
                     Contact: <br>
                     Email: <span class="bold">{{ relationship.member.email }} <br></span>
                     Numéro de télephone: <span class="bold">{{ relationship.member.phone }}</span>
@@ -164,11 +164,12 @@
 
                                 </div>
                             {% endif %}
-                            {% if relationship.isOwner == 1 %}
-                              <p class="color-green font-size-20 margin-5 padding-0">Titulaire du compte</p>
-                            {% endif %}
+
 
                         </a>
+                        {% if relationship.isOwner == 1 %}
+                            <p class="color-green font-size-20 margin-5 padding-0">Titulaire du compte</p>
+                        {% endif %}
                     </div>
                 {% endif %}
 

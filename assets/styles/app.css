@@ -379,9 +379,11 @@ h1 {
 .color-red {
     color: #B0413E;
 }
+
 .color-black {
     color: #333333;
 }
+
 a {
     color: inherit;
     text-decoration: none;
@@ -456,6 +458,12 @@ button:active {
     box-shadow: transparent;
     color: darkgrey;
 
+}
+.warning-button:hover .warning-button:hover .warning-button:hover{
+    background: rgba(255, 128, 128, 0.12);
+    border-radius: 100px;
+    box-shadow: transparent;
+    color: darkgrey;
 }
 
 
@@ -673,7 +681,7 @@ css pour accéder à des div créées par symfony
     font-weight: bold;
 }
 
-video{
+video {
 
     display: flex;
     align-items: center;

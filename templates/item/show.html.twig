@@ -19,7 +19,32 @@
                         <a href="{{ path('app_item_edit', {'id': item.id} ) }}">
                             <img width="20px" src="/img/edit.svg" alt="éditer">
                         </a>
-                        {{ include('item/_delete_form.html.twig') }}
+                        {% set test = false %}
+                        {% for loan in item.loans %}
+
+                            {% if loan.effectReturnDateTime and loan.completenessReturn != 0 %}
+                                {% set test = true %}
+                            {% else %}
+                                <button style="cursor: help!important;" class="disabled-button margin-5 padding-5"><img
+                                            width="20px"
+                                            src="/img/delete_not.svg"
+                                            alt="Impossible de supprimer"
+                                            title="Impossible de supprimer un jeu en cours de prêt ou en cours de litige.">
+                                </button>
+
+
+                                {% set test = false %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if test == true %}
+                            {{ include('item/_delete_form.html.twig') }}
+                            {% if item.available %}
+                                <button>Rendre le jeu indispo</button>
+                            {% endif %}
+                            {% if item.completeness %}
+                                <button>Rendre le jeu complet</button>
+                            {% endif %}
+                        {% endif %}
                     </button>
 
 
@@ -123,7 +148,8 @@
                                 <span class="color-red">incomplet</span>
                                 <div class="box margin-5">
                                     <button STYLE="color: #B0413E" class=""><a class=""
-                                                                               href="{{ path('app_family_resolve', {'idFamily': loan.family.id}) }}">Résoudre le blocage</a></button>
+                                                                               href="{{ path('app_family_resolve', {'idFamily': loan.family.id}) }}">Résoudre
+                                            le blocage</a></button>
                                 </div>
 
                             {% endif %}
