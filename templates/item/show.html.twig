@@ -6,6 +6,8 @@
     <div class="cont-hidden flex-wrap margin-top-0 padding-top-0">
         <div class="cont-title padding-top-0 margin-top-0"><h1>{{ item.name }}
             </h1>
+
+
         </div>
         <div class="cont radius-bottom flex-wrap margin-top-0">
 
@@ -15,6 +17,7 @@
                 <h5
                         class="padding-0  margin-5 bold font-size-15 color-blue"
                         style="text-align: center"><span style="color: #333333">Nom du jeu: </span> {{ item.name }}
+
                     <button class="padding-5 margin-5">
                         <a href="{{ path('app_item_edit', {'id': item.id} ) }}">
                             <img width="20px" src="/img/edit.svg" alt="éditer">
@@ -36,16 +39,11 @@
                                 {% set test = false %}
                             {% endif %}
                         {% endfor %}
+
                         {% if test == true %}
-                            {{ include('item/_delete_form.html.twig') }}
-                            {% if item.available %}
-                                <button>Rendre le jeu indispo</button>
-                            {% endif %}
-                            {% if item.completeness %}
-                                <button>Rendre le jeu complet</button>
-                            {% endif %}
-                        {% endif %}
-                    </button>
+                        {{ include('item/_delete_form.html.twig') }}</button>
+
+                    {% endif %}
 
 
                 </h5>
@@ -188,7 +186,40 @@
 
                 </div>
 
-                <div class="cont-medium-height-locked  radius text-center margin-top-0 padding-top-0 relative"><h3
+                <div class="cont-medium-height-locked  radius text-center margin-top-0 padding-top-0 relative">
+                    {#                    Verification des completudes et disponibilité pour afficher les boutons actif ou pas, qui declenche des methods differetnes #}
+
+                    {% set test = false %}
+                    {% for loan in item.loans %}
+
+                        {% if loan.effectReturnDateTime and loan.completenessReturn != 0 %}
+                            {% set test = true %}
+                        {% else %}
+                            {% set test = false %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if test == true %}
+                        <div class="flex-justify-center font-size-15 padding-5" style="border-bottom: 2px solid #333333">
+                            {% if item.available %}
+                                <div>
+                                    <div style="margin-right: 20px"><img width="30px" src="/img/active.svg" alt="disponible">
+                                    </div>
+                                    <div style="margin-right: 20px">Disponible</div>
+                                </div>
+                            {% endif %}
+                            {% if item.completeness %}
+                                <div>
+                                    <div style="margin-right: 20px"><img width="30px" src="/img/active.svg" alt="complet">
+                                    </div>
+                                    <div style="margin-right: 20px">Complet</div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+
+                    {#                    fin des boutons de verifications de completude et de dispo #}
+                    <h3
                             class="margin-top-0 padding-top-0 margin-5">Prêt et retour</h3>
                     {% if item.available == 0 %}
                         <p><span class="color-red font-size-20">Indisponible</span></p>
@@ -198,7 +229,7 @@
                     {% endif %}
 
                     {% if item.available == 1 %}
-                        <div class="absolute">
+                        <div class="">
                             <h2>Prêter le jeu à une famille?</h2>
                             <div class="cont-small-hidden flex-justify-center">
                                 <form class="text-center" style="width: 300px"
