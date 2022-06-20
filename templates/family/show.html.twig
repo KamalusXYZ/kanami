@@ -63,6 +63,7 @@
                             jeu incomplet</a></button>
                 </div>
             {% endif %}
+
             <br>
             <div class="cont-result flex-space-center">
                 <div class="margin-5">Paiement à jour: <br>
@@ -149,15 +150,23 @@
                         {{ relationship.member.birthday|date('d-m-Y') }} <a
                                 href="{{ path('app_member_delete', {'id': relationship.member.id, 'idFamily': relationship.family }) }}">
 
-                            <div style="font-size: 12px"
-                                 class="color-red flex-justify-center">
-                                <div class="radius margin-5 "
-                                     style="background-color: rgba(176,65,62,0.2); padding: 3px ; border: 1px solid #B0413E">
-                                    Supprimer le membre
+
+                            {% if relationship.isOwner == 0 %}
+                                <div style="font-size: 12px"
+                                     class="color-red flex-justify-center">
+
+
+                                    <div class="radius margin-5 "
+                                         style="background-color: rgba(176,65,62,0.2); padding: 3px ; border: 1px solid #B0413E">
+                                        Supprimer le membre
+                                    </div>
+
+
                                 </div>
-
-
-                            </div>
+                            {% endif %}
+                            {% if relationship.isOwner == 1 %}
+                              <p class="color-green font-size-20 margin-5 padding-0">Titulaire du compte</p>
+                            {% endif %}
 
                         </a>
                     </div>

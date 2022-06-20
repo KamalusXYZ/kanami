@@ -121,6 +121,10 @@
 
                             {% if loan.completenessReturn == 0 %}
                                 <span class="color-red">incomplet</span>
+                                <div class="box margin-5">
+                                    <button STYLE="color: #B0413E" class=""><a class=""
+                                                                               href="{{ path('app_family_resolve', {'idFamily': loan.family.id}) }}">Résoudre le blocage</a></button>
+                                </div>
 
                             {% endif %}
 
@@ -137,7 +141,7 @@
 
                         {% if loan.effectReturnDateTime %}
                             {% if loan.completenessReturn == 1 %} Complet: <span
-                                    style="color: #25963F">OUI</span> le {{ loan.effectReturnDateTime|date('d-m-Y') }}  
+                                    style="color: #25963F">OUI</span> le {{ loan.effectReturnDateTime|date('d-m-Y') }}/
                                 {% if loan.returnComment != null %}| {{ loan.returnComment }} {% else %}| Aucun commentaire
                                 {% endif %}
                             {% endif %}
