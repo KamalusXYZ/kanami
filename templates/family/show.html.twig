@@ -33,7 +33,7 @@
                     Adresse: {{ relationship.member.address }} <br>
                     <span class="bold">{{ relationship.member.zipCode }} <br>
                     {{ relationship.member.city }} <br>
-                    {{ relationship.member.otherAddressDetail }} <br> <br></span>
+                    {{ relationship.member.otherAddressDetail }} <br></span>
                     Contact: <br>
                     Email: <span class="bold">{{ relationship.member.email }} <br></span>
                     Numéro de télephone: <span class="bold">{{ relationship.member.phone }}</span>
@@ -63,13 +63,14 @@
                             jeu incomplet</a></button>
                 </div>
             {% endif %}
+
             <br>
             <div class="cont-result flex-space-center">
                 <div class="margin-5">Paiement à jour: <br>
                     {% if family.paymentOK %} <img style="width: 30px" src="/img/available.svg" alt="OK">
                     {% else %} <img style="width: 30px" src="/img/unavailable.svg" alt="NON">
                     {% endif %}</div>
-                <div class="margin-5">Retour incomplet à regler? : <br>
+                <div class="margin-5">Retour à jour : <br>
                     {% if family.incompleteReturn == 0 %} <img style="width: 30px" src="/img/available.svg"
                                                                alt="OK">
                     {% else %} <img style="width: 30px" src="/img/unavailable.svg" alt="NON">
@@ -86,34 +87,36 @@
                 prêts</h3>
 
 
-            {% for loan in family.loan|sort() %}
-
-
+            {% for loan in family.loan|reverse %}
 
                 {% if loan.effectReturnDateTime %}
                     <div class="cont-result bg-green-light">
-                        Jeu: {{ loan.item }} <br>
+                        <span class="bold"> {{ loan.item }}</span> <br>
                         Date de début: {{ loan.startDateTime|date('d-m-Y') }}
                         {% if loan.effectReturnDateTime %}
                             retourné le: {{ loan.effectReturnDateTime|date('d-m-Y') }} <br>
                         {% else %}
-                            Retour prévu le: {{ loan.datePreviewBack|date('d-m-Y') }}  <br>
+                            <span class="bold"> Retour prévu le: {{ loan.datePreviewBack|date('d-m-Y') }}  </span><br>
                         {% endif %}
-                        {% if 'now' < loan.datePreviewBack %}
-                            pas de retard (a supprimé ajouté pour test)
-                        {% else %} En retard
+                        {% if 'now' > loan.datePreviewBack %}
+                            En retard
+                        {% endif %}
+                        {% if loan.completenessReturn == 0 %}
+                            <span class="color-red">Retour incomplet</span>
+                        {% else %}
+                            <span class="color-green"> Retour complet</span>
                         {% endif %}
 
                     </div>
 
                 {% else %}
                     <div class="cont-result bg-green">
-                        Jeu: {{ loan.item }} <br>
+                        <span class="bold">{{ loan.item }} </span> <br>
                         Date de début: {{ loan.startDateTime|date('d-m-Y') }}
                         {% if loan.effectReturnDateTime %}
                             retourné le: {{ loan.effectReturnDateTime|date('d-m-Y') }} <br>
                         {% else %}
-                            Retour prévu le: {{ loan.datePreviewBack|date('d-m-Y') }}  <br>
+                            <span class="bold">Retour prévu le: {{ loan.datePreviewBack|date('d-m-Y') }} </span> <br>
                         {% endif %}
                         {% if 'now' < loan.datePreviewBack %}
                             pas de retard (a supprimé ajouté pour test)
@@ -131,7 +134,8 @@
 
 
         </div>
-        <div class="cont-medium radius  "><h3 class="padding-top-0 margin-top-0 margin-bottom-0 margin-5">Liste des
+        <div class="cont-medium-height-locked radius  "><h3
+                    class="padding-top-0 margin-top-0 margin-bottom-0 margin-5">Liste des
                 membres</h3>
             <div class="box margin-5">
                 <button class="margin-0"><a class=""
@@ -140,11 +144,34 @@
                         un adhérant </a></button>
             </div>
             {% for relationship in family.relationships %}
-                <div class="cont-result">
-                    {{ relationship.member.firstName }}            {{ relationship.member.lastName }}
-                    {{ relationship.member.birthday|date('d-m-Y') }}
-                </div>
+                {% if relationship.member.archive != 1 %}
+                    <div class="cont-result font-size-20">
+                        {{ relationship.member.firstName|capitalize }}            {{ relationship.member.lastName|upper }}
+                        {{ relationship.member.birthday|date('d-m-Y') }} <a
+                                href="{{ path('app_member_delete', {'id': relationship.member.id, 'idFamily': relationship.family }) }}">
 
+
+                            {% if relationship.isOwner == 0 %}
+                                <div style="font-size: 12px"
+                                     class="color-red flex-justify-center">
+
+
+                                    <div class="radius margin-5 "
+                                         style="background-color: rgba(176,65,62,0.2); padding: 3px ; border: 1px solid #B0413E">
+                                        Supprimer le membre
+                                    </div>
+
+
+                                </div>
+                            {% endif %}
+
+
+                        </a>
+                        {% if relationship.isOwner == 1 %}
+                            <p class="color-green font-size-20 margin-5 padding-0">Titulaire du compte</p>
+                        {% endif %}
+                    </div>
+                {% endif %}
 
             {% endfor %}
 

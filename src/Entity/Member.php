@@ -57,6 +57,9 @@ class Member
     #[ORM\OneToMany(mappedBy: 'member', targetEntity: Relationship::class)]
     private $relationships;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $archive;
+
     public function __construct()
     {
         $this->relationships = new ArrayCollection();
@@ -254,6 +257,18 @@ class Member
                 $relationship->setMember(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isArchive(): ?bool
+    {
+        return $this->archive;
+    }
+
+    public function setArchive(?bool $archive): self
+    {
+        $this->archive = $archive;
 
         return $this;
     }

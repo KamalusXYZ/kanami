@@ -88,8 +88,6 @@ class FamilyController extends AbstractController
         $loansToResolve = $loanRepository->findBy(array('completenessReturn'=>0, 'family'=> $idFamily));
 
 
-
-
         return $this->render('family/resolve.html.twig', [
             'family' => $family,
             'idFamily' => $idFamily,

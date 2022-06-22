@@ -25,6 +25,7 @@ class SearchController extends AbstractController
             ->select('i')
             ->from('App:Item', 'i')
             ->where('i.name LIKE :key')
+            ->andWhere('i.archive != 1')
             ->setParameter('key', '%' . $searchWord . '%');
 
         $query = $qb->getQuery();

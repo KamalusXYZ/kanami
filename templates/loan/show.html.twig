@@ -13,12 +13,24 @@
                 {% for relation in result.relationships %}
                     {% if relation.isOwner == 1 %}
 
-                        <a href="{{ path('app_loan_new', {'idItem': item.id, 'idMember': result.id}) }}">
-                            <div style=" background-color: rgba(149,214,164,0.2)"
+                        {% if relation.family.maxLoanSimultaneous > 0 %}
+
+                            <a href="{{ path('app_loan_new', {'idItem': item.id, 'idMember': result.id}) }}">
+                                <div style=" background-color: rgba(149,214,164,0.2)"
+                                     class="cont-result flex-align-center font-size-20">
+                                    Famille {{ result.lastname|upper }}
+                                    <img style="width: 30px" src="/img/valid_family.svg" alt=""></div>
+                            </a>
+                        {% endif %}
+
+                        {% if relation.family.maxLoanSimultaneous == 0 %}
+
+                            <div style=" background-color: rgba(196,196,196,0.3)"
                                  class="cont-result flex-align-center font-size-20">
-                                Famille {{ result.lastname|upper }}
+                                Famille {{ result.lastname|upper }} | Plus de possibilitée de prêt.
                                 <img style="width: 30px" src="/img/valid_family.svg" alt=""></div>
-                        </a>
+
+                        {% endif %}
 
                     {% endif %}
 

@@ -63,11 +63,13 @@ class LoanController extends AbstractController
     public function new(Request $request, FamilyRepository $familyRepository, RelationshipRepository $relationshipRepository, ItemRepository $itemRepository, MemberRepository $memberRepository, LoanRepository $loanRepository, $idItem, $idMember): Response
     {
 
+
+
         $item = $itemRepository->find($idItem);
         $member = $memberRepository->find($idMember);
 
-        $relation = $relationshipRepository->find($idMember);
 
+        $relation = $relationshipRepository->findOneBy(['member'=> $idMember]);
         $family = $relation->getFamily();
 
         $dateTime = date_create("now");
@@ -81,31 +83,15 @@ class LoanController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if ($item->isAvailable(1)) {
-                $loan->setStartDateTime($dateTime);
-                $loan->setDatePreviewBack($backDateTime);
-                $loan->setItem($item);
-                $loan->setFamily($family);
-                $family->setMaxLoanSimultaneous($family->getMaxLoanSimultaneous() - 1);
-                $item->setAvailable(0);
+            $loan->setCompletenessReturn(1);
+            $loan->setStartDateTime($dateTime);
+            $loan->setDatePreviewBack($backDateTime);
+            $loan->setItem($item);
+            $loan->setFamily($family);
+            $family->setMaxLoanSimultaneous($family->getMaxLoanSimultaneous() - 1);
+            $item->setAvailable(0);
+            $loanRepository->add($loan, true);
 
-
-                $loanRepository->add($loan, true);
-
-            } else {
-
-                print 'Le jeu est indisponible';
-                return $this->renderForm('loan/new.html.twig', [
-                    'loan' => $loan,
-                    'form' => $form,
-                    'idItem' => $idItem,
-                    'item' => $item,
-                    'member' => $member,
-                    'family' => $family,
-//                    'owner' => $owner
-                ]);
-
-            }
 
             return $this->redirectToRoute('app_main', [], Response::HTTP_SEE_OTHER);
         }
@@ -117,7 +103,6 @@ class LoanController extends AbstractController
             'item' => $item,
             'member' => $member,
             'family' => $family,
-//            'owner' => $owner
 
 
         ]);

@@ -20,13 +20,16 @@
             </h1>
             <p style="font-size: x-large">Jeu(x) à résoudre:</p>
              {% for loan in loanToResolve %}
-                    <div class="cont-result"> <h4 class="text-center font-size-20">{{ loan.item }}</h4>
+                    <div class="cont-result"> <h4 class="text-center">{{ loan.item }}</h4>
 
                         <button ><a href="{{ path('app_resolve_confirmation', {'idItem': loan.item.id , 'idFamily': loan.family.id} ) }}">La famille a retrouvé ou remplacé la pièce manquante</a> </button>
-                        <button ><a href="{{ path('app_pay_to_resolve_confirmation', {'idItem': loan.item.id , 'idFamily': loan.family.id, 'loanToResolve': loanToResolve} ) }}">La famille va payer le jeu</a> </button>
-                        <button ><a href="{{ path('app_free_resolve_confirmation', {'idItem': loan.item.id , 'idFamily': loan.family.id} ) }}">La ludothèque annule le contentieux avec la famille</a> </button>
+                        <button ><a href="{{ path('app_pay_to_resolve_confirmation', {'idItem': loan.item.id , 'idFamily': loan.family.id} ) }}">La famille va payer le jeu</a> </button>
+                        <button ><a href="{{ path('app_resolve_confirmation', {'idItem': loan.item.id , 'idFamily': loan.family.id} ) }}">La ludothèque annule le contentieux avec la famille</a> </button>
 
                     </div>
+                 <div>
+                     <p>Montant du jeu à régler: {{ item.price }}</p>
+                 </div>
 
             {% endfor %}
 

@@ -19,7 +19,7 @@ class Payment
     #[ORM\Column(type: 'string', length: 45)]
     private $paymentKind;
 
-    #[ORM\Column(type: 'decimal', precision: 8, scale: 2)]
+    #[ORM\Column(type: 'decimal', precision: 8, scale: 2,nullable: true)]
     private $paymentAmount;
 
     #[ORM\Column(type: 'string', length: 45, nullable: true)]

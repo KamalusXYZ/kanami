@@ -5,7 +5,7 @@
 {% block body %}
     <div class="cont-hidden ">
 
-        <div class="cont-title"><h1>Ajouter un nouveau membre à la
+        <div class="cont-title"><h1>Ajouter <span class="color-green">{{ member.firstName|upper }} {{ member.lastName|upper }} </span>à la
                 famille {% for relationship in family.relationships %}
 
                     {% if relationship.isOwner == 1 %}

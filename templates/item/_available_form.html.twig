@@ -1,0 +1,7 @@
+<form method="post" action="{{ path('app_item_set_available', {'id': item.id}) }}"
+      onsubmit="return confirm('Etes vous sur de vouloir remettre rendre disponible:  {{ item.name }}?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('available' ~ item.id) }}">
+
+   <button class="margin-0 padding-0" > <img width="30px"src="/img/active.svg" alt="rendre disponible"></button>
+
+</form>
