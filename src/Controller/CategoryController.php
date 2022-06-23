@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Category;
-use App\Entity\Item;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,19 +24,21 @@ class CategoryController extends AbstractController
     #[Route('/new', name: 'app_category_new', methods: ['GET', 'POST'])]
     public function new(Request $request, CategoryRepository $categoryRepository): Response
     {
+        $categories = $categoryRepository->findAll();
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $categoryRepository->add($category, true);
-
+            $this->addFlash('success', 'Catégorie ajoutée');
             return $this->redirectToRoute('app_settings_item', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('category/new.html.twig', [
             'category' => $category,
             'form' => $form,
+            'categories' => $categories
         ]);
     }
 
@@ -46,6 +47,7 @@ class CategoryController extends AbstractController
     {
         return $this->render('category/show.html.twig', [
             'category' => $category,
+
         ]);
     }
 
@@ -70,7 +72,7 @@ class CategoryController extends AbstractController
     #[Route('/{id}', name: 'app_category_delete', methods: ['POST'])]
     public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
             $categoryRepository->remove($category, true);
         }
 

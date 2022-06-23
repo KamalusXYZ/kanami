@@ -5,8 +5,20 @@
 {% block body %}
     <div class="cont-hidden ">
         <div class="cont-title"><h1>Ajouter une nouvelle catégorie</h1></div>
-        <div class="cont margin-0 padding-0">
 
+        <div class="cont margin-0 padding-0">
+            <div class="text-center">
+                <h2>Liste des catégories existantes</h2>
+                <ul>
+
+                    {% for category in categories %}
+                        <li> {{ category.categoryName() }} </li>
+                    {% endfor %}
+                </ul>
+
+                <br>
+
+            </div>
 
             {{ include('category/_form.html.twig') }}
 
