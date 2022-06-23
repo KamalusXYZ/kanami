@@ -362,6 +362,10 @@ h1 {
 
     background-color: rgba(37, 150, 63, 0.4);
 }
+.bg-green-dark {
+
+    background-color: rgb(37, 150, 63);
+}
 
 .bg-black-light {
 
@@ -382,6 +386,9 @@ h1 {
 
 .color-black {
     color: #333333;
+}
+.color-white{
+    color: white;
 }
 
 a {
@@ -757,6 +764,18 @@ video {
 .topnav a.active {
     background-color: #508f5e;
     color: white;
+}
+
+
+/*****************************************
+               FLASH BAR
+ ****************************************/
+.sticky{
+    position: absolute;
+    top: 60px;
+    margin: 3px auto 15px;
+    width: 100vw;
+    height: 50px;
 }
 
 

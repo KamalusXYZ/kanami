@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
 
     <title>{% block title %}Kanami{% endblock %}</title>
-{#    <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />#}
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    {#    <link rel="icon" type="image/x-icon" href="/img/favicon.ico" /> #}
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -31,10 +32,17 @@
 <body>
 <div class="cont-header margin-top-0 margin-bottom-0">
     <div class="cont-hidden margin-top-0">
+
         {% block menu %}
             {% include "header/header.html.twig" %}
         {% endblock %}
+
     </div>
+
+    {% block flash %}
+        {% include "flash/flash.html.twig" %}
+    {% endblock %}
+
 </div>
 <div class="cont-title radius-top">Ma ludothèque</div>
 
@@ -42,6 +50,7 @@
     {% block body %}
     {% endblock %}
 </div>
-<div><span style="text-align: center;font-family: 'JetBrains Mono ',serif" class="font-size-20"><p>VERSION 0.15</p></span></div>
+<div><span style="text-align: center;font-family: 'JetBrains Mono ',serif"
+           class="font-size-20"><p>VERSION 0.15</p></span></div>
 </body>
 </html>
