@@ -91,6 +91,7 @@ class LoanController extends AbstractController
             $family->setMaxLoanSimultaneous($family->getMaxLoanSimultaneous() - 1);
             $item->setAvailable(0);
             $loanRepository->add($loan, true);
+            $this->addFlash('success', 'Prêt effectué.');
 
 
             return $this->redirectToRoute('app_main', [], Response::HTTP_SEE_OTHER);
@@ -148,9 +149,10 @@ class LoanController extends AbstractController
                     $family->setIncompleteReturnNb($family->getIncompleteReturnNb() + 1);
                     $family->setIncompleteReturn(1);
                     $family->setBlocked(1);
+                    $this->addFlash('warning', 'Retour effectué: incomplet');
 
 
-                }
+                }else{ $this->addFlash('success', 'Jeux retourné : complet.');}
 
                 $loanRepository->add($loan, true);
 

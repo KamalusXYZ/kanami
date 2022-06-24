@@ -77,7 +77,6 @@ class ItemController extends AbstractController
             'loan' => $loan,
 
 
-
         ]);
     }
 
@@ -117,6 +116,7 @@ class ItemController extends AbstractController
             $item->setAvailable(1);
             $item->setCompleteness(1);
             $itemRepository->add($item, true);
+            $this->addFlash('success', 'Litige résolu: pièce manquante retrouvée ou remplacée.');
 
 
             return $this->redirectToRoute('app_family_check', ['idFamily' => $idFamily], Response::HTTP_SEE_OTHER);
@@ -170,6 +170,7 @@ class ItemController extends AbstractController
             $loanRepository->add($loan, true);
             $familyRepository->add($family, true);
             $paymentRepository->add($payment, true);
+            $this->addFlash('success', 'Litige résolu: jeu remboursé par la famille.');
 
             return $this->redirectToRoute('app_family_check', ['idFamily' => $idFamily], Response::HTTP_SEE_OTHER);
         }
@@ -220,6 +221,7 @@ class ItemController extends AbstractController
             $loanRepository->add($loan, true);
             $familyRepository->add($family, true);
             $paymentRepository->add($payment, true);
+            $this->addFlash('success', 'Litige résolu. Geste accordé: ni paiement , ni pièce rendue');
 
             return $this->redirectToRoute('app_family_check', ['idFamily' => $idFamily], Response::HTTP_SEE_OTHER);
         }
@@ -360,6 +362,7 @@ class ItemController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $item->getId(), $request->request->get('_token'))) {
             $item->setArchive(1);
             $itemRepository->add($item, true);
+            $this->addFlash('warning', 'Jeu supprimé');
         }
 
 
@@ -375,6 +378,7 @@ class ItemController extends AbstractController
 
             $item->setArchive(0);
             $itemRepository->add($item, true);
+            $this->addFlash('success', 'Jeu remis en circulation.');
         }
 
         return $this->redirectToRoute('app_item_list_deleted', [], Response::HTTP_SEE_OTHER);
@@ -386,15 +390,17 @@ class ItemController extends AbstractController
 
         if ($this->isCsrfTokenValid('available' . $item->getId(), $request->request->get('_token'))) {
 
-            if($item->isAvailable() == 1){
+            if ($item->isAvailable() == 1) {
                 $item->setAvailable(0);
-            } elseif($item->setAvailable() == 0) {
+                $this->addFlash('warning', 'Statut du jeu : INDISPONIBLE');
+            } elseif ($item->setAvailable() == 0) {
                 $item->isAvailable(1);
+                $this->addFlash('success', 'Statut du jeu : DISPONIBLE');
             }
 
             $itemRepository->add($item, true);
         }
 
-        return $this->redirectToRoute('app_item_show',  ['id' => $id], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_item_show', ['id' => $id], Response::HTTP_SEE_OTHER);
     }
 }
