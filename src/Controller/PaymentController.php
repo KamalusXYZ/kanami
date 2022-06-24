@@ -52,9 +52,14 @@ class PaymentController extends AbstractController
             $paymentKind = $payment->getPaymentKind();
             $paymentAmount = $payment->getPaymentAmount();
 
-            if ($paymentKind != 'aucun paiement' && $paymentAmount > 20) $family->setPaymentOk(1); // 20 est le prix choisit en attendant , celui ci sera fixé dynamiquement quand la ludotheque sera créée, et que le champs subscription_price_month (x12) sera renseigné.
-            $family->setMaxLoanSimultaneous($nbMember * 2); // 2 est le nombre choisit de pret par membre, en attendant que celui ci soit determiné dynamiquement dans la ludotheque dans le champs max_loan_simult_user + attention a verifier si celui ci ne depasse pas le champs max_loan_simult_family
+            if ($paymentKind != 'aucun paiement' && $paymentAmount > 20) {
+                $this->addFlash('success', 'Paiement de la cotisation complétée.');
+                $family->setPaymentOk(1); // 20 est le prix choisit en attendant , celui ci sera fixé dynamiquement quand la ludotheque sera créée, et que le champs subscription_price_month (x12) sera renseigné.
 
+            } else {
+                $this->addFlash('warning', 'Paiement de la cotisation mis en suspens.');
+            }
+            $family->setMaxLoanSimultaneous($nbMember * 2); // 2 est le nombre choisit de pret par membre, en attendant que celui ci soit determiné dynamiquement dans la ludotheque dans le champs max_loan_simult_user + attention a verifier si celui ci ne depasse pas le champs max_loan_simult_family
             $paymentRepository->add($payment, true);
 
             return $this->redirectToRoute('app_payment_new_deposit', ['idMember' => $idMember, 'idFamily' => $idFamily], Response::HTTP_SEE_OTHER);
@@ -89,14 +94,22 @@ class PaymentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if($payment->getPaymentAmount() > 50) $family->setDeposit(1) ; // 50  est determiné en attendant qu'il soit dynamiquement crée dans ludotheque avec la propriete deposit_amount
-            if($payment->getPaymentComment() ) $family->setDepositInformation($payment->getPaymentComment());
+            if ($payment->getPaymentAmount() > 50){
+
+                $family->setDeposit(1); // 50  est determiné en attendant qu'il soit dynamiquement crée dans ludotheque avec la propriete deposit_amount
+                $this->addFlash('success', 'Paiement du dépot de garantie completé.');
+
+            }else{
+                $this->addFlash('warning', 'Paiement du dépot de garantie mis en suspens.');
+
+            }
+
+
+            if ($payment->getPaymentComment()) $family->setDepositInformation($payment->getPaymentComment());
 
             $payment->setPaymentDate($dateTime);
             $payment->setFamily($family);
             $paymentOK = $payment->getId();
-
-
 
 
             if ($paymentOK) $family->setPaymentOk(1);

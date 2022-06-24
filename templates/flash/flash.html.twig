@@ -1,9 +1,32 @@
-<div class="margin-top-0 margin-bottom-0 sticky bg-green-dark flex-align-center">
-    <div class="font-size-20 cont-hidden color-white ">
-        <div style="text-align: center">
-            Catégorie ajoutée!
+{% for message in app.flashes('success') %}
+    <div class="margin-top-0 margin-bottom-0 sticky bg-green-dark flex-align-center disappear">
+        <div class="font-size-20 cont-hidden color-white ">
+
+            <div style="text-align: center">
+
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+
+            </div>
         </div>
+
+
     </div>
+{% endfor %}
+{% for message in app.flashes('warning') %}
+    <div class="margin-top-0 margin-bottom-0 sticky bg-red flex-align-center disappear">
+        <div class="font-size-20 cont-hidden color-white ">
+
+            <div style="text-align: center">
+
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+
+            </div>
+        </div>
 
 
-</div>
+    </div>
+{% endfor %}

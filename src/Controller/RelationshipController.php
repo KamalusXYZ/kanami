@@ -23,7 +23,7 @@ class RelationshipController extends AbstractController
         ]);
     }
 
-    private function manageNew(Request $request, RelationshipRepository $relationshipRepository, FamilyRepository $familyRepository, MemberRepository $memberRepository,$idFamily, $idMember, $is_owner ): Response
+    private function manageNew(Request $request, RelationshipRepository $relationshipRepository, FamilyRepository $familyRepository, MemberRepository $memberRepository, $idFamily, $idMember, $is_owner): Response
     {
         $idFamily = $request->get('idFamily');
         $family = $familyRepository->find(id: $idFamily);
@@ -40,6 +40,7 @@ class RelationshipController extends AbstractController
             $relationship->setFamily($family);
             $relationship->setMember($member);
             $relationshipRepository->add($relationship, true);
+            $this->addFlash('success', 'Membre  ajouté.');
             return $this->redirectToRoute($is_owner == 0 ? 'app_member_new' : 'app_member_new', ['idFamily' => $idFamily], Response::HTTP_SEE_OTHER);
         }
 
@@ -47,21 +48,21 @@ class RelationshipController extends AbstractController
             'relationship' => $relationship,
             'form' => $form,
             'member' => $member,
-            'family'=> $family
+            'family' => $family
         ]);
     }
 
     #[Route('/family/{idFamily}/member/{idMember}/new_owner', name: 'app_relationship_new_owner', methods: ['GET', 'POST'])]
-    public function newOwner(Request $request, RelationshipRepository $relationshipRepository, FamilyRepository $familyRepository, MemberRepository $memberRepository ,$idFamily, $idMember): Response
+    public function newOwner(Request $request, RelationshipRepository $relationshipRepository, FamilyRepository $familyRepository, MemberRepository $memberRepository, $idFamily, $idMember): Response
     {
-        return $this->manageNew($request, $relationshipRepository, $familyRepository, $memberRepository,$idFamily, $idMember, 1);
+        return $this->manageNew($request, $relationshipRepository, $familyRepository, $memberRepository, $idFamily, $idMember, 1);
     }
 
     #[Route('/family/{idFamily}/member/{idMember}/new', name: 'app_relationship_new', methods: ['GET', 'POST'])]
     public function new(Request $request, RelationshipRepository $relationshipRepository, FamilyRepository $familyRepository, MemberRepository $memberRepository, $idFamily, $idMember): Response
     {
 
-        return $this->manageNew($request, $relationshipRepository, $familyRepository, $memberRepository,$idFamily, $idMember, 0);
+        return $this->manageNew($request, $relationshipRepository, $familyRepository, $memberRepository, $idFamily, $idMember, 0);
     }
 
     #[Route('/family/{idFamily}/member/{idMember}/new_in_existing', name: 'app_relationship_new_in_existing', methods: ['GET', 'POST'])]
@@ -82,6 +83,7 @@ class RelationshipController extends AbstractController
             $relationship->setFamily($family);
             $relationship->setMember($member);
             $relationshipRepository->add($relationship, true);
+            $this->addFlash('success', 'Membre ajouté.');
             return $this->redirectToRoute('app_family_show', ['idFamily' => $idFamily], Response::HTTP_SEE_OTHER);
         }
 
@@ -89,7 +91,7 @@ class RelationshipController extends AbstractController
             'relationship' => $relationship,
             'form' => $form,
             'member' => $member,
-            'family'=> $family
+            'family' => $family
         ]);
     }
 

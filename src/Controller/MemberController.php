@@ -66,10 +66,10 @@ class MemberController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
 
-
             $family->setMaxLoanSimultaneous((($nbMember * 2) + 2));
 
             $member->setArchive(0);
+            $this->addFlash('success', 'Membre ajouté.');
 
             $memberRepository->add($member, true);
             $familyRepository->add($family, true);
@@ -121,10 +121,10 @@ class MemberController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
 
-
             $family->setMaxLoanSimultaneous((($nbMember * 2) + 2));
 
             $member->setArchive(0);
+
 
             $memberRepository->add($member, true);
             $familyRepository->add($family, true);
@@ -158,6 +158,7 @@ class MemberController extends AbstractController
 
             $memberRepository->add($member, true);
 
+
             return $this->redirectToRoute('app_relationship_new_owner', ['idMember' => $member->getId(), 'idFamily' => $idFamily, 'member' => $member], Response::HTTP_SEE_OTHER);
         }
 
@@ -172,6 +173,7 @@ class MemberController extends AbstractController
     #[Route('/{id}', name: 'app_member_show', methods: ['GET'])]
     public function show(Member $member): Response
     {
+
         return $this->render('member/show.html.twig', [
             'member' => $member,
         ]);
@@ -185,6 +187,7 @@ class MemberController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $memberRepository->add($member, true);
+            $this->addFlash('success', 'Membre mis à jour.');
 
             return $this->redirectToRoute('app_member_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -229,7 +232,7 @@ class MemberController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $member->getId(), $request->request->get('_token'))) {
 
             $family->setMaxLoanSimultaneous($nbMember * 2 - 2);
-
+            $this->addFlash('warning', 'Membre supprimé.');
             $member->setArchive(1);
             $familyRepository->add($family, true);
             $memberRepository->add($member, true);

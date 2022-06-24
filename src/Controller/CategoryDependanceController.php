@@ -38,6 +38,7 @@ class CategoryDependanceController extends AbstractController
             $item = $itemRepository->find($request->get("idItem"));
             $categoryDependance->setItem($item);
             $categoryDependanceRepository->add($categoryDependance, true);
+            $this->addFlash('success', 'Catégorie attribuée au jeu');
 
 
             return $this->redirectToRoute('app_category_dependance_new', ['idItem' => $idItem], Response::HTTP_SEE_OTHER);
