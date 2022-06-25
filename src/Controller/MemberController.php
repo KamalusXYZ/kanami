@@ -69,7 +69,7 @@ class MemberController extends AbstractController
             $family->setMaxLoanSimultaneous((($nbMember * 2) + 2));
 
             $member->setArchive(0);
-            $this->addFlash('success', 'Membre ajouté.');
+//            $this->addFlash('success', 'Membre ajouté.');
 
             $memberRepository->add($member, true);
             $familyRepository->add($family, true);
