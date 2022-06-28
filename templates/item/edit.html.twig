@@ -24,19 +24,22 @@
         </div>
         <div class="cont radius-bottom flex-wrap margin-top-0">
 
-            {% for l in loan %}
-                {{ l.family }}
+            {% for dependance in dependances %}
+
+                {% if dependance.category %}
+                    <p>
+                        {{ dependance.category.categoryName }}
+                        <button>
+                            <a
+                                    href="{{ path('app_category_dependance_edit', {'id': dependance.category.id }) }}">Modifier
+                                ou supprimer
+                            </a>
+                        </button>
+                    </p>
+                {% endif %}
+
             {% endfor %}
-
-            {% if item %}
-                <p>
-                    <button class="warning-button" style="min-width: 100px"><a
-                                href="{{ path('app_category_dependance_edit', {'id': loan.item.id}) }}">Modifier la
-                            catégorie.</a></button>
-                </p>
-
-            {% endif %}
-            {{ include('item/_form.html.twig', {'button_label': 'Metre à jour'}) }}
+            {{ include('item/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
 
         </div>

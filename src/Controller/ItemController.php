@@ -60,7 +60,7 @@ class ItemController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_item_show', methods: ['GET'])]
-    public function show(Item $item, LoanRepository $loanRepository,  CategoryDependanceRepository $categoryDependanceRepository, RelationshipRepository $relationshipRepository, $id): Response
+    public function show(Item $item, LoanRepository $loanRepository, CategoryDependanceRepository $categoryDependanceRepository, RelationshipRepository $relationshipRepository, $id): Response
     {
 
 
@@ -262,9 +262,9 @@ class ItemController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_item_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, FamilyRepository $familyRepository, Item $item, ItemRepository $itemRepository, LoanRepository $loanRepository, $id): Response
+    public function edit(Request $request, FamilyRepository $familyRepository, Item $item, ItemRepository $itemRepository, CategoryDependanceRepository $categoryDependanceRepository, LoanRepository $loanRepository, $id): Response
     {
-        // recherche d'un pret qui a été restitué incomplet.[arrive sous forme de tableau]
+        // recherche d'une dependance entre une catégorie et l'item .[arrive sous forme de tableau]
         $loan = '';
         $loans = $loanRepository->findBy(['item' => $id, 'completenessReturn' => 0]);
         //boucle sur le tableau qui ne doit contenir qu'un resultat
@@ -273,6 +273,9 @@ class ItemController extends AbstractController
 
 
         }
+        // recherche d'une dependance entre une catégorie et l'id de l'item recu en parametre.[arrive sous forme de tableau]
+
+        $dependances = $categoryDependanceRepository->findBy(['item' => $id]);
 
 
         $form = $this->createFormBuilder($item)
@@ -353,7 +356,8 @@ class ItemController extends AbstractController
         return $this->renderForm('item/edit.html.twig', [
             'item' => $item,
             'form' => $form,
-            'loan' => $loan
+            'loan' => $loan,
+            'dependances' => $dependances
         ]);
     }
 
