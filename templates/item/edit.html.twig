@@ -8,17 +8,18 @@
             <h1>Modifier le jeu: <span style="color: #25963F">{{ item.name }}</span></h1>
 
 
+            {% if  loan %}
+                <p class="font-size-20 color-red">
+                    Le jeu est incomplet suite à un prêt, pour résoudre le litige vous avez 3 solutions en cliquant sur
+                    le
+                    bouton suivant:
+                    <button class="warning-button" style="min-width: 100px"><a
+                                href="{{ path('app_family_resolve', {'idFamily': loan.family.id}) }}">Se rendre à la
+                            page de
+                            résolution des litige.</a></button>
 
-            {% if  loan  %}
-            <p class="font-size-20 color-red">
-                Le jeu est incomplet suite à un prêt, pour résoudre le litige vous avez 3 solutions en cliquant sur le
-                bouton suivant:
-                <button class="warning-button" style="min-width: 100px"><a
-                            href="{{ path('app_family_resolve', {'idFamily': loan.family.id}) }}">Se rendre à la page de
-                        résolution des litige.</a></button>
-
-            </p>
-                {% endif %}
+                </p>
+            {% endif %}
 
         </div>
         <div class="cont radius-bottom flex-wrap margin-top-0">
@@ -28,11 +29,14 @@
             {% endfor %}
 
             {% if item %}
-                <p>   <button>Modifier la catégorie</button></p>
+                <p>
+                    <button class="warning-button" style="min-width: 100px"><a
+                                href="{{ path('app_category_dependance_edit', {'id': loan.item.id}) }}">Modifier la
+                            catégorie.</a></button>
+                </p>
 
             {% endif %}
             {{ include('item/_form.html.twig', {'button_label': 'Metre à jour'}) }}
-
 
 
         </div>

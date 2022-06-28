@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Family;
 use App\Entity\Payment;
 use App\Form\FamilyType;
+use App\Repository\CategoryDependanceRepository;
 use App\Repository\FamilyRepository;
 use App\Repository\ItemRepository;
 use App\Repository\LoanRepository;
@@ -63,9 +64,11 @@ class FamilyController extends AbstractController
     }
 
     #[Route('/{idFamily}', name: 'app_family_show', methods: ['GET'])]
-    public function show(Request $request,FamilyRepository $familyRepository): Response
+    public function show(Request $request,FamilyRepository $familyRepository, $idFamily): Response
     {
-        $idFamily = $request->get('idFamily');
+
+
+
         $family = $familyRepository->find($idFamily);
 
 

@@ -63,6 +63,15 @@
                             jeu incomplet</a></button>
                 </div>
             {% endif %}
+            {% if family.paymentOk == 0 %}
+
+                <button STYLE="color: #B0413E" class="">
+                    <a class=""
+                       href="{{ path('app_family_resolve', {'idFamily': family.id}) }}">
+                        Mettre à jour le paiement
+                    </a></button>
+            {% endif %}
+
 
             <br>
             <div class="cont-result flex-space-center">
@@ -96,7 +105,8 @@
                         {% if loan.effectReturnDateTime %}
                             retourné le: {{ loan.effectReturnDateTime|date('d-m-Y') }} <br>
                         {% else %}
-                            <span class="bold"> Retour prévu le: {{ loan.datePreviewBack|date('d-m-Y') }}  </span><br>
+                            <span class="bold"> Retour prévu le: {{ loan.datePreviewBack|date('d-m-Y') }}  </span>
+                            <br>
                         {% endif %}
                         {% if 'now' > loan.datePreviewBack %}
                             En retard
@@ -116,7 +126,8 @@
                         {% if loan.effectReturnDateTime %}
                             retourné le: {{ loan.effectReturnDateTime|date('d-m-Y') }} <br>
                         {% else %}
-                            <span class="bold">Retour prévu le: {{ loan.datePreviewBack|date('d-m-Y') }} </span> <br>
+                            <span class="bold">Retour prévu le: {{ loan.datePreviewBack|date('d-m-Y') }} </span>
+                            <br>
                         {% endif %}
                         {% if 'now' < loan.datePreviewBack %}
                             pas de retard (a supprimé ajouté pour test)

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Item;
 use App\Entity\Payment;
 use App\Form\ItemType;
+use App\Repository\CategoryDependanceRepository;
 use App\Repository\FamilyRepository;
 use App\Repository\ItemRepository;
 use App\Repository\LoanRepository;
@@ -59,8 +60,9 @@ class ItemController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_item_show', methods: ['GET'])]
-    public function show(Item $item, LoanRepository $loanRepository, MemberRepository $memberRepository, RelationshipRepository $relationshipRepository, $id): Response
+    public function show(Item $item, LoanRepository $loanRepository,  CategoryDependanceRepository $categoryDependanceRepository, RelationshipRepository $relationshipRepository, $id): Response
     {
+
 
         $loans = $loanRepository->findBy(
             array('item' => $id, 'effectReturnDateTime' => null)
@@ -360,6 +362,8 @@ class ItemController extends AbstractController
     public function delete(Request $request, Item $item, ItemRepository $itemRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $item->getId(), $request->request->get('_token'))) {
+
+            $item->setArchiveDateTime(date_create("now"));
             $item->setArchive(1);
             $itemRepository->add($item, true);
             $this->addFlash('warning', 'Jeu supprimé');

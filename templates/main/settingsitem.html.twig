@@ -5,14 +5,8 @@
 {% block body %}
     {#    // supprimer plus tard le style min height 500px #}
 
-
-    {#    supprimer plus tard le style min height 500px #}
     <div style="min-height: 500px" class="cont radius-bottom-right padding-0 bg-white">
-{#        {% for message in app.flashes('success') %}#}
-{#            <div class="alert alert-success">#}
-{#                {{ message }}#}
-{#            </div>#}
-{#        {% endfor %}#}
+
 
         <div class="topnav">
 
@@ -27,6 +21,7 @@
                 jeu</a></button>
         <button class=""><a class="" href="{{ path('app_category_new') }}">Créer une catégorie</a></button>
         <button class=""><a class="" href="{{ path('app_item_list_deleted') }}">Voir les jeux supprimés</a></button>
+        <button class=""><a class="" href="{{ path('app_category_index') }}">Voir et modifier les catégories</a></button>
 
 
     </div>

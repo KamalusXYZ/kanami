@@ -69,7 +69,7 @@ class MemberController extends AbstractController
             $family->setMaxLoanSimultaneous((($nbMember * 2) + 2));
 
             $member->setArchive(0);
-//            $this->addFlash('success', 'Membre ajouté.');
+
 
             $memberRepository->add($member, true);
             $familyRepository->add($family, true);
@@ -153,11 +153,9 @@ class MemberController extends AbstractController
         $form = $this->createForm(MemberType::class, $member);
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             $memberRepository->add($member, true);
-
 
             return $this->redirectToRoute('app_relationship_new_owner', ['idMember' => $member->getId(), 'idFamily' => $idFamily, 'member' => $member], Response::HTTP_SEE_OTHER);
         }

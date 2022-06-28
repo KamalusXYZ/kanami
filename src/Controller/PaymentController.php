@@ -53,11 +53,11 @@ class PaymentController extends AbstractController
             $paymentAmount = $payment->getPaymentAmount();
 
             if ($paymentKind != 'aucun paiement' && $paymentAmount > 20) {
-                $this->addFlash('success', 'Paiement de la cotisation complétée.');
+                $this->addFlash('success', 'Paiement de la cotisation complétée. Etape suivante paiement du dépot de garantie.');
                 $family->setPaymentOk(1); // 20 est le prix choisit en attendant , celui ci sera fixé dynamiquement quand la ludotheque sera créée, et que le champs subscription_price_month (x12) sera renseigné.
 
             } else {
-                $this->addFlash('warning', 'Paiement de la cotisation mis en suspens.');
+                $this->addFlash('warning', 'Paiement de la cotisation mis en suspens. Etape suivante paiement du dépot de garantie.');
             }
             $family->setMaxLoanSimultaneous($nbMember * 2); // 2 est le nombre choisit de pret par membre, en attendant que celui ci soit determiné dynamiquement dans la ludotheque dans le champs max_loan_simult_user + attention a verifier si celui ci ne depasse pas le champs max_loan_simult_family
             $paymentRepository->add($payment, true);
@@ -97,10 +97,10 @@ class PaymentController extends AbstractController
             if ($payment->getPaymentAmount() > 50){
 
                 $family->setDeposit(1); // 50  est determiné en attendant qu'il soit dynamiquement crée dans ludotheque avec la propriete deposit_amount
-                $this->addFlash('success', 'Paiement du dépot de garantie completé.');
+                $this->addFlash('success', 'Paiement du dépot de garantie completé. Nouvelle famille ajoutée');
 
             }else{
-                $this->addFlash('warning', 'Paiement du dépot de garantie mis en suspens.');
+                $this->addFlash('warning', 'Paiement du dépot de garantie mis en suspens. Nouvelle famille ajoutée');
 
             }
 
