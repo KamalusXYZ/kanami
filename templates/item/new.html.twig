@@ -9,7 +9,63 @@
         <div class="cont margin-0 padding-0">
 
 
-            {{ include('item/_form.html.twig') }}
+            {{ form_start(form, { 'attr' : { 'class': 'cont-form' } }) }}
+            <div class="name">
+                {{ form_row(form.name, { 'attr' : { 'class': 'cont-form-row-30' } }) }}
+            </div>
+            <div class="ref">
+                {{ form_row(form.ref, { 'attr' : { 'class': 'cont-form-row-30' } }) }}
+            </div>
+            <div class="lang">
+                {{ form_row(form.lang, { 'attr' : { 'class': 'cont-form-row-30' } }) }}
+            </div>
+            <div class="publisherGameDuration">
+                {{ form_row(form.publisherGameDuration, { 'attr' : { 'class': 'cont-form-row-30' } }) }}
+            </div>
+            <div class="ourGameDuration">
+                {{ form_row(form.ourGameDuration, { 'attr' : { 'class': 'cont-form-row-30' } }) }}
+            </div>
+            <div class="playerNbMin">
+                {{ form_row(form.playerNbMin, { 'attr' : { 'class': 'cont-form-row-30' } }) }}
+            </div>
+            <div class="playerNbMax">
+                {{ form_row(form.playerNbMax, { 'attr' : { 'class': 'cont-form-row-30' } }) }}
+            </div>
+            <div class="ageMin">
+                {{ form_row(form.ageMin, { 'attr' : { 'class': 'cont-form-row-30' } }) }}
+            </div>
+            <div class="author">
+                {{ form_row(form.author, { 'attr' : { 'class': 'cont-form-row-30' } }) }}
+            </div>
+            <div class="illustrator">
+                {{ form_row(form.illustrator, { 'attr' : { 'class': 'cont-form-row-30' } }) }}
+            </div>
+            <div class="publisher">
+                {{ form_row(form.publisher, { 'attr' : { 'class': 'cont-form-row-30' } }) }}
+            </div>
+            <div class="itemCondition">
+                {{ form_row(form.itemCondition, { 'attr' : { 'class': 'cont-form-row-30' } }) }}
+            </div>
+            <div class="completeness">
+                {{ form_row(form.completeness, { 'attr' : { 'class': 'cont-form-row-30' } }) }}
+            </div>
+            <div class="available">
+                {{ form_row(form.available, { 'attr' : { 'class': 'cont-form-row-30' } }) }}
+            </div>
+            <div class="gamePrice">
+                {{ form_row(form.gamePrice, { 'attr' : { 'class': 'cont-form-row-30' } }) }}
+            </div>
+            <div class="gameOrigin">
+                {{ form_row(form.gameOrigin, { 'attr' : { 'class': 'cont-form-row-30' } }) }}
+            </div>
+            <div class="copyNumber">
+                {{ form_row(form.copyNumber, { 'attr' : { 'class': 'cont-form-row-30' } }) }}
+            </div>
+
+
+            {{ form_end(form) }}
+
+
         </div>
     </div>
 {% endblock %}

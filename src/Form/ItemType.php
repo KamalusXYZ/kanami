@@ -7,7 +7,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,8 +17,9 @@ class ItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('name', TextType::class, ["label" => "Nom: ",'attr' => ['class' => 'nameType']],
+                )
 
-            ->add('name', TextType::class, ["label" => "Nom: "])
             ->add('ref', TextType::class, ["label" => "Référence interne à la ludothèque: ", 'required' => false])
             ->add('lang', ChoiceType::class, [
                 'choices' => [
