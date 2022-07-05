@@ -1,23 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}CategoryDependance{% endblock %}
+{% block title %}Suppression d'une catégorie{% endblock %}
 
 {% block body %}
-    <h1>Supprimer la catégorie.</h1>
+    <div class="cont-hidden flex-wrap margin-top-0 padding-top-0">
+        <div class="cont-title padding-top-0 margin-top-0"><h1>Supprimer la catégorie <span
+                        class="color-red">{{ category_dependance.category }}</span>
+                pour le jeu <span class="color-red">{{ category_dependance.item }}</span></h1>
 
-    <table class="table">
-        <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ category_dependance.id }}</td>
-            <th>item</th>
-            <td>{{ category_dependance.item }}</td>
-            <th>item</th>
-            <td>{{ category_dependance.category }}</td>
-        </tr>
-        </tbody>
-    </table>
+        </div>
+        <div class="cont radius-bottom flex-justify-center margin-top-0">
+            <div>{{ include('category_dependance/_delete_form.html.twig') }}</div>
+        </div>
+    </div>
 
-
-    {{ include('category_dependance/_delete_form.html.twig') }}
 {% endblock %}
