@@ -21,7 +21,7 @@
                     {% for cat in categories %}
 
                         <span style="font-size: 18px" class="padding-10 margin-5 bold color-green"> {{ cat }}</span>
-                        <a href="{{ path('app_category_dependance_delete_in_creation', {'id': cat.id }) }}"><img width="25px"
+                        <a href="{{ path('app_category_dependance_delete_in_creation', {'id': cat.id, 'idItem': cat.item }) }}"><img width="25px"
                                                                                                        src="/img/close.svg"
                                                                                                        alt="supprimer"></a>
 

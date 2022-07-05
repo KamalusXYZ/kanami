@@ -69,7 +69,7 @@ class CategoryDependanceController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $categoryDependanceRepository->add($categoryDependance, true);
 
-            return $this->redirectToRoute('app_category_dependance_index', [ ], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_category_dependance_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('category_dependance/edit.html.twig', [
@@ -81,11 +81,13 @@ class CategoryDependanceController extends AbstractController
     #[Route('/{id}', name: 'app_category_dependance_delete_in_creation', methods: ['POST'])]
     public function deleteInCreation(Request $request, CategoryDependance $categoryDependance, CategoryDependanceRepository $categoryDependanceRepository): Response
     {
+
+       
         if ($this->isCsrfTokenValid('delete' . $categoryDependance->getId(), $request->request->get('_token'))) {
             $categoryDependanceRepository->remove($categoryDependance, true);
         }
 
-        return $this->redirectToRoute('app_category_dependance_new', ['idItem' => ite], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_category_dependance_new', ['idItem' => $categoryDependance->getItem()->getId()], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/{id}', name: 'app_category_dependance_delete', methods: ['POST'])]
