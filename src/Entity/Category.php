@@ -77,4 +77,9 @@ class Category
 
         return $this;
     }
+
+    public function getName()
+    {
+        return $this->categoryName;
+    }
 }

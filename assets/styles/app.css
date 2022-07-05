@@ -351,6 +351,7 @@ h1 {
 
     background-color: rgba(176, 65, 62, 0.3);
 }
+
 .bg-red {
 
     background-color: rgb(176, 65, 62);
@@ -411,7 +412,7 @@ input {
     /* M3/sys/light/outline */
     border: 1px solid #79747E;
     border-radius: 4px;
-    margin: 10px;
+    margin: 3px;
 }
 
 
@@ -489,9 +490,9 @@ button:active {
 
 }
 
-.flex {
+.flex-space-around {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 
 
 }
@@ -640,9 +641,9 @@ tfoot {
 }
 
 /************
-    Form Cont
+    Form Cont (Symfony sans bootstrap force à cibler les class en sous couche) ITEM
 *************/
-.cont-form{
+.cont-form {
 
     display: flex;
     justify-content: center;
@@ -650,15 +651,188 @@ tfoot {
     flex-wrap: wrap;
     width: 100%;
 }
-.cont-form-row-30{
+
+.cont-form-row-30 {
 
     width: 30%;
 
+    text-align: center;
+    display: inline-grid;
+
+}
+
+.nom {
+    width: 600px;
+    height: 35px;
+    font-size: 25px;
+    margin-bottom: 0;
+}
+
+.input-nombre {
+
+    width: 50px;
+    margin-bottom: 0;
+}
+
+.name div {
+    display: inline-grid;
+    padding: 7px;
+    font-size: 18px;
+    font-weight: normal;
+
+}
+
+.completeness div {
+    display: inline-grid;
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.available div {
+    display: inline-grid;
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.itemCondition div {
+    display: inline-grid;
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.ref div {
+    display: inline-grid;
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.lang div {
+    display: inline-grid;
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.publisherGameDuration div {
+    display: inline-grid;
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.ourGameDuration div {
+    display: inline-grid;
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.playerNbMax div {
+
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.playerNbMin div {
+
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.ageMin div {
+
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.author div {
+    display: inline-grid;
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+    text-align: center;
+}
+
+.illustrator div {
+    display: inline-grid;
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+    text-align: center;
+}
+
+.publisher div {
+    display: inline-grid;
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+    text-align: center;
+}
+
+.gameOrigin div {
+    display: inline-grid;
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+    text-align: center;
+}
+
+.gamePrice div {
+    display: inline-grid;
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.copyNumber div {
+
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+    text-decoration-style: dotted;
+}
+
+.submit-form div {
+    display: inline-grid;
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+/**********
+    FORM CATEGORY DEPENDANCE
+******** */
+
+#category_dependance div label {
+    display: none;
+
+}
+
+#category_dependance_category {
+
+    width: 250px;
+    background-color: #95D6A4;
+    border-radius: 15px;
+    height: 35px;
+    color: #333333;
+    font-size: 18px;
 }
 
 
+/*************
+ Checkeboxs
+*************/
+#item_completeness, #item_available {
 
-
+    height: 30px;
+}
 
 
 /******Fonts (size , weight,...)/

@@ -8,18 +8,19 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
 
 class ItemType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, ["label" => "Nom: ",'attr' => ['class' => 'nameType']],
-                )
-
+            ->add('name', TextType::class, ["label" => "Nom complet du jeu:* ", 'attr' => ['class' => 'nameType']],
+            )
             ->add('ref', TextType::class, ["label" => "Référence interne à la ludothèque: ", 'required' => false])
             ->add('lang', ChoiceType::class, [
                 'choices' => [
@@ -31,7 +32,7 @@ class ItemType extends AbstractType
                     'Autre' => 'Autre',
 
                 ],
-                'preferred_choices' => ['Français'],
+                'preferred_choices' => ['Français'], "label" => "Langue principale: "
             ])
             ->add('publisherGameDuration', ChoiceType::class, [
                 'choices' => [
@@ -65,26 +66,26 @@ class ItemType extends AbstractType
             ->add('playerNbMax', IntegerType::class, ["label" => "Nombre de joueur maximum: ", 'required' => false])
             ->add('ageMin', IntegerType::class, ["label" => "Age minimum conseillé par l'éditeur: ", 'required' => false])
             ->add('author', TextType::class, ["label" => "Auteur(s):  (si plusieurs séparez les par des virgules) ", 'required' => false])
-            ->add('illustrator', TextType::class, ["label" => "Illustrateur(s):  (si plusieurs séparez les par des virgules) ", 'required' => false])
-            ->add('publisher', TextType::class, ["label" => "Editeur: ", 'required' => false])
+            ->add('illustrator', TextType::class, ["label" => "Illustrateur(s):", 'required' => false])
+            ->add('publisher', TextType::class, ["label" => "Éditeur: ", 'required' => false])
             ->add('itemCondition', ChoiceType::class, [
                 'choices' => [
 
+                    'A définir' => "A définir",
                     'Neuf' => "Neuf",
                     'Moyen' => "Moyen",
                     'Usé' => "Usé",
                     'Très usé' => "Très usé",
-                    'à définir' => "à définir",
 
-
-                ], "label" => "Etat d'usure du jeu: ", 'required' => false
+                ],
+                'preferred_choices' => ['A définir'], "label" => "Etat d'usure du jeu: "
             ])
-            ->add('completeness', CheckboxType::class, ["label" => "Cochez la case si le jeu est complet: ", 'required' => false])
-            ->add('available', CheckboxType::class, ["label" => "Cochez la case si le jeu est disponible: ", 'required' => false])
-            ->add('gamePrice', MoneyType::class, ["label" => "Valeur du jeu: ", 'required' => false,
-                'empty_data' => 0])
+            ->add('completeness', CheckboxType::class, ['data' => true, "label" => "Complet?", 'required' => false])
+            ->add('available', CheckboxType::class, ['data' => true, "label" => "Disponible?", 'required' => false])
+            ->add('gamePrice', IntegerType::class, ["label" => "Valeur: ", 'required' => false])
             ->add('gameOrigin', TextType::class, ["label" => "Provenance: ", 'required' => false])
-            ->add('copyNumber', IntegerType::class, ["label" => "Remplir uniquement si le jeu est possédé en plusieurs exemplaire, indiquez le numéro de l'exemplaire: ", 'required' => false]);
+            ->add('copyNumber', IntegerType::class, ["label" => "Remplir uniquement si le jeu est possédé en plusieurs exemplaire, indiquez le numéro de l'exemplaire: ", 'required' => false])
+            ->add('Suivant', SubmitType::class);
 
     }
 

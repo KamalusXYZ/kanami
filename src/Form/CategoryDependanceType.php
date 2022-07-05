@@ -2,8 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\CategoryDependance;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,8 +15,8 @@ class CategoryDependanceType extends AbstractType
     {
         $builder
 
-            ->add('category')
-        ;
+            ->add('category');
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void

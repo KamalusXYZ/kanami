@@ -29,6 +29,7 @@ class SearchController extends AbstractController
             ->setParameter('key', '%' . $searchWord . '%');
 
         $query = $qb->getQuery();
+
         if ($searchWord != '')
             $resultsItem = $query->execute();
 
@@ -58,6 +59,7 @@ class SearchController extends AbstractController
 
 
         $query = $qb->getQuery();
+
         if ($searchWord != '')
             $resultsFamily = $query->execute();
 
