@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New CategoryDependance{% endblock %}
+{% block title %}Attribuer une catégorie{% endblock %}
 
 {% block body %}
 
@@ -20,7 +20,12 @@
                 {% if categories %}
                     {% for cat in categories %}
 
-                        <span class="padding-10 margin-5 bold font-size-15 color-blue"> {{ cat }}</span>
+                        <span style="font-size: 18px" class="padding-10 margin-5 bold color-green"> {{ cat }}</span>
+                        <a href="{{ path('app_category_dependance_delete_in_creation', {'id': cat.id }) }}"><img width="25px"
+                                                                                                       src="/img/close.svg"
+                                                                                                       alt="supprimer"></a>
+
+
 
                     {% endfor %}
                 {% endif %}
