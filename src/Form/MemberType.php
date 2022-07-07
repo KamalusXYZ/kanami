@@ -32,7 +32,7 @@ class MemberType extends AbstractType
                 'data' => 'FR',
                 'label' => 'Pays',
             ])
-            ->add('otherAddressDetail', TextType::class, ["label" => "Complément d'adresse"])
+            ->add('otherAddressDetail', TextType::class, ["label" => "Complément d'adresse", "required"=> false])
             ->add('Suivant', SubmitType::class);
 
     }

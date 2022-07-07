@@ -5,7 +5,8 @@
 {% block body %}
     <div class="cont-hidden ">
 
-        <div class="cont-title"><h1>Ajouter <span class="color-green">{{ member.firstName|upper }} {{ member.lastName|upper }} </span>à la
+        <div class="cont-title"><h1>Ajouter <span
+                        class="color-green">{{ member.firstName|upper }} {{ member.lastName|upper }} </span>à la
                 famille {% for relationship in family.relationships %}
 
                     {% if relationship.isOwner == 1 %}
@@ -16,8 +17,8 @@
 
         </div>
 
-        <div class="cont margin-0 padding-0">
-            {{ include('relationship/_form.html.twig') }}
+        <div class="cont margin-0 padding-0 flex-space-center">
+            <div>{{ include('relationship/_form.html.twig') }}</div>
         </div>
     </div>
 {% endblock %}

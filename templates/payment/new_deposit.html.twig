@@ -6,22 +6,49 @@
     <div class="cont-hidden ">
 
         <div class="cont-title">
-            <h5 class="margin-5"  style="color: #79747E; font-size: 16px">Etape de paiement 1: cotisation</h5>
+            <h5 class="margin-5" style="color: #79747E; font-size: 16px">Etape de paiement 1: cotisation</h5>
             <h1>Etape de paiement 2: dépot de garantie</h1></div>
         <div class="cont margin-0 padding-0">
 
+            <div class="cont-medium-hidden">
+                <p class="text-center font-size-15">Pour pouvoir effectuer un emprûnt ou participer à une cession le
+                    dépot de garantie doit
+                    être payée. Néanmoins,
+                    vous
+                    pouvez finir l’enregistrement de la famille sans valider cette étape, et un délai de 15 jours sera
+                    accorder
+                    pour le paiement.
+                    <br> <strong>Pour ça, choisissez "Payez plus tard" le mode de paiement</strong></p>
+            </div>
 
-            <p class="text-center bold">Pour pouvoir effectuer un emprûnt ou participer un dépot de garantie doit être donné. Néanmoins, vous
-                pouvez
-                finir l’enregistrement de la famille sans valider cette étape, et un délai de 15 jours sera accorder
-                pour le
-                paiement.
-                <br> <strong>Pour ça choisissez "Payez plus tard" le mode de paiement</strong>
-            </p>
+
+            <div class="cont-medium text-center bg-blue-light radius">
+                {{ form_start(form, { 'attr' : { 'class': '' } }) }}
+
+                <div class="paymentKind">
+                    <h2>Dépot de garantie</h2>
+                    {{ form_row(form.paymentKind, { 'attr' : { 'class': 'paymentKind' } }) }}
+                </div>
+                <div class="paymentAmount">
+
+                    {{ form_row(form.paymentAmount, { 'attr' : { 'class': 'input-nombre' } }) }}
+                </div>
+                <div class="paymentComment">
+
+                    {{ form_row(form.paymentComment, { 'attr' : { 'class': 'paymentComment' } }) }}
+                </div>
 
 
-            {{ include('payment/_form.html.twig') }}
+            </div>
 
+            <div class="cont-hidden-ajust flex-right">
+
+                <div><span class="submit-form">{{ form_row(form.Suivant) }}</span></div>
+
+
+            </div>
+
+            {{ form_end(form) }}
         </div>
     </div>
 {% endblock %}

@@ -36,7 +36,7 @@ h1 {
 
 }
 
-.hidden{
+.hidden {
     display: none;
 }
 
@@ -360,6 +360,15 @@ h1 {
 
     background-color: rgb(176, 65, 62);
 }
+.bg-blue-light {
+
+    background-color: rgba(115, 154, 214, 0.3);
+}
+
+.bg-blue {
+
+    background-color: #739AD6;
+}
 
 
 .bg-green-light {
@@ -410,6 +419,7 @@ a {
 form {
     width: 100%;
 }
+
 textarea {
     box-sizing: border-box;
     /* M3/sys/light/outline */
@@ -419,7 +429,6 @@ textarea {
     color: #739AD6;
 
 }
-
 
 
 input {
@@ -887,16 +896,48 @@ tfoot {
     font-weight: normal;
 
 }
-.address div{
+
+.address div {
     padding: 0;
 }
 
-#member_address{
+#member_address {
 
     min-height: 83px;
 }
-#member_country , #form_country{
+
+#member_country, #form_country {
     width: 200px;
+}
+
+/**********************
+    FORM PAYMENT
+*********************** */
+.paymentKind div {
+    display: inline-grid;
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+    text-align: center;
+
+}
+
+.paymentAmount div {
+    display: inline-grid;
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+    text-align: center;
+
+}
+
+.paymentComment div {
+    display: inline-grid;
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+    text-align: center;
+
 }
 
 
