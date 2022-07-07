@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Family;
 use App\Entity\Member;
 use App\Form\MemberType;
 use App\Repository\FamilyRepository;
@@ -10,15 +9,14 @@ use App\Repository\MemberRepository;
 use App\Repository\RelationshipRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function Sodium\add;
 
 #[Route('/member')]
 class MemberController extends AbstractController
@@ -51,7 +49,7 @@ class MemberController extends AbstractController
         $form = $this->createFormBuilder($member)
             ->add('firstName', TextType::class, ['label' => 'Prénom', 'required' => true])
             ->add('lastName', TextType::class, ['label' => 'Nom', 'required' => true])
-            ->add('birthDay', DateType::class, ['label' => 'Date de naissance', 'required' => true])
+            ->add('birthday', DateType::class, ['label' => 'Date de naissance', 'required' => true])
             ->add('phone', TelType::class, ['label' => 'Numéro de tél.', 'required' => false])
             ->add('email', EmailType::class, ['label' => 'Email', 'required' => false])
             ->add('address', TextType::class, ['label' => 'Adresse', 'required' => false])
@@ -59,6 +57,7 @@ class MemberController extends AbstractController
             ->add('city', TextType::class, ["label" => "Ville: ", 'required' => false])
             ->add('country', CountryType::class, ["label" => "Pays: ", 'required' => false])
             ->add('otherAddressDetail', TextType::class, ["label" => "Complément d'adresse: ", 'required' => false])
+            ->add('Enregistrer', SubmitType::class)
             ->getForm();
 
         $form->handleRequest($request);

@@ -8,10 +8,77 @@
 
         <div class="cont margin-0 padding-0">
 
-            {{ include('member/_form.html.twig') }}
-            <p class="text-center"><button><a href="{{ path('app_payment_new', {'idFamily': family.id}) }}">Valider les membres de la famille,
+            {{ form_start(form, { 'attr' : { 'class': 'cont-form' } }) }}
+
+
+            <div style="border:1px solid #25963F; margin-top: 15px" class="cont-medium-hidden bg-green-light radius">
+                <h3>Champs obligatoires</h3>
+
+                <div class="cont-hidden-ajust flex-space-center text-center">
+                    <div class="name">
+                        {{ form_row(form.firstName, { 'attr' : { 'class': 'name' } }) }}
+                        {{ form_row(form.lastName, { 'attr' : { 'class': 'lastName' } }) }}
+                    </div>
+                </div>
+
+                <div class="cont-hidden-ajust flex-space-center text-center">
+                    <div class="birthday">
+                        {{ form_row(form.birthday, { 'attr' : { 'class': 'birthday'} }) }}
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="cont-hidden-ajust flex-space-center text-center">
+                <div class="name">
+                    {{ form_row(form.phone, { 'attr' : { 'class': 'phone' } }) }}
+                    {{ form_row(form.email, { 'attr' : { 'class': 'email' } }) }}
+                </div>
+            </div>
+
+
+            <div class="cont-hidden-ajust flex-space-center text-center">
+                <div class="name">
+                    {{ form_row(form.address, { 'attr' : { 'class': 'address' } }) }}
+                    <div class="address">
+                        {{ form_row(form.zipCode, { 'attr' : { 'class': 'zipCode' } }) }}
+                        {{ form_row(form.city, { 'attr' : { 'class': 'city' } }) }}
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cont-hidden-ajust flex-space-center text-center">
+                <div class="name">
+                    {{ form_row(form.otherAddressDetail, { 'attr' : { 'class': 'otherAddressDetail' } }) }}
+                    {{ form_row(form.country, { 'attr' : { 'class': 'country' } }) }}
+
+
+                </div>
+            </div>
+
+            <div class="cont-hidden-ajust flex-space-around">
+                <div>* Champs requis.</div>
+                <div><span class="submit-form">{{ form_row(form.Enregistrer) }}</span></div>
+
+
+            </div>
+
+            {{ form_end(form) }}
+
+            <div class="cont-hidden-ajust flex-right">
+
+                <div><span class="submit-form">   <button><a
+                                    href="{{ path('app_payment_new', {'idFamily': family.id}) }}">Valider les membres de la
+                        famille,
                         et
-                        passer à la phase de paiement</a></button></p>
+                        passer à la phase de paiement</a></button></span></div>
+
+
+            </div>
+
         </div>
 
 

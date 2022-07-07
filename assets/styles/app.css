@@ -36,6 +36,10 @@ h1 {
 
 }
 
+.hidden{
+    display: none;
+}
+
 .cont {
 
     width: 1192px;
@@ -406,13 +410,25 @@ a {
 form {
     width: 100%;
 }
+textarea {
+    box-sizing: border-box;
+    /* M3/sys/light/outline */
+    border: 2px solid #739AD6;
+    border-radius: 4px;
+    margin: 3px;
+    color: #739AD6;
+
+}
+
+
 
 input {
     box-sizing: border-box;
     /* M3/sys/light/outline */
-    border: 1px solid #79747E;
+    border: 2px solid #739AD6;
     border-radius: 4px;
     margin: 3px;
+    color: #739AD6;
 }
 
 
@@ -806,9 +822,9 @@ tfoot {
     font-weight: normal;
 }
 
-/**********
+/****************************
     FORM CATEGORY DEPENDANCE
-******** */
+*****************************/
 
 #category_dependance div label {
     display: none;
@@ -824,6 +840,66 @@ tfoot {
     color: #333333;
     font-size: 18px;
 }
+
+/***************************
+        FORM CATEGORY
+****************************/
+
+.categorie div {
+    display: inline-grid;
+    font-weight: bold;
+    font-size: 25px;
+
+    text-align: center;
+
+}
+
+.categorie {
+    min-height: 45px;
+
+}
+
+
+/***************************
+    FROM MEMBER
+ ***************************/
+
+.phone div {
+    display: inline-grid;
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+    text-align: center;
+}
+
+.email div {
+    display: inline-grid;
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+    text-align: center;
+}
+
+.birthday div {
+
+    padding: 7px;
+    font-size: 18px;
+    font-weight: normal;
+
+}
+.address div{
+    padding: 0;
+}
+
+#member_address{
+
+    min-height: 83px;
+}
+#member_country , #form_country{
+    width: 200px;
+}
+
+
 
 
 /*************

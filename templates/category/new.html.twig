@@ -8,20 +8,32 @@
 
         <div class="cont margin-0 padding-0">
             <div class="text-center">
+
                 <h2>Liste des catégories existantes</h2>
-                <ul>
+                <p class="font-size-15">Il n'est pas possible de supprimer une catégorie car cela affecterait la fiche "jeu" sur laquelle est
+                    affecté cette dernière. <br> Vous pouvez néanmoins désafecter une catégorie à un jeu sur a fiche du
+                    jeu
+                    en question, dans les paramètres d'édition.</p>
+                <div class="cont-big border-1 radius flex-space-around">
 
                     {% for category in categories %}
-                        <li> {{ category.categoryName() }} </li>
+                        <div style="border: 1px solid #333333 "
+                             class="color-white bold font-size-15 bg-green-dark radius padding-5 margin-5"> {{ category.categoryName() }} </div>
                     {% endfor %}
-                </ul>
+                </div>
+
 
                 <br>
-
+                {{ form_start(form) }}
+            </div>
+            <div class="cont-form">
+                <span class="categorie">{{ form_row(form.categoryName, { 'attr' : { 'class': 'categorie' } }) }}</span>
+            </div>
+            <div class="cont-hidden-ajust flex-space-center">
+                <div>{{ include('category/_form.html.twig') }}</div>
             </div>
 
-            {{ include('category/_form.html.twig') }}
-
+            {{ form_end(form) }}
         </div>
     </div>
 {% endblock %}

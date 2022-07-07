@@ -7,13 +7,17 @@
     <div class="cont-hidden ">
         <div class="cont-title"><h1>Confirmation</h1></div>
         <div class="cont margin-0 padding-0">
-            <p class="bold text-center" style="font-size: 20px">Confirmez que la famille <span class="color-green">{{ member.lastName|upper }}</span> va
+            <p class="bold text-center" style="font-size: 20px">Confirmez que la famille <span
+                        class="color-green">{{ member.lastName|upper }}</span> va
                 etre
                 créee avec pour
                 titulaire <span class="color-green">{{ member.firstName|upper }} {{ member.lastName|upper }}</span></p>
 
+            <div class="flex-space-center">
+                <div>
+                    {{ include('relationship/_form.html.twig') }}</div>
 
-            {{ include('relationship/_form.html.twig') }}
+            </div>
         </div>
     </div>
 {% endblock %}

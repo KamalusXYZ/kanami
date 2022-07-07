@@ -7,9 +7,64 @@
         <div class="cont-title"><h1>Ajouter un titulaire à la famille</h1>
         </div>
         <div class="cont margin-0 padding-0">
-            <p style="font-size: 20px" class="text-center bold">Avant de valider les détails de la famille, vous devez
-                choisir le titulaire du compte: </p>
-            <div>{{ include('member/_form.html.twig') }}</div>
+            <p style="font-size: 20px" class="text-center ">Avant de valider les détails de la famille, vous devez
+                <span class="color-red bold">choisir le titulaire du compte</span>: </p>
+
+
+            {{ form_start(form, { 'attr' : { 'class': 'cont-form' } }) }}
+
+
+            <div class="cont-hidden-ajust flex-space-center text-center">
+                <div class="name">
+                    {{ form_row(form.firstName, { 'attr' : { 'class': 'name' } }) }}
+                    {{ form_row(form.lastName, { 'attr' : { 'class': 'lastName' } }) }}
+                </div>
+            </div>
+
+            <div class="cont-hidden-ajust flex-space-center text-center">
+                <div class="name">
+                    {{ form_row(form.phone, { 'attr' : { 'class': 'phone' } }) }}
+                    {{ form_row(form.email, { 'attr' : { 'class': 'email' } }) }}
+                </div>
+            </div>
+
+            <div class="cont-hidden-ajust flex-space-center text-center">
+                <div class="birthday">
+                    {{ form_row(form.birthday, { 'attr' : { 'class': 'birthday'} }) }}
+
+                </div>
+            </div>
+
+            <div class="cont-hidden-ajust flex-space-center text-center">
+                <div class="name">
+                    {{ form_row(form.address, { 'attr' : { 'class': 'address' } }) }}
+                    <div class="address">
+                        {{ form_row(form.zipCode, { 'attr' : { 'class': 'zipCode' } }) }}
+                        {{ form_row(form.city, { 'attr' : { 'class': 'city' } }) }}
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cont-hidden-ajust flex-space-center text-center">
+                <div class="name">
+                    {{ form_row(form.otherAddressDetail, { 'attr' : { 'class': 'otherAddressDetail' } }) }}
+                    {{ form_row(form.country, { 'attr' : { 'class': 'country' } }) }}
+
+
+                </div>
+            </div>
+            
+            <div class="cont-hidden-ajust flex-space-around">
+                <div>* Champs requis.</div>
+                <div><span class="submit-form">{{ form_row(form.Suivant) }}</span></div>
+
+
+            </div>
+
+
+            {#            <div>{{ include('member/_form.html.twig') }}</div> #}
+            {{ form_end(form) }}
 
         </div>
     </div>>
