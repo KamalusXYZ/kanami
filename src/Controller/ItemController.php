@@ -49,6 +49,7 @@ class ItemController extends AbstractController
             $item->setArchive(0);
             $item->setRegisterDateTime($dateTime);
             $itemRepository->add($item, true);
+            $this->addFlash('success', 'Votre jeu à été crée. Attribuez lui une catégorie.');
 
             return $this->redirectToRoute('app_category_dependance_new', ['idItem' => $item->getId()], Response::HTTP_SEE_OTHER);
         }

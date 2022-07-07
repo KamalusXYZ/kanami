@@ -1,27 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category index{% endblock %}
+{% block title %}Liste des catégories{% endblock %}
 
 {% block body %}
-    <div class="cont-hidden ">
+    <div class="cont-hidden">
         <div class="cont-title padding-top-0 margin-top-0 ">
-            <h1>Liste des catégories </h1>
-            <div class="">
+            <h1>Liste des catégories</h1>
+        </div>
+        <div class="cont padding-0">
+            <div class="flex-space-center-wrap">
 
                 {% for category in categories %}
-                    <div><span class="bold margin-0 font-size-20 ">
+                    <div style="width: auto!important;"
+                         class="cont-result text-center "><span
+                                class="bold margin-0 font-size-20 padding-5">
 
-                        {{ category.categoryName }}
-                        <button><a href="{{ path('app_category_edit', {'id': category.id}) }}"><img width="20px"
-                                                                                                    src="/img/edit.svg"
-                                                                                                    alt=""></a></button>
+                        {{ category.categoryName }} <button style="padding: 3px;"><a
+                                        href="{{ path('app_category_edit', {'id': category.id}) }}"><img width="20px"
+                                                                                                         src="/img/edit.svg"
+                                                                                                         alt=""></a></button>
+
 
                         </span></div>
                 {% endfor %}
 
             </div>
-            <button style="width: 120px; font-size: 17px"><a href="{{ path('app_category_new') }}">Ajouter une nouvelle
-                    catégorie</a></button>
+           <div class="flex-space-center"> <button style="width: 200px; font-size: 17px"><a href="{{ path('app_category_new') }}">Ajouter une nouvelle
+                       catégorie</a></button></div>
         </div>
     </div>
 

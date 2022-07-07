@@ -6,8 +6,10 @@
     <div class="cont-hidden flex-wrap margin-top-0 padding-top-0">
         <div class="cont-title padding-top-0 margin-top-0"><h1>Confirmation de suppression
             </h1>
-            <p class="font-size-20">Etes vous sur de vouloir supprimer: <br> <span
-                        class=" color-red">{{ member.firstName|upper }} {{ member.lastName|upper }}</span></p>
+            <p class="font-size-20">Etes vous sur de vouloir supprimer: <br></p>
+            <p class="font-size-20">
+                <span class=" color-red">{{ member.firstName|capitalize }} &nbsp; {{ member.lastName|upper }}</span>
+            </p>
 
             {{ include('member/_delete_form.html.twig') }}
 

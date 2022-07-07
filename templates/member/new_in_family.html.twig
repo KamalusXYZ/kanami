@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout d'une famille{% endblock %}
+
+{% block body %}
+    <div class="cont-hidden ">
+
+        <div class="cont-title"><h1>Ajouter <span
+                        class="color-green">{{ member.firstName|upper }} {{ member.lastName|upper }} </span>à la
+                famille {% for relationship in family.relationships %}
+
+                    {% if relationship.isOwner == 1 %}
+                        <span style="color: #25963F">{{ relationship.member.lastName|upper }}</span>
+                    {% endif %}
+                {% endfor %}
+            </h1>
+
+        </div>
+
+
+        <div class="cont margin-0 padding-0 flex-space-center">
+
+            {{ form_start(form, { 'attr' : { 'class': 'cont-form' } }) }}
+
+
+            <div style="border:1px solid #25963F; margin-top: 15px" class="cont-medium-hidden bg-green-light radius">
+                <h3>Champs obligatoires</h3>
+
+                <div class="cont-hidden-ajust flex-space-center text-center">
+                    <div class="name">
+                        {{ form_row(form.firstName, { 'attr' : { 'class': 'name' } }) }}
+                        {{ form_row(form.lastName, { 'attr' : { 'class': 'lastName' } }) }}
+                    </div>
+                </div>
+
+                <div class="cont-hidden-ajust flex-space-center text-center">
+                    <div class="birthday">
+                        {{ form_row(form.birthDay, { 'attr' : { 'class': 'birthday'} }) }}
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="cont-hidden-ajust flex-space-center text-center">
+                <div class="name">
+                    {{ form_row(form.phone, { 'attr' : { 'class': 'phone' } }) }}
+                    {{ form_row(form.email, { 'attr' : { 'class': 'email' } }) }}
+                </div>
+            </div>
+
+
+            <div class="cont-hidden-ajust flex-space-center text-center">
+                <div class="name">
+                    {{ form_row(form.address, { 'attr' : { 'class': 'address' } }) }}
+                    <div class="address">
+                        {{ form_row(form.zipCode, { 'attr' : { 'class': 'zipCode' } }) }}
+                        {{ form_row(form.city, { 'attr' : { 'class': 'city' } }) }}
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="cont-hidden-ajust flex-space-center text-center">
+                <div class="name">
+                    {{ form_row(form.otherAddressDetail, { 'attr' : { 'class': 'otherAddressDetail' } }) }}
+                    {{ form_row(form.country, { 'attr' : { 'class': 'country' } }) }}
+
+
+                </div>
+            </div>
+
+            <div class="cont-hidden-ajust flex-space-around">
+                <div>* Champs requis.</div>
+                <div>{{ include('member/_form.html.twig') }}</div>
+
+
+            </div>
+
+
+
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+{% endblock %}

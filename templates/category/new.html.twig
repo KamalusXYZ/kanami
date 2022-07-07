@@ -14,7 +14,7 @@
                     affecté cette dernière. <br> Vous pouvez néanmoins désafecter une catégorie à un jeu sur a fiche du
                     jeu
                     en question, dans les paramètres d'édition.</p>
-                <div class="cont-big border-1 radius flex-space-around">
+                <div class="cont-big border-1 radius flex-space-around" style="flex-wrap: wrap">
 
                     {% for category in categories %}
                         <div style="border: 1px solid #333333 "
@@ -28,6 +28,9 @@
             </div>
             <div class="cont-form">
                 <span class="categorie">{{ form_row(form.categoryName, { 'attr' : { 'class': 'categorie' } }) }}</span>
+            </div>
+            <div class="hidden">
+               {{ form_row(form.Modifier, { 'attr' : { 'class': 'hidden' } }) }}
             </div>
             <div class="cont-hidden-ajust flex-space-center">
                 <div>{{ include('category/_form.html.twig') }}</div>
