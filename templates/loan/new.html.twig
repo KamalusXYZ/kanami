@@ -4,9 +4,13 @@
 
 {% block body %}
     <div class="cont">
-    <div ><h1>Prêter le jeu <span style="color: #B0413E">  {{ item.name }} </span> à la famille <span style="color: #B0413E"> {{ member.lastName }}</span> ?</h1></div>
+        <div><h1>Prêter le jeu <span style="color: #B0413E">  {{ item.name }} </span> à la famille <span
+                        style="color: #B0413E"> {{ member.lastName }}</span> ?</h1></div>
+        <div class="flex-justify-center">
+            <div>
+                {{ include('loan/_form.html.twig') }}
+            </div>
+        </div>
 
-  <div style="justify-content: center">  {{ include('loan/_form.html.twig') }}
-  </div>
     </div>
 {% endblock %}

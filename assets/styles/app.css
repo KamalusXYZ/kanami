@@ -942,6 +942,32 @@ tfoot {
 
 }
 
+/***************
+    FORM LOAN
+**************/
+.completenessReturn div {
+    display: inline-grid;
+    padding: 7px;
+    font-size: 20px;
+    font-weight: normal;
+    text-align: center;
+
+}
+.returnComment div {
+    display: inline-grid;
+    padding: 7px;
+    font-size: 15px;
+    font-weight: normal;
+    text-align: center;
+
+}
+#form_completenessReturn{
+
+    height: 40px;
+
+}
+
+
 
 /*************
  Checkeboxs

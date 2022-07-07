@@ -30,13 +30,14 @@
                 {% if relationship.isOwner == 1 %}
                     <span class="bold">{{ relationship.member.lastName|upper }}
                         {{ relationship.member.firstName|capitalize }} <br></span>
-                    Adresse: {{ relationship.member.address }} <br>
+                    Adresse: <br>
+                    <span class="bold">{{ relationship.member.address }}</span> <br>
                     <span class="bold">{{ relationship.member.zipCode }} <br>
                     {{ relationship.member.city }} <br>
                     {{ relationship.member.otherAddressDetail }} <br></span>
-                    Contact: <br>
-                    Email: <span class="bold">{{ relationship.member.email }} <br></span>
-                    Numéro de télephone: <span class="bold">{{ relationship.member.phone }}</span>
+
+                    @ Email: <span class="bold">{{ relationship.member.email }} <br></span>
+                    Tél : <span class="bold">{{ relationship.member.phone }}</span>
 
                 {% endif %}
 

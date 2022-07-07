@@ -22,7 +22,7 @@ class CategoryController extends AbstractController
     }
 
     #[Route('/new', name: 'app_category_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CategoryRepository $categoryRepository, $idItem): Response
+    public function new(Request $request, CategoryRepository $categoryRepository): Response
     {
         $categories = $categoryRepository->findAll();
         $category = new Category();
@@ -38,7 +38,7 @@ class CategoryController extends AbstractController
         return $this->renderForm('category/new.html.twig', [
             'category' => $category,
             'form' => $form,
-            'categories' => $categories
+            'categories' => $categories,
         ]);
     }
 
