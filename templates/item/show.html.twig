@@ -89,8 +89,11 @@
 
                     Catégorie(s):
                     {% for category in item.categories %}
-                        <span
-                                class="bold"> {{ category }}</span>
+                        {% if category == "Vide" %}
+{#                            ne rien faire#}
+                        {% else %}
+                            <span class="bold"> {{ category }}</span>
+                        {% endif %}
                     {% endfor %}
                 </p>
                 <div class="cont-result flex-align-center">
