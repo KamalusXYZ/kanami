@@ -21,6 +21,7 @@ class CategoryDependance
 
     public function __toString()
     {
+        if($this->getCategory() == null) return "Vide";
         return $this->category;
     }
 

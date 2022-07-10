@@ -36,9 +36,13 @@ class CategoryDependanceController extends AbstractController
 
             $item = $itemRepository->find($request->get("idItem"));
             $categoryDependance->setItem($item);
-            $categoryDependanceRepository->add($categoryDependance, true);
-            $this->addFlash('success', 'Catégorie attribuée au jeu');
 
+            if ($categoryDependance->getCategory() == null ){
+                $this->addFlash('warning', 'Aucune catégorie , veuillez selectionner une catégorie avant de valider');
+            }else{
+                $this->addFlash('succes', 'Catégorie ajoutée');
+            }
+            $categoryDependanceRepository->add($categoryDependance, true);
 
             return $this->redirectToRoute('app_category_dependance_new', ['idItem' => $idItem], Response::HTTP_SEE_OTHER);
         }
@@ -52,7 +56,7 @@ class CategoryDependanceController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_category_dependance_show', methods: ['GET'])]
+    #[Route(' /{id}', name: 'app_category_dependance_show', methods: ['GET'])]
     public function show(CategoryDependance $categoryDependance): Response
     {
         return $this->render('category_dependance/show.html.twig', [
@@ -60,7 +64,7 @@ class CategoryDependanceController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_category_dependance_edit', methods: ['GET', 'POST'])]
+    #[Route(' /{id}/edit', name: 'app_category_dependance_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, CategoryDependance $categoryDependance, CategoryDependanceRepository $categoryDependanceRepository): Response
     {
         $form = $this->createForm(CategoryDependanceType::class, $categoryDependance);
@@ -72,17 +76,17 @@ class CategoryDependanceController extends AbstractController
             return $this->redirectToRoute('app_category_dependance_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('category_dependance/edit.html.twig', [
+        return $this->renderForm('category_dependance / edit . html . twig', [
             'category_dependance' => $categoryDependance,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}', name: 'app_category_dependance_delete_in_creation', methods: ['POST'])]
+    #[Route(' /{id}', name: 'app_category_dependance_delete_in_creation', methods: ['POST'])]
     public function deleteInCreation(Request $request, CategoryDependance $categoryDependance, CategoryDependanceRepository $categoryDependanceRepository): Response
     {
 
-       
+
         if ($this->isCsrfTokenValid('delete' . $categoryDependance->getId(), $request->request->get('_token'))) {
             $categoryDependanceRepository->remove($categoryDependance, true);
         }
@@ -90,7 +94,7 @@ class CategoryDependanceController extends AbstractController
         return $this->redirectToRoute('app_category_dependance_new', ['idItem' => $categoryDependance->getItem()->getId()], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{id}', name: 'app_category_dependance_delete', methods: ['POST'])]
+    #[Route(' /{id}', name: 'app_category_dependance_delete', methods: ['POST'])]
     public function delete(Request $request, CategoryDependance $categoryDependance, CategoryDependanceRepository $categoryDependanceRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $categoryDependance->getId(), $request->request->get('_token'))) {

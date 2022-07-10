@@ -55,18 +55,14 @@ class LoanController extends AbstractController
             'resultsFamily' => $resultsFamily,
             'item' => $item,
 
-
         ]);
     }
 
     #[Route('/new/item/{idItem}/family/{idMember}', name: 'app_loan_new', methods: ['GET', 'POST'])]
     public function new(Request $request, FamilyRepository $familyRepository, RelationshipRepository $relationshipRepository, ItemRepository $itemRepository, MemberRepository $memberRepository, LoanRepository $loanRepository, $idItem, $idMember): Response
     {
-
-
         $item = $itemRepository->find($idItem);
         $member = $memberRepository->find($idMember);
-
 
         $relation = $relationshipRepository->findOneBy(['member' => $idMember]);
         $family = $relation->getFamily();
@@ -74,7 +70,6 @@ class LoanController extends AbstractController
         $dateTime = date_create("now");
         $backDateTime = new DateTime();
         $backDateTime->add(new \DateInterval('P15D')); // La date de 15 jour de la date interval a été inscrite en dur, une fois le programme avancé elle sera recupéré dynamiquement dans la propriété max_duration_loan_day de la class ToyLibrary.
-
 
         $loan = new Loan();
         $form = $this->createForm(LoanType::class, $loan);
@@ -91,7 +86,6 @@ class LoanController extends AbstractController
             $item->setAvailable(0);
             $loanRepository->add($loan, true);
             $this->addFlash('success', 'Prêt effectué.');
-
 
             return $this->redirectToRoute('app_main', [], Response::HTTP_SEE_OTHER);
         }
@@ -111,85 +105,52 @@ class LoanController extends AbstractController
     #[Route('/return/item/{idItem}', name: 'app_loan_return', methods: ['GET', 'POST'])]
     public function loanReturn(Request $request, FamilyRepository $familyRepository, ItemRepository $itemRepository, LoanRepository $loanRepository, $idItem): Response
     {
-        // Initialisation de la variable loan pour attribution mémoire.
-        $loan = '';
-        // Récupérer l'objet qi sera retourné grâce à son ID avec la méthod find()
+
         $item = $itemRepository->find($idItem);
-        // Récupérer les prêts avec findBy() avec l'idItem du jeu à retourner et la prop effectReturnDateTime à null (un seul résultat peux sortir), mettre sa dans une variable.
         $arrayLoan = $loanRepository->findBy(array('item' => $idItem, 'effectReturnDateTime' => null));
-        // Boucler sur le tableau retourné , et mettre l'objet recu dans la variable loan, initialisé précédamment.
-        foreach ($arrayLoan as $loanPending) {
-            $loan = $loanPending;
-        }
-        // Obtenir la date à l'instant et la mettre dans une variable.
+        $loan = $arrayLoan[0];
+
         $dateTime = date_create("now");
-        // Grâce à l'objet loan reçu, obtenir l'objet famille lié à ce prêt, et le mettre dans une variable.
         $family = $loan->getFamily();
 
-        // Créer le formulaire symfony de la classe loan  dans la variable form. Permettrais à l'utilisateur de remplir uniquement 2 champs, le reste se fera automatiquement ou n'est pas nécéssaire.
-        $form = $this->createFormBuilder($loan)
-            ->add('completenessReturn', CheckboxType::class, ['label' => 'Le jeu est rendu complet?', 'required' => false])
-            ->add('returnComment', TextareaType::class, ['label' => 'Commentaire (optionnel)', 'required' => false])
-            ->getForm();
-        // Envoyer la requête grâce à la méthod symfony, appliquée sur la variavble créee.
+            $form = $this->createFormBuilder($loan)
+                ->add('completenessReturn', CheckboxType::class, ["label" => "Complet?", 'attr' => ['class' => 'completenessReturn','required' => true]],
+                )
+                ->add('returnComment', TextareaType::class, ['label' => 'Commentaire (optionnel)','required' => true])
+                ->getForm();
         $form->handleRequest($request);
 
-        // Vérifier si le formulaire et soumis et conforme grace eux methodes symfony prévu à cette effet.
         if ($form->isSubmitted() && $form->isValid()) {
-            // Récupérer (avec ses nouvelles valeurs) les prêts avec findBy() avec l'idItem du jeu à retourner et la prop effectReturnDateTime à null (un seul résultat peux sortir), mettre sa dans une variable.
-            $arrayLoan = $loanRepository->findBy(array('item' => $idItem, 'effectReturnDateTime' => null));
-            // Boucler sur le tableau retourné , et mettre l'objet recu dans la variable loan, initialisé précédamment.
-            foreach ($arrayLoan as $loanPending) {
-                $loan = $loanPending;
-            }
+            $loanRepository->add($loan, true);
+            sleep(1);
+            dd($loan);
 
-            // Appliquer à la variable loan une date de retour, grâce à la variable créee plus haut.
+
             $loan->setEffectReturnDateTime($dateTime);
-            // Ajouter une possibilité de prêt supplémentaire à la famille, puisqu'un article est restitué.
             $family->setMaxLoanSimultaneous($family->getMaxLoanSimultaneous() + 1);
-            // Rendre l'article disponible.
             $item->setAvailable(1);
 
-
             if ($loan->isCompletenessReturn() == 0) {
-
 
                 $item->setCompleteness(0);
                 $item->setAvailable(0);
                 $family->setIncompleteReturnNb($family->getIncompleteReturnNb() + 1);
                 $family->setIncompleteReturn(1);
                 $family->setBlocked(1);
-                $this->addFlash('warning', 'Retour effectué: incomplet');
 
 
-            } else {
-
-
-                $item->setCompleteness(1);
-                $item->setAvailable(1);
-                $family->setIncompleteReturnNb($family->getIncompleteReturnNb() + 1);
-
-
-                $this->addFlash('success', 'Retour effectué: complet');
             }
+
             $loanRepository->add($loan, true);
-            $itemRepository->add($item, true);
-            $familyRepository->add($family, true);
 
-
-            return $this->redirectToRoute('app_main', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('loan/show_return.html.twig', [
-            'loan' => $loan,
+        return $this->renderForm('loan/show_return.html.twig', ['loan' => $loan,
             'form' => $form,
             'idItem' => $idItem,
             'item' => $item,
 
-            'family' => $family,
-
-
-        ]);
+            'family' => $family,]);
     }
 
 

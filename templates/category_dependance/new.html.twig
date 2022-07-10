@@ -11,7 +11,16 @@
 
 
             <div class="cont-medium-hidden flex-space-center padding-10">
-                {{ include('category_dependance/_form.html.twig') }}
+                {{ form_start(form) }}
+
+                {{ form_row(form.category) }}
+                {{ form_row(form.Ajouter) }}
+
+                {{ form_end(form) }}
+
+                {#                {{ include('category_dependance/_form.html.twig') }} #}
+
+
             </div>
             <div style="width: 60%" class="cont-result">
                 <h3 class="text-center margin-5 padding-5 font-size-25">Catégorie(s) séléctionnées</h3>
@@ -20,11 +29,13 @@
                 {% if categories %}
                     {% for cat in categories %}
 
-                        <span style="font-size: 18px" class="padding-10 margin-5 bold color-green"> {{ cat }}</span>
-                        <a href="{{ path('app_category_dependance_delete_in_creation', {'id': cat.id, 'idItem': cat.item }) }}"><img width="25px"
-                                                                                                       src="/img/close.svg"
-                                                                                                       alt="supprimer"></a>
-
+                        {% if cat != 'Vide' %}
+                            <span style="font-size: 18px" class="padding-10 margin-5 bold color-green"> {{ cat }}</span>
+                            <a href="{{ path('app_category_dependance_delete_in_creation', {'id': cat.id, 'idItem': cat.item }) }}"><img
+                                        width="25px"
+                                        src="/img/close.svg"
+                                        alt="supprimer"></a>
+                        {% endif %}
 
 
                     {% endfor %}
