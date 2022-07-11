@@ -4,6 +4,8 @@
 
 {% block body %}
     <div class="cont-hidden flex-wrap margin-top-0 padding-top-0">
+
+
         <div class="cont-title padding-top-0 margin-top-0">
             <h1>Modifier le jeu: <span style="color: #25963F">{{ item.name }}</span></h1>
 
@@ -24,24 +26,26 @@
         </div>
         <div class="cont radius-bottom flex-wrap margin-top-0">
 
-            {% for dependance in dependances %}
+{#todo a débuggué#}
+{#            {% for dependance in dependances %}#}
 
-                {% if dependance.category %}
-                    <p>
-                        {{ dependance.category.categoryName }}
-                        <button>
-                            <a
-                                    href="{{ path('app_category_dependance_edit', {'id': dependance.category.id }) }}">Modifier
-                                ou supprimer
-                            </a>
-                        </button>
-                    </p>
-                {% endif %}
+{#                {% if dependance.category %}#}
+{#                    <p>#}
+{#                        {{ dependance.category.categoryName }}#}
+{#                        <button>#}
+{#                            <a#}
+{#                                    href="{{ path('app_category_dependance_edit', {'id': dependance.category.id }) }}">Modifier#}
+{#                                ou supprimer#}
+{#                            </a>#}
+{#                        </button>#}
+{#                    </p>#}
+{#                {% endif %}#}
 
-            {% endfor %}
-            {{ include('item/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+{#            {% endfor %}#}
 
+            {{ include('item/_form.html.twig') }}
 
         </div>
+
     </div>
 {% endblock %}

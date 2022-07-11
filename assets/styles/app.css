@@ -50,6 +50,16 @@ h1 {
 
 }
 
+
+.cont-ajustable {
+
+    width: 45%;
+    padding: 5px;
+    border: 2px solid #739AD6;
+    padding: 10px;
+    margin: 5px;
+}
+
 .cont-title {
 
     width: 1192px;
@@ -60,6 +70,7 @@ h1 {
     font-size: xxx-large;
 
 }
+
 
 .cont-hidden {
 
@@ -196,7 +207,7 @@ h1 {
     margin: 3px auto;
     text-align: center;
     padding: 8px;
-    min-height: 612px;
+    height: 612px;
 
 }
 
@@ -953,6 +964,7 @@ tfoot {
     text-align: center;
 
 }
+
 .returnComment div {
     display: inline-grid;
     padding: 7px;
@@ -961,12 +973,12 @@ tfoot {
     text-align: center;
 
 }
-#form_completenessReturn{
+
+#form_completenessReturn {
 
     height: 40px;
 
 }
-
 
 
 /*************

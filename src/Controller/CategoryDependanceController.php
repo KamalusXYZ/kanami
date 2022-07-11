@@ -76,7 +76,7 @@ class CategoryDependanceController extends AbstractController
             return $this->redirectToRoute('app_category_dependance_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('category_dependance / edit . html . twig', [
+        return $this->renderForm('category_dependance/edit.html.twig', [
             'category_dependance' => $categoryDependance,
             'form' => $form,
         ]);

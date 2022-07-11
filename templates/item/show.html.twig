@@ -18,13 +18,17 @@
                         class="padding-0  margin-5 bold font-size-15 color-blue"
                         style="text-align: center"><span style="color: #333333">Nom du jeu: </span> {{ item.name }}
 
-                    <button class="padding-5 margin-5">
-                        <a href="{{ path('app_item_edit', {'id': item.id} ) }}">
-                            <img width="20px" src="/img/edit.svg" alt="éditer">
-                        </a>
+                    <button title="Fonctionnalité en cours d'amélioration, impossible d'utiliser pour le moment."
+                            style="cursor: help!important;" class="padding-5 margin-5 disabled-button">
+                        <img width="20px" src="/img/edit.svg" alt="éditer">
+                        {#                        en cours de modification pour amélioration #}
+                        {#                        <a href="{{ path('app_item_edit', {'id': item.id} ) }}"> #}
+                        {#                            <img width="20px" src="/img/edit.svg" alt="éditer"> #}
+                        {#                        </a> #}
                         {% set test = false %}
                         {% if item.loans|length == 0 %}
                             {% set test = true %}
+
                         {% endif %}
                         {% for loan in item.loans %}
 
@@ -32,6 +36,7 @@
                             {% if loan.effectReturnDateTime and loan.completenessReturn != 0 %}
                                 {% set test = true %}
                             {% else %}
+
                                 <button style="cursor: help!important;" class="disabled-button margin-5 padding-5"><img
                                             width="20px"
                                             src="/img/delete_not.svg"
@@ -90,7 +95,7 @@
                     Catégorie(s):
                     {% for category in item.categories %}
                         {% if category == "Vide" %}
-{#                            ne rien faire#}
+                            {#                            ne rien faire #}
                         {% else %}
                             <span class="bold"> {{ category }}</span>
                         {% endif %}
@@ -312,13 +317,15 @@
 
 
                             </p>
-                            <div class="cont-small-hidden flex">
+                            <div class="cont-small-hidden flex-space-center">
                                 <form style="width: 300px"
                                       action="{{ path('app_loan_return',  {'idItem': item.id }) }}"
                                       method="post">
-                                    <button
-                                            style="width: 170px  ; font-size: 12px">Effectuer le retour de l'article
-                                    </button>
+                                    <div class="flex-space-center">
+                                        <button
+                                                style="width: 170px  ; font-size: 12px">Effectuer le retour de l'article
+                                        </button>
+                                    </div>
                                 </form>
                             </div>
 
