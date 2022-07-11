@@ -31,7 +31,31 @@
             {{ item }}
 
         </p>
-        <p>    {{ include('loan/_form.html.twig') }}</p>
+
+        {{ form_start(form, { 'attr' : { 'class': 'cont-form' } }) }}
+        <div class="cont-form">
+            <div class="completenessReturn">
+                <div>
+                    {{ form_row(form.completenessReturn, { 'attr' : { 'class': 'completenessReturn', 'required': true } }) }}
+                </div>
+
+            </div>
+        </div>
+        <div class="cont-form">
+
+
+            <div class="returnComment">
+                <div>
+                    {{ form_row(form.returnComment) }}
+                </div>
+
+            </div>
+        </div>
+        <div class="flex-justify-center">
+            <div> {{ include('loan/_form.html.twig') }}</div>
+        </div>
+        {{ form_end(form) }}
+
 
     </div>
 
