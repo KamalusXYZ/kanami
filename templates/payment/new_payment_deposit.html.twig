@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau paiement de cotisation{% endblock %}
+
+{% block body %}
+
+{% if  %}
+<div class="cont-hidden ">
+    <div class="cont-title"><h1>Payer un dépot de garantie</h1>
+    </div>
+    <div class="cont margin-0 padding-0">
+
+        <div class="cont-medium text-center bg-green-light radius">
+            <div class="paymentAmount">
+
+                <p class="font-size-15 bold">Montant à payer pour le dépot de garantie: 50€</p>
+            </div>
+            {{ form_start(form) }}
+            <div class="paymentKind">
+
+                {{ form_row(form.paymentKind, { 'attr' : { 'class': 'paymentKind' } }) }}
+            </div>
+
+            <div class="paymentComment">
+
+                {{ form_row(form.paymentComment, { 'attr' : { 'class': 'paymentComment' } }) }}
+            </div>
+
+            <div class="submit-form">
+
+                {{ form_row(form.Confirmer, { 'attr' : { 'class': 'Confirmer' } }) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+
+    </div>
+
+    {% endblock %}
+</div>
+

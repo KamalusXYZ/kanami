@@ -24,15 +24,16 @@
 
             <div class="cont-medium text-center bg-green-light radius">
                 {{ form_start(form, { 'attr' : { 'class': '' } }) }}
-
-                <div class="paymentKind">
-                    <h2>Cotisation</h2>
-                    {{ form_row(form.paymentKind, { 'attr' : { 'class': 'paymentKind' } }) }}
-                </div>
+                <h2>Cotisation</h2>
                 <div class="paymentAmount">
 
-                    {{ form_row(form.paymentAmount, { 'attr' : { 'class': 'input-nombre' } }) }}
+                    <p class="font-size-15 bold">Montant à payer pour la cotisation: 20€</p>
                 </div>
+                <div class="paymentKind">
+
+                    {{ form_row(form.paymentKind, { 'attr' : { 'class': 'paymentKind' } }) }}
+                </div>
+
                 <div class="paymentComment">
 
                     {{ form_row(form.paymentComment, { 'attr' : { 'class': 'paymentComment' } }) }}
@@ -43,7 +44,7 @@
 
             <div class="cont-hidden-ajust flex-right">
 
-                <div><span class="submit-form">{{ form_row(form.Suivant) }}</span></div>
+                <div><span class="submit-form">{{ form_row(form.Confirmer) }}</span></div>
 
 
             </div>

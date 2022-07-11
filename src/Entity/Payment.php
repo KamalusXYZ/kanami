@@ -31,6 +31,9 @@ class Payment
     #[ORM\ManyToOne(targetEntity: ToyLibrary::class, inversedBy: 'payments')]
     private $toylibrary;
 
+    #[ORM\Column(type: 'string', length: 45, nullable: true)]
+    private $paymentCause;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +107,18 @@ class Payment
     public function setToylibrary(?ToyLibrary $toylibrary): self
     {
         $this->toylibrary = $toylibrary;
+
+        return $this;
+    }
+
+    public function getPaymentCause(): ?string
+    {
+        return $this->paymentCause;
+    }
+
+    public function setPaymentCause(?string $paymentCause): self
+    {
+        $this->paymentCause = $paymentCause;
 
         return $this;
     }

@@ -29,13 +29,13 @@ class PaymentType extends AbstractType
 
                 ],"label" => "Choisissez le mode de paiement: ", 'required' => true
             ])
-            ->add('paymentAmount', MoneyType::class, ["label" => "Montant: ", 'required' => false]
-            )
+            ->add('paymentAmount', HiddenType::class)
             ->add('paymentComment', TextareaType::class, ["label" => "Commentaire: ", 'required' => false,
                 'empty_data' => 'Aucun commentaire'])
             ->add('family', HiddenType::class)
-            ->add('Suivant', SubmitType::class)
+            ->add('Confirmer', SubmitType::class)
             ->add('toylibrary', HiddenType::class);
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void

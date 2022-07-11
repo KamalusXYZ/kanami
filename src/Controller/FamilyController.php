@@ -3,14 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Family;
-use App\Entity\Payment;
 use App\Form\FamilyType;
-use App\Repository\CategoryDependanceRepository;
 use App\Repository\FamilyRepository;
-use App\Repository\ItemRepository;
 use App\Repository\LoanRepository;
 use App\Repository\PaymentRepository;
-use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,7 +50,7 @@ class FamilyController extends AbstractController
             $idFamily = $family->getId();
 
 
-            return $this->redirectToRoute('app_member_new_owner', ['idFamily'=> $idFamily ], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_member_new_owner', ['idFamily' => $idFamily], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('family/new.html.twig', [
@@ -64,16 +60,11 @@ class FamilyController extends AbstractController
     }
 
     #[Route('/{idFamily}', name: 'app_family_show', methods: ['GET'])]
-    public function show(Request $request,FamilyRepository $familyRepository, $idFamily): Response
+    public function show(Request $request, FamilyRepository $familyRepository, $idFamily): Response
     {
 
 
-
         $family = $familyRepository->find($idFamily);
-
-
-
-
 
 
         return $this->render('family/show.html.twig', [
@@ -82,24 +73,33 @@ class FamilyController extends AbstractController
     }
 
     #[Route('/{idFamily}/resolve', name: 'app_family_resolve', methods: ['GET', 'POST'])]
-    public function resolve(Request $request, LoanRepository $loanRepository, ItemRepository $itemRepository,FamilyRepository $familyRepository, $idFamily): Response
+    public function resolve(Request $request, LoanRepository $loanRepository, PaymentRepository $paymentRepository, FamilyRepository $familyRepository, $idFamily): Response
     {
         $loan = 0;
+
         // recherche de la famille ayant un pret retourné incomplet
         $family = $familyRepository->find($idFamily);
         // recherche du pret litigieux, recuperation sous forme de tableau.
-        $loansToResolve = $loanRepository->findBy(array('completenessReturn'=>0, 'family'=> $idFamily));
+        $loansToResolve = $loanRepository->findBy(array('completenessReturn' => 0, 'family' => $idFamily));
+
+        //Rechercher un paiement de cotisation  non à jour (20 represente le cout en € d'une cotisation ecrit en dur, le montant sera un propriété de toyLibrary quand celle çi sera mise en place.
+        $incompleteContributions = $paymentRepository->findBy(array('family' => $idFamily, 'paymentCause' => "cotisation", 'paymentAmount' => null));
+        //Rechercher un paiement de depot de garantie  non à jour (50 represente le cout en € d'une cotisation ecrit en dur, le montant sera un propriété de toyLibrary quand celle çi sera mise en place.
+        $incompleteDeposits = $paymentRepository->findBy(array('family' => $idFamily, 'paymentCause' => "dg", 'paymentAmount' => null));
+
+
 
 
         return $this->render('family/resolve.html.twig', [
             'family' => $family,
             'idFamily' => $idFamily,
-            'loanToResolve'=> $loansToResolve,
+            'loanToResolve' => $loansToResolve,
+            'incompleteContributions' => $incompleteContributions,
+            'incompleteDeposits' => $incompleteDeposits
 
 
         ]);
     }
-
 
 
     #[Route('/{id}/edit', name: 'app_family_edit', methods: ['GET', 'POST'])]
@@ -123,13 +123,12 @@ class FamilyController extends AbstractController
     #[Route('/{id}', name: 'app_family_delete', methods: ['POST'])]
     public function delete(Request $request, Family $family, FamilyRepository $familyRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$family->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $family->getId(), $request->request->get('_token'))) {
             $familyRepository->remove($family, true);
         }
 
         return $this->redirectToRoute('app_family_index', [], Response::HTTP_SEE_OTHER);
     }
-
 
 
 }

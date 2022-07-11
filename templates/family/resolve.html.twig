@@ -12,7 +12,7 @@
         <h2 class="text-center font-size-25">Résolution de contentieux pour la famille
             {% for relation in family.relationships %}
                 {% if relation.isOwner == 1 %}
-                    {{ relation.member.lastName }}
+                    <span class="bold color-blue">{{ relation.member.lastName|upper }}</span>
                 {% endif %}
             {% endfor %}
         </h2>
@@ -35,7 +35,37 @@
 
 
         <div style="padding-top: 25px">
-            <h2 class="text-center font-size-25">Mettre à jour un paiement de cotisation ou dépot de garantie</h2>
+            <h2 class="text-center font-size-20">Mettre à jour un paiement de cotisation ou dépot de garantie</h2>
+
+            <div class="flex-space-center-wrap">
+
+
+                {% for incompleteContribution in incompleteContributions %}
+                    {% if incompleteContribution %}
+                        <button>
+                            <a href="{{ path('app_pay', {'idPayment': incompleteContribution.id, 'idFamily': idFamily  } ) }}">Payer
+                                la cotisation
+                                impayée</a>
+                        </button>
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+{#            Fonctionnalité mise en attent, voir payment controller#}
+{#            <div class="flex-space-center-wrap">#}
+
+{#                {% for incompleteDeposit in incompleteDeposits %}#}
+{#                    {% if incompleteDeposit %}#}
+{#                        <button>#}
+{#                            <a href="{{ path('app_pay_deposit', {'idPayment': incompleteDeposit.id, 'idFamily': idFamily  } ) }}">Payer#}
+{#                                le dépôt de garantie#}
+{#                                impayée</a>#}
+{#                        </button>#}
+{#                    {% endif %}#}
+
+{#                {% endfor %}#}
+
+{#            </div>#}
 
 
         </div>
