@@ -110,18 +110,17 @@ class LoanController extends AbstractController
         $arrayLoan = $loanRepository->findBy(array('item' => $idItem, 'effectReturnDateTime' => null));
         $loan = $arrayLoan[0];
 
-        $dateTime = date_create("now");
         $family = $loan->getFamily();
 
         $form = $this->createFormBuilder($loan)
-            ->add('completenessReturn', CheckboxType::class, ["label" => "Complet?", 'attr' => ['class' => 'completenessReturn', 'required' => false]])
-            ->add('returnComment', TextareaType::class, ['label' => 'Commentaire (optionnel)', 'required' => false])
+            ->add('completenessReturn', CheckboxType::class, ["label" => "Complet?", 'required' => false])
+            ->add('returnComment', TextareaType::class, ['label' => 'Commentaire (optionnel)'])
             ->getForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $loan->setEffectReturnDateTime($dateTime);
+            $loan->setEffectReturnDateTime(date_create("now"));
             $family->setMaxLoanSimultaneous($family->getMaxLoanSimultaneous() + 1);
 
             if ($loan->isCompletenessReturn() == 0) {
@@ -152,7 +151,6 @@ class LoanController extends AbstractController
 
         }
 
-
         return $this->renderForm('loan/show_return.html.twig', ['loan' => $loan,
             'form' => $form,
             'idItem' => $idItem,
@@ -160,7 +158,6 @@ class LoanController extends AbstractController
             'family' => $family,]);
 
     }
-
 
     #[
         Route('/{id}/edit', name: 'app_loan_edit', methods: ['GET', 'POST'])]
