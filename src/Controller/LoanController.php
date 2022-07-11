@@ -113,22 +113,16 @@ class LoanController extends AbstractController
         $dateTime = date_create("now");
         $family = $loan->getFamily();
 
-            $form = $this->createFormBuilder($loan)
-                ->add('completenessReturn', CheckboxType::class, ["label" => "Complet?", 'attr' => ['class' => 'completenessReturn','required' => true]],
-                )
-                ->add('returnComment', TextareaType::class, ['label' => 'Commentaire (optionnel)','required' => true])
-                ->getForm();
+        $form = $this->createFormBuilder($loan)
+            ->add('completenessReturn', CheckboxType::class, ["label" => "Complet?", 'attr' => ['class' => 'completenessReturn', 'required' => false]])
+            ->add('returnComment', TextareaType::class, ['label' => 'Commentaire (optionnel)', 'required' => false])
+            ->getForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $loanRepository->add($loan, true);
-            sleep(1);
-            dd($loan);
-
 
             $loan->setEffectReturnDateTime($dateTime);
             $family->setMaxLoanSimultaneous($family->getMaxLoanSimultaneous() + 1);
-            $item->setAvailable(1);
 
             if ($loan->isCompletenessReturn() == 0) {
 
@@ -137,24 +131,39 @@ class LoanController extends AbstractController
                 $family->setIncompleteReturnNb($family->getIncompleteReturnNb() + 1);
                 $family->setIncompleteReturn(1);
                 $family->setBlocked(1);
+                $item->setAvailable(0);
 
+                $loanRepository->add($loan, true);
+                $familyRepository->add($family, true);
+                $itemRepository->add($item, true);
+                $this->addFlash('warning', 'Retour incomplet.');
+                return $this->redirectToRoute('app_main', [], Response::HTTP_SEE_OTHER);
 
             }
+            $item->setCompleteness(1);
+            $item->setAvailable(1);
 
             $loanRepository->add($loan, true);
+            $familyRepository->add($family, true);
+            $itemRepository->add($item, true);
+            $this->addFlash('success', 'Retour effectué.');
+
+            return $this->redirectToRoute('app_main', [], Response::HTTP_SEE_OTHER);
 
         }
+
 
         return $this->renderForm('loan/show_return.html.twig', ['loan' => $loan,
             'form' => $form,
             'idItem' => $idItem,
             'item' => $item,
-
             'family' => $family,]);
+
     }
 
 
-    #[Route('/{id}/edit', name: 'app_loan_edit', methods: ['GET', 'POST'])]
+    #[
+        Route('/{id}/edit', name: 'app_loan_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Loan $loan, LoanRepository $loanRepository): Response
     {
         $form = $this->createForm(LoanType::class, $loan);

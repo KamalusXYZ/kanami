@@ -6,11 +6,11 @@
     <div class="cont-hidden">
         <div class="cont-title"><h1>Retour d'article</h1></div>
         <div class="cont padding-0">
-
+            {{ form_start(form, { 'attr' : { 'class': 'cont-form' } }) }}
             <div class="cont-form">
                 <div class="completenessReturn">
                     <div>
-                        {{ form_row(form.completenessReturn, { 'attr' : { 'class': 'completenessReturn' } }) }}
+                        {{ form_row(form.completenessReturn) }}
                     </div>
 
                 </div>
@@ -20,7 +20,7 @@
 
                 <div class="returnComment">
                     <div>
-                        {{ form_row(form.returnComment, { 'attr' : { 'class': 'returnComment', 'required': true } }) }}
+                        {{ form_row(form.returnComment) }}
                     </div>
 
                 </div>
@@ -34,6 +34,6 @@
 
 
     </div>
-
+    {{ form_end(form) }}
 
 {% endblock %}
