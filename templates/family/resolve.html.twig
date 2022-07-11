@@ -8,40 +8,38 @@
 {% block body %}
 
 
-    
-        <div class="cont">
-
-            <h1>Résolution de contentieux pour la famille
-                {% for relation in family.relationships %}
-                    {% if relation.isOwner == 1 %}
-                        {{ relation.member.lastName }}
-                    {% endif %}
-                {% endfor %}
-            </h1>
-            <p style="font-size: x-large">Jeu(x) à résoudre:</p>
-             {% for loan in loanToResolve %}
-                    <div class="cont-result"> <h4 class="text-center font-size-20">{{ loan.item }}</h4>
-
-                        <button ><a href="{{ path('app_resolve_confirmation', {'idItem': loan.item.id , 'idFamily': loan.family.id} ) }}">La famille a retrouvé ou remplacé la pièce manquante</a> </button>
-                        <button ><a href="{{ path('app_pay_to_resolve_confirmation', {'idItem': loan.item.id , 'idFamily': loan.family.id, 'loanToResolve': loanToResolve} ) }}">La famille va payer le jeu</a> </button>
-                        <button ><a href="{{ path('app_free_resolve_confirmation', {'idItem': loan.item.id , 'idFamily': loan.family.id} ) }}">La ludothèque annule le contentieux avec la famille</a> </button>
-
-                    </div>
-
+    <div class="cont">
+        <h2 class="text-center font-size-25">Résolution de contentieux pour la famille
+            {% for relation in family.relationships %}
+                {% if relation.isOwner == 1 %}
+                    {{ relation.member.lastName }}
+                {% endif %}
             {% endfor %}
+        </h2>
+        {% if loanToResolve %}
+            <p class="font-size-15">Jeu(x) à résoudre:</p>
+        {% endif %}
+        {% for loan in loanToResolve %}
+            <div class="cont-result"><h4 class="text-center font-size-20 margin-5">{{ loan.item }}</h4>
+                <button>
+                    <a href="{{ path('app_resolve_confirmation', {'idItem': loan.item.id , 'idFamily': loan.family.id} ) }}">La
+                        famille a retrouvé ou remplacé la pièce manquante</a></button>
+                <button>
+                    <a href="{{ path('app_pay_to_resolve_confirmation', {'idItem': loan.item.id , 'idFamily': loan.family.id, 'loanToResolve': loanToResolve} ) }}">La
+                        famille va payer le jeu</a></button>
+                <button>
+                    <a href="{{ path('app_free_resolve_confirmation', {'idItem': loan.item.id , 'idFamily': loan.family.id} ) }}">La
+                        ludothèque annule le contentieux avec la famille</a></button>
+            </div>
+        {% endfor %}
 
 
-
-
-
+        <div style="padding-top: 25px">
+            <h2 class="text-center font-size-25">Mettre à jour un paiement de cotisation ou dépot de garantie</h2>
 
 
         </div>
-
-
-
-
-
+    </div>
 
 
 
