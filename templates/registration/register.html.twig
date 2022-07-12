@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+    <div class="cont-hidden ">
+        <div class="cont-title"><h1>Formulaire de création d'un compte</h1></div>
+
+
+        <div class="cont flex-space-center-wrap">
+
+            <div style="border:1px solid #25963F; margin-top: 15px" class="cont-big margin-0 padding-0 radius">
+                {{ form_start(registrationForm, { 'attr' : { 'class': 'cont-form' } }) }}
+                <div class="cont-hidden-ajust flex-space-center text-center">
+                    <div class="name">
+                        {{ form_row(registrationForm.username, { label: 'Pseudo'}) }}
+                    </div>
+                </div>
+                <div class="cont-hidden-ajust flex-space-center text-center">
+                    <div class="name">
+                        {{ form_row(registrationForm.firstName, { label: 'Prénom:'}) }}
+                        {{ form_row(registrationForm.lastName, { label: 'Nom de famille:'}) }}
+                    </div>
+                </div>
+                <div class="cont-hidden-ajust flex-space-center text-center">
+                    <div class="name">
+                        {{ form_row(registrationForm.email, { label: 'E-mail:'}) }}
+                        {{ form_row(registrationForm.plainPassword, { label: 'Mot de passe:'}) }}
+                    </div>
+                </div>
+
+
+                <button type="submit" class="btn">Enregistrer</button>
+                {{ form_end(registrationForm) }}
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
