@@ -1,0 +1,15 @@
+{# templates/bundles/TwigBundle/Exception/error404.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div style="min-height: 500px" class="cont radius-bottom-right padding-0 bg-white">
+        <h1 class="margin-10">Page non trouvée</h1>
+        <p class="bold font-size-25 text-center">Erreur 404</p>
+
+        <p class="bold font-size-20 text-center">
+            Une erreur s'est produite. <br>
+            Aucune donnée n'a été perdue. <br> <br>
+            <a class="color-green" href="{{ path('app_main') }}">Cliquez ici pour revenir à l'acceuil</a>
+        </p>
+    </div>
+{% endblock %}
