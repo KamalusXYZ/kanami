@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SettingsController extends AbstractController
 {
-    #[Route('/settings', name: 'app_settings')]
+    #[Route('/admin/settings', name: 'app_settings')]
     public function index(): Response
     {
 

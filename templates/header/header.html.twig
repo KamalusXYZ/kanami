@@ -5,15 +5,28 @@
                 <a href="/"><img width="45px" src="/img/butterfly_logo.png" alt="Logo"></a>
             </div>
             <div>
-                <a href="/"><img width="125px" src="/img/titre_logo.png" alt="Logo"></a>
+                <a href="/admin"><img width="125px" src="/img/titre_logo.png" alt="Logo"></a>
 
             </div>
 
 
         </div>
-        <div style="padding-left: 50px" class="font-size-35 align-center">{{ "now"|date(" d / m  / Y", "Europe/Paris") }}</div>
+        <div style="padding-left: 50px"
+             class="font-size-35 align-center">{{ "now"|date(" d / m  / Y", "Europe/Paris") }}</div>
 
         <div class="flex-right">
+            {% if app.user %}
+                <span class="bold color-green font-size-15" style="margin-right: 5px">
+                    Connecté
+                </span>
+                <span class="bold color-green font-size-15" style="margin-right: 30px">
+                     <a href="{{ path('app_logout') }}"><img src="/img/active.svg"></a>
+
+                </span>
+
+
+
+            {% endif %}
             <div class="rotate">
                 <a href="{{ path('app_settings') }}"><img id="setting-icon" src="/img/setting.svg" alt="reglage"></a>
                 <img id="info-icon" src="/img/info.svg" alt="info">

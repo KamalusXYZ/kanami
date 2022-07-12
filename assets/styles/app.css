@@ -22,6 +22,7 @@ body {
     --couleur-pri-light: #8BB3EA;
     --couleur-sec: #25963F;
     --couleur-sec-light: #95D6A4;
+
     /*background-color: var(--couleur-sec-light);*/
 
 
@@ -410,6 +411,9 @@ h1 {
 
 .color-green {
     color: #508f5e;
+}
+.color-green_light {
+    color: rgba(80, 143, 94, 0.5);
 }
 
 .color-red {
@@ -921,6 +925,27 @@ tfoot {
 
 #member_country, #form_country {
     width: 200px;
+}
+/************************
+    FORMLOGIN
+************************ */
+
+.form-control div {
+    display: inline-grid;
+
+    font-size: 15px;
+    font-weight: normal;
+    text-align: center;
+
+}
+
+#inputPassword , #inputUsername{
+    background-color: #dddddd;
+    color: #3163af;
+    min-width: 200px;
+    font-size: 20px;
+    padding: 2px;
+
 }
 
 /**********************

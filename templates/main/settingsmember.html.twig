@@ -11,14 +11,28 @@
 
         <div class="topnav">
 
-            <a  href="{{ path('app_settings') }}">Réglage général</a>
+            <a href="{{ path('app_settings') }}">Réglage général</a>
             <a href="{{ path('app_settings_family') }}">Famille</a>
             <a href="{{ path('app_settings_item') }}">Jeux</a>
             <a class="active" href="{{ path('app_settings_member') }}">Membres du staff</a>
         </div>
 
+        <div class="flex-space-center-wrap">
+
+            <div class="cont-medium radius margin-10">
+                <h2>Vous souhaitez créer un nouvel utilisateur à votre ludothèque.</h2>
+                <p>
+
+                    laboriosam molestias nulla obcaecati perferendis praesentium provident quidem quis quod recusandae
+                    sint ullam unde, vero voluptates!</p>
+                <button class=""><a class="text-white text-decoration-none" href="{{ path('app_register') }}">Ajouter un
+                        utilisateur</a></button> <br>
+                <span class="color-red">* la fonctionnalité est active, mais vous ne pourrez pas créer d'admin, hors pour le moment,
+                        aucune fonctionnalité n'est accessible en utilisateur classique, ce qui vous bloquera meme l'accès à la page d'acceuil.</span>
+            </div>
 
 
+        </div>
 
 
     </div>

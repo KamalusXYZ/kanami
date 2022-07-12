@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/catdependance')]
+#[Route('/admin/catdependance')]
 class CategoryDependanceController extends AbstractController
 {
     #[Route('/', name: 'app_category_dependance_index', methods: ['GET'])]

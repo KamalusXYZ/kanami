@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/loan')]
+#[Route('/admin/loan')]
 class LoanController extends AbstractController
 {
     #[Route('/', name: 'app_loan_index', methods: ['GET'])]
