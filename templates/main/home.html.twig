@@ -80,7 +80,7 @@
                     <div class="cont-result flex-align-center">
 
                         {% if result.available == 1 %}
-                            <div><img src="/img/available.svg" alt="disponible"></div>
+                            <div><img src="{{ asset('/img/available.svg') }}" alt="disponible"></div>
                         {% elseif result.available ==0 %}
                             <div><img src="/img/unavailable.svg" alt="indisponible"></div>
                         {% endif %}
