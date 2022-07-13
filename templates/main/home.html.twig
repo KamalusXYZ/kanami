@@ -33,10 +33,14 @@
             </form>
 
             <div title="Fonctionnalité en construction" style="margin-top: 25px; cursor: help">
-                <button style=" cursor: help!important;" title="Fonctionnalité en construction" class="disabled-button ">Démarrer une nouvelle session journalière</button>
+                <button style=" cursor: help!important;" title="Fonctionnalité en construction"
+                        class="disabled-button ">Démarrer une nouvelle session journalière
+                </button>
             </div>
             <div title="Fonctionnalité en construction" style="margin-top: 25px; cursor: help" style="margin-top: 25px">
-                <button style=" cursor: help!important;" title="Fonctionnalité en construction" class="disabled-button">Démarrer un nouvel évènement</button>
+                <button style=" cursor: help!important;" title="Fonctionnalité en construction" class="disabled-button">
+                    Démarrer un nouvel évènement
+                </button>
             </div>
 
 
@@ -48,7 +52,7 @@
 
         {% if resultsItem == "" and resultsFamily == "" %}
 
-            <video width="100%" height="100%"  loop="loop" autoplay="autoplay"
+            <video width="100%" height="100%" loop="loop" autoplay="autoplay"
                    src="https://kstatic.googleusercontent.com/files/2ae55adccf63bac71ab324690aa09258ae234c78ca76a129cb224f49eb61ccf7540fdc6080abf69a53a62138890a8ef7aa84139c091bfa0a045e5fce84de3d24">
 
 
@@ -59,10 +63,17 @@
 
 
         {% if resultsItem != '' %}
-            <p class="bold font-size-15">
-                Voici les {{ resultsItem|length }} résultat(s) pour la recherche: <strong
-                        class="font-size-20"> {{ searchWord|upper }}</strong>
-            </p>
+            {% if resultsItem|length == 0 %}
+                <p class="bold font-size-15">
+                    Aucun résultat pour la recherche: <strong
+                            class="font-size-20"> {{ searchWord|upper }}</strong>
+                </p>
+            {% else %}
+                <p class="bold font-size-15">
+                    {{ resultsItem|length }} résultat(s) pour la recherche: <strong
+                            class="font-size-20"> {{ searchWord|upper }}</strong>
+                </p>
+            {% endif %}
 
             {% if resultsItem %}
                 {% for result in resultsItem %}

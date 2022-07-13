@@ -16,11 +16,12 @@
 
         <div class="flex-right">
             {% if app.user %}
-                <span class="bold color-green font-size-15" style="margin-right: 5px">
-                    Connecté
+
+                <span class="bold color-green font-size-15" style="margin-right: 5px; vertical-align: central">
+                    {{ app.user.username|capitalize }} connecté
                 </span>
                 <span class="bold color-green font-size-15" style="margin-right: 30px">
-                     <a href="{{ path('app_logout') }}"><img src="/img/active.svg"></a>
+                     <a title="Cliquez pour vous déconnecter." href="{{ path('app_logout') }}"><img src="/img/active.svg"></a>
 
                 </span>
 
