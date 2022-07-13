@@ -4,12 +4,11 @@
 
 {% block body %}
     <form method="post">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
 
 
-        <div class="cont">
+
+        <div class="cont" style="width: 1176px">
+
             <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
             <div class=" flex-justify-center">
                 <input placeholder="Pseudo" type="text" value="{{ last_username }}" name="username" id="inputUsername"
@@ -17,7 +16,7 @@
             </div>
             <div class=" flex-justify-center">
 
-                <input  placeholder="Mot de passe" type="password" name="password" id="inputPassword"
+                <input placeholder="Mot de passe" type="password" name="password" id="inputPassword"
                        class="form-signin"
                        autocomplete="current-password" required>
 
@@ -40,7 +39,11 @@
                 <button class="btn btn-lg btn-primary" type="submit">
                     Connexion
                 </button>
+
             </div>
+            {% if error %}
+                <div class="bold color-red font-size-15 text-center"> Impossible de se connecter</div>
+            {% endif %}
         </div>
 
     </form>

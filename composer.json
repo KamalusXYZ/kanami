@@ -100,6 +100,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "fzaninotto/faker": "^1.5",
         "symfony/debug-bundle": "6.0.*",
         "symfony/maker-bundle": "^1.42",
         "symfony/stopwatch": "6.0.*",
