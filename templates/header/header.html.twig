@@ -12,18 +12,20 @@
 
         </div>
         <div style="padding-left: 50px"
-             class="font-size-35 align-center">{{ "now"|date(" d / m  / Y", "Europe/Paris") }}</div>
+             class="font-size-35 align-center date-now">{{ "now"|date(" d / m  / Y", "Europe/Paris") }}</div>
 
-        <div class="flex-right">
+        <div class="flex-right ">
             {% if app.user %}
 
-                <span class="bold color-green font-size-15" style="margin-right: 5px; vertical-align: central">
+                <div class="login">                <span class="bold color-green font-size-15"
+                                                         style="margin-right: 5px; vertical-align: central">
                     {{ app.user.username|capitalize }} connecté
                 </span>
-                <span class="bold color-green font-size-15" style="margin-right: 30px">
-                     <a title="Cliquez pour vous déconnecter." href="{{ path('app_logout') }}"><img src="/img/active.svg"></a>
+                    <span class="bold color-green font-size-15" style="margin-right: 30px">
+                     <a title="Cliquez pour vous déconnecter." href="{{ path('app_logout') }}"><img
+                                 src="/img/active.svg"></a>
 
-                </span>
+                </span></div>
 
 
 

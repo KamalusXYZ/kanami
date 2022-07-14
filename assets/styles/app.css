@@ -7,6 +7,7 @@ ajouter au header:
 */
 
 @import "normalize.css";
+@import "app_mobile.css";
 
 
 body {
