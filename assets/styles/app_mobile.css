@@ -19,6 +19,10 @@ ajouter au header:
 /** Media Queries 900   */
 @media screen and (max-width: 900px) {
 
+    body{
+        background-image: none!important;
+    }
+
     .cont-title {
 
         display: none;
